@@ -1,0 +1,108 @@
+% MIT License
+
+% Copyright (c) 2022 Chiyuru
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+% to deal in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+\documentclass[UTF8]{ctexart}
+\renewcommand\contentsname{Content}
+
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{12.64723pt}
+\usepackage{lmodern}
+
+\def\r#1{{\rm #1}}
+\def\b#1{{\bf #1}}
+\def\c{\cdot}
+\title{Assignment 1}
+\author{刘锦坤\\行健-能源2\\2022013352}
+\date{\today}
+\pagenumbering{arabic}
+
+\begin{document}
+
+\fancyhead[C]{Assignment 1}
+\fancyfoot[C]{\thepage}
+
+\maketitle
+%\tableofcontents
+% \newpage
+
+\section*{Explanation}
+At first, I tried using LaTeX to complete my homework,
+but typing the LaTex code was too slow, so I ended up writing it on paper.
+
+\section*{Question 1}
+The specific weight can be calculated as
+$$
+    \r{specific} \ \r{weight}= \frac{8 \r{N}}{400 \r{ml}} = 20000 \r{N \c m^{-3}}
+$$
+\noindent The density can be calculated as
+$$
+    \r{density} = \frac{8 \r{N}}{400 \r{ml} \c 9.81 \r{N \c kg^{-1}}} = 2038.74 \r{kg \c m^{-3}}
+$$
+\noindent The specific gravity can be calculated as
+$$
+    \r{specific} \ \r{gravity} = \frac{2038.74 \r{kg \c m^{-3}}}{1000 \r{kg \c m^{-3}}} = 2.03874
+$$
+
+\section*{Question 2}
+The dimension of $c$ is $[c]=\r{L \c T^{-1}}$, 
+the dimension of $E_v$ is $[E_v]=\r{M \c L^{-1} \c T^{-2}}$, 
+the dimension of $\rho$ is $[\rho] = \r{M \c L^{-3}}$, 
+due to that $c = {E_v}^a\c \rho^b$ is dimensionally homogeneous, we can get
+$$
+\begin{cases}
+    a + b = 0\\
+    -a - 3b = 1\\
+    -2a = -1
+\end{cases}
+\Rightarrow
+\begin{cases}
+    a = \frac{1}{2}\\
+    b = -\frac{1}{2}
+\end{cases}
+$$
+\noindent So we can get the relationship between $c$, $E_v$ and $\rho$ as
+$$
+    c = \sqrt{\frac{E_v}{\rho}}
+$$
+Therefore
+$$
+    E_v = \rho \c c^2 = 2000 \times 2000^2 \r{kg \c m^{-1} \c s^{-2}} = 8 \times 10^9 \r{kg \c m^{-1} \c s^{-2}}
+$$
+
+\section*{Question 3}
+The dimension of $Q$ is $[Q]=\r{L^3 \c T^{-1}}$,
+the dimension of $\Delta p$ is $[\Delta p]=\r{M \c L^{-1} \c T^{-2}}$,
+the dimension of $R$ and $L$ is $\r{L}$,
+the dimension of $\mu$ is $[\mu]=\r{M \c L^{-1} \c T^{-1}}$.
+Considering that the equation $Q = \frac{c R^4 \Delta p}{\mu L}$ is dimensionally homogeneous,
+we can finally get that \b{$\bf{c}$ is a dimensionless constant.}
+Actually this equation is called Poiseuille's law, in which $c$ is equal to $\frac \pi 8$.
+
+% \section{Question 4}
+% By looking for the Appendix B we can get the density of the water at different temperature.
+% $$
+% \rho_{@4^\circ C} = 999.98 \r{kg \c m^{-3}}, \quad \rho_{@32^\circ C} =  \r{kg \c m^{-3}}
+% $$
+
+\end{document}
