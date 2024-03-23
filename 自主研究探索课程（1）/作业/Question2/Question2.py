@@ -14,20 +14,20 @@ E_m = 1.5
 Q_0 = k*np.sqrt(2*g*H_R)
 # 阀门全开时的流量
 
-N = 10
+N = 5
 # 管道分段
 
 # 初始化Q和H
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-H[0,10] = 0
+H[0,N] = 0
 
 # 迭代计算
 dx = L/N
 dt = dx/a
 
-N_t = int(30/dt)
+N_t = int(25/dt)
 A = np.pi*D**2/4
 B = a/(g*A)
 S = 0
@@ -36,8 +36,10 @@ for i in range(1,N_t+1):
     t =  i*dt
     if t<t_c:
         tau = np.power(1-t/t_c,E_m)
+        # tau = 1
     else:
         tau = 0
+        # tau = 1
     Q = np.append(Q,[init],axis=0)
     H = np.append(H,[init],axis=0)
     for j in range(N+1):
@@ -57,29 +59,29 @@ for i in range(1,N_t+1):
             Q[i,j] = (C_P-C_M)/(2*B)
 
 # 画出流量Q随时间变化
-fig, ax = plt.subplots(2,2)
-fig.suptitle('Node Traffic(N=10)')
-ax[0,0].plot([i*dt for i in range (N_t+1)],Q[:,0])
-ax[0,0].set_title('Node 0 Traffic')
-ax[0,1].plot([i*dt for i in range (N_t+1)],Q[:,3])
-ax[0,1].set_title('Node 3 Traffic')
-ax[1,0].plot([i*dt for i in range (N_t+1)],Q[:,6])
-ax[1,0].set_title('Node 6 Traffic')
-ax[1,1].plot([i*dt for i in range (N_t+1)],Q[:,10])
-ax[1,1].set_title('Node 10 Traffic')
+fig, ax = plt.subplots(1,3)
+# 将图窗设置为3英寸*3英寸
+fig.set_size_inches(12,4)
+fig.suptitle('NodeTraffic(N='+str(N)+')')
+ax[0].plot([i*dt for i in range (N_t+1)],Q[:,0])
+ax[0].set_title('Node 0 Traffic')
+ax[1].plot([i*dt for i in range (N_t+1)],Q[:,int(N/2)])
+ax[1].set_title('Node '+str(int(N/2))+' Traffic')
+ax[2].plot([i*dt for i in range (N_t+1)],Q[:,N])
+ax[2].set_title('Node '+str(N)+' Traffic')
 plt.tight_layout()
-plt.show()
+# 存储图像到Question2文件夹下
+plt.savefig('Question2/NodeTraffic(N='+str(N)+').png',dpi=300)
 
 # 画出水头H随时间变化
-fig, ax = plt.subplots(2,2)
-fig.suptitle('Node Head(N=10)')
-ax[0,0].plot([i*dt for i in range (N_t+1)],H[:,0])
-ax[0,0].set_title('Node 0 Head')
-ax[0,1].plot([i*dt for i in range (N_t+1)],H[:,3])
-ax[0,1].set_title('Node 3 Head')
-ax[1,0].plot([i*dt for i in range (N_t+1)],H[:,6])
-ax[1,0].set_title('Node 6 Head')
-ax[1,1].plot([i*dt for i in range (N_t+1)],H[:,10])
-ax[1,1].set_title('Node 10 Head')
+fig, ax = plt.subplots(1,3)
+fig.set_size_inches(12,4)
+fig.suptitle('NodeHead(N='+str(N)+')')
+ax[0].plot([i*dt for i in range (N_t+1)],H[:,0])
+ax[0].set_title('Node 0 Head')
+ax[1].plot([i*dt for i in range (N_t+1)],H[:,int(N/2)])
+ax[1].set_title('Node '+str(int(N/2))+' Head')
+ax[2].plot([i*dt for i in range (N_t+1)],H[:,N])
+ax[2].set_title('Node '+str(N)+' Head')
 plt.tight_layout()
-plt.show()
+plt.savefig('Question2/NodeHead(N='+str(N)+').png',dpi=300)
