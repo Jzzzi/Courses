@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 
 H_R = 150
 L = 600
@@ -9,7 +10,7 @@ f = 0.018
 k = 0.009
 # 即C_dA_g
 g = 9.806
-t_c = 2.5
+t_c = 4
 #修改t_c即可得到不同t_c下的结果
 E_m = 1
 Q_0 = k*np.sqrt(2*g*H_R)
@@ -62,7 +63,7 @@ for i in range(1,N_t+1):
 # 画出流量Q随时间变化
 fig, ax = plt.subplots(1,3)
 fig.set_size_inches(12,4)
-# plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['font.family'] = 'Times New Roman'
 
 
 fig.suptitle('NodeTraffic($t_c$='+str(t_c)[0:4]+')')
