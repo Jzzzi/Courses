@@ -14,7 +14,7 @@ E_m = 1.5
 Q_0 = k*np.sqrt(2*g*H_R)
 # 阀门全开时的流量
 
-N = 10 
+N = 10
 # 管道分段
 
 # 初始化Q和H
@@ -27,7 +27,7 @@ H[0,10] = 0
 dx = L/N
 dt = dx/a
 
-N_t = int(20/dt)
+N_t = int(30/dt)
 A = np.pi*D**2/4
 B = a/(g*A)
 S = 0
@@ -56,5 +56,30 @@ for i in range(1,N_t+1):
             H[i,j] = (C_P+C_M)/2
             Q[i,j] = (C_P-C_M)/(2*B)
 
-plt.plot([i*dt for i in range (N_t+1)],Q[:,5])
+# 画出流量Q随时间变化
+fig, ax = plt.subplots(2,2)
+fig.suptitle('Node Traffic(N=10)')
+ax[0,0].plot([i*dt for i in range (N_t+1)],Q[:,0])
+ax[0,0].set_title('Node 0 Traffic')
+ax[0,1].plot([i*dt for i in range (N_t+1)],Q[:,3])
+ax[0,1].set_title('Node 3 Traffic')
+ax[1,0].plot([i*dt for i in range (N_t+1)],Q[:,6])
+ax[1,0].set_title('Node 6 Traffic')
+ax[1,1].plot([i*dt for i in range (N_t+1)],Q[:,10])
+ax[1,1].set_title('Node 10 Traffic')
+plt.tight_layout()
+plt.show()
+
+# 画出水头H随时间变化
+fig, ax = plt.subplots(2,2)
+fig.suptitle('Node Head(N=10)')
+ax[0,0].plot([i*dt for i in range (N_t+1)],H[:,0])
+ax[0,0].set_title('Node 0 Head')
+ax[0,1].plot([i*dt for i in range (N_t+1)],H[:,3])
+ax[0,1].set_title('Node 3 Head')
+ax[1,0].plot([i*dt for i in range (N_t+1)],H[:,6])
+ax[1,0].set_title('Node 6 Head')
+ax[1,1].plot([i*dt for i in range (N_t+1)],H[:,10])
+ax[1,1].set_title('Node 10 Head')
+plt.tight_layout()
 plt.show()
