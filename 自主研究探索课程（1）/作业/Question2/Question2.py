@@ -14,7 +14,7 @@ E_m = 1.5
 Q_0 = k*np.sqrt(2*g*H_R)
 # 阀门全开时的流量
 
-N = 5
+N = 20
 # 管道分段
 
 # 初始化Q和H
@@ -60,6 +60,8 @@ for i in range(1,N_t+1):
 
 # 画出流量Q随时间变化
 fig, ax = plt.subplots(1,3)
+plt.rcParams['font.family'] = 'Times New Roman'
+
 # 将图窗设置为3英寸*3英寸
 fig.set_size_inches(12,4)
 fig.suptitle('NodeTraffic(N='+str(N)+')')
