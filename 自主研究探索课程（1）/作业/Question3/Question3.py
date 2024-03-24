@@ -3,17 +3,19 @@ import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
 H_R = 150
+H_0 = 143.48828
+Q_0 = 0.4774321
+#Question1计算结果
 L = 600
 a = 1200
 D = 0.5
 f = 0.018
 k = 0.009
-# 即C_dA_g
+# 即C_d*A_g
 g = 9.806
 t_c = 16.0
 #修改t_c即可得到不同t_c下的结果
 E_m = 1
-Q_0 = k*np.sqrt(2*g*H_R)
 # 阀门全开时的流量
 
 N = 10
@@ -21,9 +23,10 @@ N = 10
 
 # 初始化Q和H
 init = np.zeros(N+1)
-Q = np.array([init])
-H = np.array([init])+H_R
-# H[0,N] = 0
+Q = np.array([init])+Q_0
+H = np.array([init])
+for i in range(N+1):
+    H[0,i] = H_R+(H_0-H_R)/(N)*i
 
 # 迭代计算
 dx = L/N
@@ -51,7 +54,7 @@ for i in range(1,N_t+1):
             Q[i,j] = (H[i,j]-C_M)/B
         elif j == N:
             C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
-            C_V = (Q_0*tau)**2/(2*H_R)
+            C_V = (Q_0*tau)**2/(2*H_0)
             Q[i,j] = -B*C_V+np.sqrt((B*C_V)**2+2*C_V*C_P)
             H[i,j] = C_P - B*Q[i,j]
         else:
@@ -66,7 +69,7 @@ fig.set_size_inches(12,4)
 plt.rcParams['font.family'] = 'Times New Roman'
 
 
-fig.suptitle('NodeTraffic($t_c$='+str(t_c)[0:4]+')')
+fig.suptitle('NodeTraffic($t_c$='+str(t_c)[0:4]+'s)')
 ax[0].plot([i*dt for i in range (N_t+1)],Q[:,0])
 ax[0].set_title('Node 0 Traffic')
 ax[1].plot([i*dt for i in range (N_t+1)],Q[:,int(N/2)])
@@ -74,13 +77,12 @@ ax[1].set_title('Node '+str(int(N/2))+' Traffic')
 ax[2].plot([i*dt for i in range (N_t+1)],Q[:,N])
 ax[2].set_title('Node '+str(N)+' Traffic')
 plt.tight_layout()
-# 存储图像到Question2文件夹下
 plt.savefig('Question3/NodeTraffic(t_c='+str(t_c)[0:4]+').png',dpi=300)
 
 # 画出水头H随时间变化
 fig, ax = plt.subplots(1,3)
 fig.set_size_inches(12,4)
-fig.suptitle('NodeHead($t_c$='+str(t_c)[0:4]+')')
+fig.suptitle('NodeHead($t_c$='+str(t_c)[0:4]+'s)')
 ax[0].plot([i*dt for i in range (N_t+1)],H[:,0])
 ax[0].set_title('Node 0 Head')
 ax[1].plot([i*dt for i in range (N_t+1)],H[:,int(N/2)])

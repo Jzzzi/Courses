@@ -9,10 +9,9 @@ f = 0.018
 k = 0.009
 # 即C_dA_g
 g = 9.806
-t_c = 16.0
-#修改t_c即可得到不同t_c下的结果
-E_m = 1
-Q_0 = k*np.sqrt(2*g*H_R)
+t_c = 2.1
+E_m = 1.5
+Q_0 =0.4774321
 # 阀门全开时的流量
 
 N = 10
@@ -20,7 +19,7 @@ N = 10
 
 # 初始化Q和H
 init = np.zeros(N+1)
-Q = np.array([init])
+Q = np.array([init])+Q_0
 H = np.array([init])+H_R
 # H[0,N] = 0
 
@@ -28,7 +27,7 @@ H = np.array([init])+H_R
 dx = L/N
 dt = dx/a
 
-N_t = int(35/dt)#这里为仿真时间
+N_t = int(25/dt)
 A = np.pi*D**2/4
 B = a/(g*A)
 S = 0
@@ -36,11 +35,11 @@ R = f*dx/(2*g*D*A**2)
 for i in range(1,N_t+1):
     t =  i*dt
     if t<t_c:
-        # tau = np.power(1-t/t_c,E_m)
-        tau = 1
+        tau = np.power(1-t/t_c,E_m)
+        # tau = 1
     else:
-        # tau = 0
-        tau = 1
+        tau = 0
+        # tau = 1
     Q = np.append(Q,[init],axis=0)
     H = np.append(H,[init],axis=0)
     for j in range(N+1):
@@ -61,11 +60,11 @@ for i in range(1,N_t+1):
 
 # 画出流量Q随时间变化
 fig, ax = plt.subplots(1,3)
-fig.set_size_inches(12,4)
 plt.rcParams['font.family'] = 'Times New Roman'
 
-
-fig.suptitle('NodeTraffic($t_c$='+str(t_c)[0:4]+')')
+# 将图窗设置为3英寸*3英寸
+fig.set_size_inches(12,4)
+fig.suptitle('NodeTraffic(N='+str(N)+')')
 ax[0].plot([i*dt for i in range (N_t+1)],Q[:,0])
 ax[0].set_title('Node 0 Traffic')
 ax[1].plot([i*dt for i in range (N_t+1)],Q[:,int(N/2)])
@@ -79,7 +78,7 @@ plt.show()
 # 画出水头H随时间变化
 fig, ax = plt.subplots(1,3)
 fig.set_size_inches(12,4)
-fig.suptitle('NodeHead($t_c$='+str(t_c)[0:4]+')')
+fig.suptitle('NodeHead(N='+str(N)+')')
 ax[0].plot([i*dt for i in range (N_t+1)],H[:,0])
 ax[0].set_title('Node 0 Head')
 ax[1].plot([i*dt for i in range (N_t+1)],H[:,int(N/2)])
@@ -88,6 +87,3 @@ ax[2].plot([i*dt for i in range (N_t+1)],H[:,N])
 ax[2].set_title('Node '+str(N)+' Head')
 plt.tight_layout()
 plt.show()
-
-print('流量：',Q[N_t,N],'\n')
-print('水头：',H[N_t,N],'\n')
