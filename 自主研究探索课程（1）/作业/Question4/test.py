@@ -11,20 +11,20 @@ k = 0.009
 g = 9.806
 t_c = 4.0
 #阀门关闭时间
-t_s = 8.0
+t_s = 2.0
 #阀门开启时间
 E_m = 1
 Q_0 = k*np.sqrt(2*g*H_R)
 # 阀门全开时的流量
 
-N = 5
+N = 10
 # 管道分段
 
 # 初始化Q和H
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-H[0,N] = 0
+# H[0,N] = 0
 
 # 迭代计算
 dx = L/N
@@ -38,12 +38,13 @@ R = f*dx/(2*g*D*A**2)
 for i in range(1,N_t+1):
     t =  i*dt
     if t<t_s:
-        tau = t/t_s
+        tau = 0
+        # tau = t/t_s
         # tau = np.power(1-t/t_c,E_m)
         # tau = 1
     else:
-        tau = 1
         # tau = 1
+        tau = 0
     Q = np.append(Q,[init],axis=0)
     H = np.append(H,[init],axis=0)
     for j in range(N+1):
@@ -77,7 +78,7 @@ ax[2].plot([i*dt for i in range (N_t+1)],Q[:,N])
 ax[2].set_title('Node '+str(N)+' Traffic')
 plt.tight_layout()
 # 存储图像到Question4文件夹下
-plt.savefig('Question4/NodeTraffic(t_s='+str(t_s)[0:4]+').png',dpi=300)
+plt.show()
 
 # 画出水头H随时间变化
 fig, ax = plt.subplots(1,3)
@@ -90,4 +91,4 @@ ax[1].set_title('Node '+str(int(N/2))+' Head')
 ax[2].plot([i*dt for i in range (N_t+1)],H[:,N])
 ax[2].set_title('Node '+str(N)+' Head')
 plt.tight_layout()
-plt.savefig('Question4/NodeHead(t_s='+str(t_s)[0:4]+').png',dpi=300)
+plt.show()
