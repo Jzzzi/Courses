@@ -35,12 +35,7 @@ S = 0
 R = f*dx/(2*g*D*A**2)
 for i in range(1,N_t+1):
     t =  i*dt
-    if t<t_c:
-        # tau = np.power(1-t/t_c,E_m)
-        tau = 1
-    else:
-        # tau = 0
-        tau = 1
+    tau = 1
     Q = np.append(Q,[init],axis=0)
     H = np.append(H,[init],axis=0)
     for j in range(N+1):
@@ -50,7 +45,8 @@ for i in range(1,N_t+1):
             Q[i,j] = (H[i,j]-C_M)/B
         elif j == N:
             C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
-            C_V = (Q_0*tau)**2/(2*H_R)
+            C_V = (k*tau)**2*g
+            # print(C_V)
             Q[i,j] = -B*C_V+np.sqrt((B*C_V)**2+2*C_V*C_P)
             H[i,j] = C_P - B*Q[i,j]
         else:
