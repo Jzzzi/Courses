@@ -89,5 +89,5 @@ ax[2].set_title('Node '+str(N)+' Head')
 plt.tight_layout()
 plt.show()
 
-print('流量：',Q[N_t,N],'\n')
-print('水头：',H[N_t,N],'\n')
+print('流量：',Q[N_t,N])
+print('水头：',H[N_t,N])
