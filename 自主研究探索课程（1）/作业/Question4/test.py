@@ -11,7 +11,7 @@ k = 0.009
 g = 9.806
 t_c = 4.0
 #阀门关闭时间
-t_s = 2.0
+t_s = 8.0
 #阀门开启时间
 E_m = 1
 Q_0 = k*np.sqrt(2*g*H_R)
@@ -24,7 +24,8 @@ N = 10
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-# H[0,N] = 0
+# for i in range(N+1):
+#     H[0,i] = H_R-H_R/(N)*i
 
 # 迭代计算
 dx = L/N
@@ -38,13 +39,13 @@ R = f*dx/(2*g*D*A**2)
 for i in range(1,N_t+1):
     t =  i*dt
     if t<t_s:
-        tau = 0
-        # tau = t/t_s
+        # tau = 0
+        tau = t/t_s
         # tau = np.power(1-t/t_c,E_m)
         # tau = 1
     else:
-        # tau = 1
-        tau = 0
+        tau = 1
+        # tau = 0
     Q = np.append(Q,[init],axis=0)
     H = np.append(H,[init],axis=0)
     for j in range(N+1):

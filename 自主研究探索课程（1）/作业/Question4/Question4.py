@@ -11,7 +11,7 @@ k = 0.009
 g = 9.806
 t_c = 4.0
 #阀门关闭时间
-t_s = 8.0
+t_s = 16.0
 #阀门开启时间
 E_m = 1
 Q_0 = k*np.sqrt(2*g*H_R)
@@ -24,7 +24,7 @@ N = 5
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-H[0,N] = 0
+# H[0,N] = 0
 
 # 迭代计算
 dx = L/N

@@ -10,7 +10,7 @@ f = 0.018
 k = 0.009
 # 即C_dA_g
 g = 9.806
-t_c = 4
+t_c = 16.0
 #修改t_c即可得到不同t_c下的结果
 E_m = 1
 Q_0 = k*np.sqrt(2*g*H_R)
@@ -23,7 +23,7 @@ N = 10
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-H[0,N] = 0
+# H[0,N] = 0
 
 # 迭代计算
 dx = L/N

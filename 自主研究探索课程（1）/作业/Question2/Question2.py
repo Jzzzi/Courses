@@ -21,7 +21,7 @@ N = 20
 init = np.zeros(N+1)
 Q = np.array([init])
 H = np.array([init])+H_R
-H[0,N] = 0
+# H[0,N] = 0
 
 # 迭代计算
 dx = L/N
