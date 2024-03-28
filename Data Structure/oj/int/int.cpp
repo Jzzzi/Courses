@@ -1,6 +1,9 @@
+//实现两个大数的乘法
 #include <stdio.h>
-using namespace std;
+#include <string>
 int main(){
-    printf("hello\n");
+    // 定义字符数组a,b
+    char a[]="hello";
+    printf("%s\n",a);
     return 0;
 }
