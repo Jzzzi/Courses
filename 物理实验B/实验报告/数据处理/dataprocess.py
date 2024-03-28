@@ -11,10 +11,10 @@ U1 = np.array(U1)-U1[0]
 
 # U1处理，设置大号字体
 plt.xlabel('Time(min)')
-plt.ylabel('$U_1$(V)')
+plt.ylabel('$U_1$(mV)')
 plt.scatter(range(len(U1)), U1, label='$U_1$',color='g')
 plt.plot(range(len(U1)), U1, label='$U_1$',color='b',linewidth=1)
-plt.axhline(y=0.173, color='r', linestyle='--',linewidth=1,label='0.173V')
+plt.axhline(y=0.173, color='r', linestyle='--',linewidth=1,label='0.173mV')
 plt.legend()
 plt.show()
 
@@ -40,7 +40,7 @@ r = cov_xy / (std_t * std_U2)
 print(r)
 
 plt.xlabel('Time(min)')
-plt.ylabel('$U_2$(V)')
+plt.ylabel('$U_2$(mV)')
 plt.scatter(range(len(U2)), U2, label='$U_2$',color='g')
 plt.plot(range(len(U2)), line, label='Linear Fit of $U_2$',color='b',linewidth=1)
 plt.legend()
