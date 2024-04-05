@@ -111,7 +111,7 @@ def depthFirstSearch(problem):
             if problem.isGoalState(newstate):
                 path.append(action)
                 getgoal = True
-                print(f"Got it! Depth is {depth}.")
+                # print(f"Got it! Depth is {depth}.")
                 break
             if newstate not in explored:
                 newnode = (newstate, action, depth+1)
