@@ -87,8 +87,36 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    path = []
-    
+    from util import Stack
+    from searchAgents import PositionSearchProblem
+
+    getgoal = False
+    path =  []
+    fringe = Stack()
+    # stack of node to be explored in type (state, action to get the state, depth)
+    depth = 0
+    explored = []
+    startnode = (problem.getStartState(), None, depth)
+    fringe.push(startnode)
+    explored.append(problem.getStartState())
+    while not getgoal:
+        state, action, depth = fringe.pop()
+        if not depth == 0:
+            path = path[:depth-1]
+            path.append(action)
+        successors = problem.getSuccessors(state)
+        for child in successors:
+            newstate = child[0]
+            action = child[1]
+            if problem.isGoalState(newstate):
+                path.append(action)
+                getgoal = True
+                print(f"Got it! Depth is {depth}.")
+                break
+            if newstate not in explored:
+                newnode = (newstate, action, depth+1)
+                fringe.push(newnode)
+                explored.append(newstate)
     return path
     
 
