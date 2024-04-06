@@ -13,3 +13,4 @@ The variable named "problem" in the function "depthFirstSearch" in search.py is 
 * getCostOfActions(self, actions) 
 
 in which the variable named "state" is a tuple of the position.
+
