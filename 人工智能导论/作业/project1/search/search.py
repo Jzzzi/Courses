@@ -72,7 +72,7 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-def depthFirstSearch(problem):
+def depthFirstSearch(problem:SearchProblem):
     """
     Search the deepest nodes in the search tree first.
 
@@ -88,7 +88,6 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     from util import Stack
-    from searchAgents import PositionSearchProblem
 
     getgoal = False
     path =  []
@@ -120,14 +119,46 @@ def depthFirstSearch(problem):
     return path
     
 
-def breadthFirstSearch(problem):
+def breadthFirstSearch(problem:SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Queue
+
+    getgoal = False
+    path = []
+    explored = []
+    fringe = Queue()
+    startnode = (None, None, problem.getStartState())
+    # node in type of (predecessor node, action to the state, state)
+    explored.append(startnode[2])
+    fringe.push(startnode)
+    while not getgoal:
+        node = fringe.pop()
+        state = node[2]
+        successors = problem.getSuccessors(state)
+        for child in successors:
+            predecessor = node
+            newaction = child[1]
+            newstate = child[0]
+            if problem.isGoalState(newstate):
+                finalnode = (predecessor, newaction, newstate)
+                getgoal = True
+                # print("Got it!")
+                break
+            if newstate not in explored:
+                newnode = (predecessor, newaction, newstate)
+                fringe.push(newnode)
+                explored.append(newstate)
+    backnode = finalnode
+    while backnode[0] != None:
+        path.insert(0, backnode[1])
+        backnode = backnode[0]
+    return path
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    print(type(problem))
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):

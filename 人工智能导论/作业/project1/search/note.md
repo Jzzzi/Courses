@@ -9,7 +9,7 @@ The variable named "problem" in the function "depthFirstSearch" in search.py is 
 * getStartState(self)
 * isGoalState(self, state)
 * getSuccessors(self, state)
-  returns the tuple in form of (nextState,action, cost),
+  returns the tuple in form of (nextState, action, cost),
 * getCostOfActions(self, actions) 
 
 in which the variable named "state" is a tuple of the position.
