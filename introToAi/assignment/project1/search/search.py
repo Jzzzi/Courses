@@ -206,23 +206,17 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     from util import PriorityQueue
     getGoal = False
     path = []
+    explored = []
     fringe = PriorityQueue()
     startnode = (None, None, problem.getStartState(), 0)
     # node in type of (predecessor node, action to the state, state, cost)
-    fringe.push(startnode, startnode[3]+heuristic(startnode[2], problem))
-    cnt = 0
+    explored.append(startnode[2])
+    fringe.push(startnode, startnode[3] + heuristic(startnode[2], problem))
     while not getGoal:
-        cnt += 1
-        if cnt > 500:
-            break
         node = fringe.pop()
         state = node[2]
         cost = node[3]
-        print("Pop out",state)
         successors = problem.getSuccessors(state)
-        print(successors)
-        if state == (35,3):
-            print(successors)
         for child in successors:
             predecessor = node
             newaction = child[1]
@@ -233,15 +227,15 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 getGoal = True
                 # print("Got it!")
                 break
-            newnode = (predecessor, newaction, newstate, newcost)
-            fringe.push(newnode, newcost+heuristic(newstate, problem))
-            print("Push in state",newnode[2],"with f =",newcost+heuristic(newstate, problem))
+            if newstate not in explored:
+                newnode = (predecessor, newaction, newstate, newcost)
+                fringe.push(newnode, newcost + heuristic(newstate, problem))
+                explored.append(newstate)
     backnode = finalnode
     while backnode[0] != None:
         path.insert(0, backnode[1])
         backnode = backnode[0]
     return path
-
 
 # Abbreviations
 bfs = breadthFirstSearch
