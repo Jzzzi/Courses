@@ -230,8 +230,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             if newstate not in explored:
                 newnode = (predecessor, newaction, newstate, newcost)
                 fringe.push(newnode, newcost + heuristic(newstate, problem))
-                # if newcost + heuristic(newstate, problem) < cost + heuristic(state, problem):
-                #     print("Heuristic is not consistent!")
+                if newcost + heuristic(newstate, problem) < cost + heuristic(state, problem):
+                    print("Heuristic is not consistent!")
                     # print(state[0], newstate[0])
                     # print(state[1], newstate[1])
                 explored.append(newstate)
