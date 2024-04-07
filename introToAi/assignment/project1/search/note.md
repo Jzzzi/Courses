@@ -14,3 +14,7 @@ The variable named "problem" in the function "depthFirstSearch" in search.py is 
 
 in which the variable named "state" is a tuple of the position.
 
+---
+
+In cornersproblem, variable named "state" is a tuple in type of (position, cornersEaten). Also, in the problem of cornersproblem, the variable named cornersEaten is a list of bool variables that indicate whether the food at each corner has been eaten.
+
