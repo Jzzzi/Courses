@@ -12,6 +12,7 @@
     - [A\* with nullHeuristic策略](#a-with-nullheuristic策略)
     - [A\* with manhattanHeuristic策略](#a-with-manhattanheuristic策略)
   - [Finding All the Corners](#finding-all-the-corners)
+    - [CornersProblem Search Problem](#cornersproblem-search-problem)
 
 ## Finding a Fixed Food Dot
 
@@ -48,3 +49,7 @@
 这里引入曼哈顿距离作为启发式函数，容易看出，这样的启发式函数有admissible和consistent两个性质，因此在图搜索形式的A*搜索可以保证解的最优性，又由于额外信息的引入有效的减少了展开节点的个数，所以A\* with manhattanHeuristic仅仅展开了221个节点（优于其他最优性算法267个节点）找到了总花费为68的最优路径。
 
 ## Finding All the Corners
+
+在CornersProblem里，地图的四个角都有食物，需要寻找路径吃掉四个角所有的食物。
+
+### CornersProblem Search Problem
