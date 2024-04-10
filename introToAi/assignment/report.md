@@ -9,8 +9,9 @@
     - [深度优先搜索策略（DFS）](#深度优先搜索策略dfs)
     - [广度优先搜索策略（BFS）](#广度优先搜索策略bfs)
     - [一致代价搜索策略（UCS）](#一致代价搜索策略ucs)
-    - [A\* with nullHeuristic](#a-with-nullheuristic)
-    - [A\* with manhattanHeuristic](#a-with-manhattanheuristic)
+    - [A\* with nullHeuristic策略](#a-with-nullheuristic策略)
+    - [A\* with manhattanHeuristic策略](#a-with-manhattanheuristic策略)
+  - [Finding All the Corners](#finding-all-the-corners)
 
 ## Finding a Fixed Food Dot
 
@@ -20,7 +21,7 @@
 | :----------------------: | :-: | :-: | :-: | :-------------------------: | :------------------------------: |
 | **Nodes Expanded** | 144 | 267 | 267 |             267             |               221               |
 |   **Total Cost**   | 130 | 68 | 68 |             68             |                68                |
-|     **Score**     | 380 | 442 | 442 |             442             |               442               |
+|     **Score**     | 380 | 442 | 442 |             442             |               442             |
 
 <div style="text-align: center; font-size: 12px;">
 各搜索策略在mediumMaze中表现
@@ -38,8 +39,12 @@
 
 一直代价搜索策略类似于广度优先搜索策略，但是优先展开待搜索节点中目前花费最小的那些节点，这个特性可以保证解的最优性。如之前所说，由于本问题中路径的花费等价于节点的深度，所以可以UCS和BFS在这个问题中是完全等价的，展开267个节点最终找到总花费为68的最优路径。
 
-### A\* with nullHeuristic
+### A\* with nullHeuristic策略
 
 不同于之前的搜索策略，A*搜索属于informed search的一种类型，由于额外信息的引入使得搜索更有方向性，在A\* with nullHeuristic搜索策略中，由于启发式函数（heuristic）使用的是平庸（trivial）的$h(n)=1$，根据A\*搜索的展开顺序$f(n)=g(n)+h(n)=g(n)+1$可以看出，采用平凡的启发式函数的A\*搜索就等价于一致代价搜索，在本问题中也等价于广度优先搜索策略，均展开267个节点找到总花费为68的最优路径。
 
-### A\* with manhattanHeuristic
+### A\* with manhattanHeuristic策略
+
+这里引入曼哈顿距离作为启发式函数，容易看出，这样的启发式函数有admissible和consistent两个性质，因此在图搜索形式的A*搜索可以保证解的最优性，又由于额外信息的引入有效的减少了展开节点的个数，所以A\* with manhattanHeuristic仅仅展开了221个节点（优于其他最优性算法267个节点）找到了总花费为68的最优路径。
+
+## Finding All the Corners
