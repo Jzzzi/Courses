@@ -289,6 +289,7 @@ class CornersProblem(search.SearchProblem):
         # in initializing the problem
         "*** YOUR CODE HERE ***"
         self.cornersEaten = [False, False, False, False]
+        # Check if the starting position is a corner
         for corner in self.corners:
             if self.startingPosition == corner:
                 self.cornersEaten[self.corners.index(corner)] = True
