@@ -11,10 +11,10 @@ info = jq.get_account_info()
 print(info)
 
 # 获取标的
-securities = jq.get_all_securities(types=[], date=None)
+securities = jq.get_all_securities(types = ['index'], date = None)
 print(securities)
 print('end')
 
 # 获取价格
-price = jq.get_price('000001.XSHE', start_date='2024-02-01', end_date='2024-03-01')
+price = jq.get_price('000001.XSHE', start_date = '2024-02-01', end_date = '2024-03-01')
 print(price)
