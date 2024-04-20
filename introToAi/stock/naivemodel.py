@@ -26,7 +26,8 @@ price = pd.read_csv(f'{code}.csv')
 # 处理数据用于训练，用前days_before天的所有数据（包括今天）预测days_after天后相对今天的涨跌
 # print(price.info())
 days_before = 15
-days_after = 3
+days_after = 1
+
 open = price['open'].values
 close = price['close'].values
 high = price['high'].values
@@ -64,14 +65,15 @@ for i in range(batch_size):
     train_inputs[:, i, 5] = train_money[i:i+sequence_length]
     new_price = train_close[i+sequence_length+days_after]
     old_price = train_close[i+sequence_length]
-    train_labels[i] = new_price/old_price - 1
+    if new_price > old_price:
+        train_labels[i] = 1
+    else:
+        train_labels[i] = 0
 # 归一化各个特征，并为之后反归一化做准备
 feature_max = np.zeros(feature_size)
-label_max = np.max(train_labels)
 for i in range(feature_size):
     feature_max[i] = np.max(train_inputs[:, :, i])
     train_inputs[:, :, i] = train_inputs[:, :, i] / feature_max[i]
-train_labels = train_labels / label_max
 
 # LSTM模型
 
@@ -105,14 +107,11 @@ class LSTMModel(nn.Module):
         sequence_length, batch_size, feature_size = x.shape
         # 展平x的前两个维度
         x_flattened = x.view(batch_size * sequence_length, feature_size)
-
         # 通过前两个全连接层映射到新的特征空间
         layer_1 = torch.relu(self.fc_1(x_flattened))
         layer_2 = torch.sigmoid(self.fc_2(layer_1))
-
         # 展平layer_1回到三维张量
         layer_2 = layer_2.view(sequence_length, batch_size, self.hidden_size_2)
-        
         # LSTM层
         lstm_out, _ = self.lstm(layer_2, (h0, c0))
         # 只取最后一个时间步的输出
@@ -120,35 +119,32 @@ class LSTMModel(nn.Module):
         # lstm_ot.shape = (batch_size, hidden_size_3)
         # 经过最后一个全连接层并使用sigmoid激活函数
         output = torch.sigmoid(self.fc_3(lstm_out))
+        output = output.view(batch_size)
         return output
     
 # 模型参数
-hidden_size_1 = 4
-hidden_size_2 = 4
-hidden_size_3 = 2
+hidden_size_1 = 8
+hidden_size_2 = 6
+hidden_size_3 = 6
 output_size = 1
-
 # 实例化模型
 model = LSTMModel(feature_size, hidden_size_1, hidden_size_2, hidden_size_3, output_size).to(device)
-
 # 损失函数和优化器
-criterion = nn.MSELoss()
+# 二分类问题使用交叉熵损失函数
+criterion = nn.BCELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 num_epochs = 10000
 train_inputs = torch.tensor(train_inputs, dtype=torch.float32).to(device)
 train_labels = torch.tensor(train_labels, dtype=torch.float32).to(device)
 # 训练模型
 for epoch in range(num_epochs):  # num_epochs是训练轮数
-
     # 前向传播
     outputs = model(train_inputs)
     loss = criterion(outputs, train_labels)
-
     # 反向传播和优化
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-
     print(f'Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}')
 
 # 在测试集上测试模型
@@ -174,22 +170,17 @@ for i in range(batch_size):
     test_inputs[:, i, 5] = test_money[i:i+sequence_length]
     new_price = test_close[i+sequence_length+days_after]
     old_price = test_close[i+sequence_length]
-    test_labels[i] = new_price/old_price - 1
+    if new_price > old_price:
+        test_labels[i] = 1
+    else:
+        test_labels[i] = 0
 for i in range(feature_size):
     test_inputs[:, :, i] = test_inputs[:, :, i] / feature_max[i]
-test_labels = test_labels / label_max
 test_inputs = torch.tensor(test_inputs, dtype=torch.float32).to(device)
 test_labels = torch.tensor(test_labels, dtype=torch.float32).to(device)
 outputs = model(test_inputs)
 loss = criterion(outputs, test_labels)
 print(f'Test Loss: {loss.item()}')
-# 反归一化
-outputs = outputs.cpu().detach().numpy()
-test_labels = test_labels.cpu().detach().numpy()
-outputs = outputs * label_max
-test_labels = test_labels * label_max
-print(outputs)
-print(test_labels)
 # 输出结果
 for i in range(batch_size):
     print(f'Predict: {outputs[i]}, Real: {test_labels[i]}')
