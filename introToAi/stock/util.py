@@ -1,20 +1,38 @@
 # Description: 一些工具函数
 
-# 定义异常
 class MyException(Exception):
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)
 
-# 根据名称获取标的代码
+class DebugStop(Exception):
+    def __init__(self):
+        self.message = 'debug stop'
+        super().__init__(self.message)
+
 def get_security (name = None, types = ['index', 'stock']):
+    '''
+    根据名称获取标的代码
+    当为单个名称时，返回一个字符串
+    当为多个名称时，返回一个列表
+    '''
     import collections.abc
-    from jqdatasdk import get_all_securities
+    from jqdatasdk import get_all_securities, auth
+    # 登陆授权
+    auth('18973738468','040725Liu')
     # 如果名称为空，抛出异常
     if name == None:
         raise MyException('name is None')
+    # 如果名称是一个字符串，那么直接获取标的代码
+    if isinstance(name, str):
+        securities = get_all_securities(types = types, date = None)
+        target = securities[securities['display_name'] == name]
+        if target.empty:
+            raise MyException('No such security')
+        code = target.index[0]
+        return code
     # 如果名称是一个列表，那么遍历列表，获取每个标的的代码
-    if isinstance(name, collections.abc.Iterable) and not isinstance(name, str):
+    elif isinstance(name, collections.abc.Iterable) and not isinstance(name, str):
         names = name
         codes = []
         securities = get_all_securities(types = types, date = None)
@@ -25,18 +43,19 @@ def get_security (name = None, types = ['index', 'stock']):
             code = target.index[0]
             codes.append(code)
         return codes
-    # 如果名称是一个字符串，那么直接获取标的代码
-    securities = get_all_securities(types = types, date = None)
-    target = securities[securities['display_name'] == name]
-    if target.empty:
-        raise MyException('No such security')
-    code = target.index[0]
-    return code
+    # 如果名称不是字符串，也不是列表，抛出异常
+    else:
+        raise MyException('name is not a string or a list')
 
-# 获取价格
-def get_price_to_csv (code = None, start_date = None, end_date = None):
-    from jqdatasdk import get_price
+def get_price_to_csv (code = None, start_date = None, end_date = None,
+                      fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close']):
+    '''
+    获取价格并保存到csv文件
+    '''
+    from jqdatasdk import get_price, auth
     import pandas as pd
+    # 登陆授权
+    auth('18973738468','040725Liu')
     # 如果标的代码为空，抛出异常
     if code == None:
         raise MyException('code is None')
@@ -47,7 +66,7 @@ def get_price_to_csv (code = None, start_date = None, end_date = None):
     if end_date == None:
         raise MyException('end_date is None')
     # 获取价格
-    price = get_price(code, start_date = start_date, end_date = end_date)
+    price = get_price(code, start_date = start_date, end_date = end_date, fields = fields)
     # 导出价格
     price.to_csv(f'{code}.csv')
     print(f'{code}.csv has been saved')
