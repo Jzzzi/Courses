@@ -71,3 +71,24 @@ def get_price_to_csv (code = None, start_date = None, end_date = None,
     price.to_csv(f'{code}.csv')
     print(f'{code}.csv has been saved')
     return
+
+def batchify_sequences(data, batch_size, shuffle=True):
+    import torch
+    """
+    将序列数据集划分成不同的批次，适用于LSTM网络。
+
+    参数:
+    data -- 三维张量，形状为(num_samples, sequence_length, num_features)
+    batch_size -- 整数，每个批次的样本数量
+    shuffle -- 布尔值，表示是否在每次迭代前打乱数据集
+
+    返回:
+    一个生成器，每次生成一个批次的张量
+    """
+    if shuffle:
+        indices = torch.randperm(data.size(0))  # 生成随机索引
+        data = data[indices]  # 根据随机索引打乱数据
+
+    # 生成批次
+    for i in range(0, data.size(0), batch_size):
+        yield data[i:i + batch_size]

@@ -47,28 +47,27 @@ for i in range(len(fields)):
 4. 振幅 = (high - low) / low
 5. 均价比 = avg / avg_yesterday
 6. 开盘/前日收盘 = open / pre_close
+data的形状为(num_samples, sequence_length, num_features)
 '''
-days_before = 1
-days_after = 1
+days_before = 15
+days_after = 3
 sequence_length = days_before
-feature_size = 1
-train_len = int(0.7 * price.shape[0])
-test_len = price.shape[0] - train_len
+feature_size = 7
+k = 0.7
+num_samples = k * price.shape[0]
 #处理得到训练输入和训练标签
-train_inputs = np.zeros((sequence_length, train_len, feature_size))
-train_labels = np.zeros(train_len)
-for i in range(sequence_length, train_len):
-    train_labels[i] = (price[i+days_after, column_index['close']] - price[i, column_index['close']]) / price[i, column_index['close']]
-
-    for j in range(sequence_length):
-            # train_inputs[j, i, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
-            # train_inputs[j, i, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
-            # train_inputs[j, i, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
-            # train_inputs[j, i, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
-            # train_inputs[j, i, 4] = (price[i-j, column_index['high']] - price[i-j, column_index['low']]) / price[i-j, column_index['low']]
-            # train_inputs[j, i, 5] = price[i-j, column_index['avg']] / price[i-j-1, column_index['avg']]
-            # train_inputs[j, i, 6] = price[i-j, column_index['open']] / price[i-j, column_index['pre_close']]
-        train_inputs[j, i, 0] = train_labels[i]
+data = np.zeros((num_samples, sequence_length, feature_size))
+for i in range(num_samples):
+     for j in range(sequence_length):
+            if i-j >= 0:
+                data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
+                data[i, j, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
+                data[i, j, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']
+                data[i, j, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
+                data[i, j, 4] = (price[i-j, column_index['high']] - price[i-j, column_index['low']]) / price[i-j, column_index['low']]
+                data[i, j, 5] = price[i-j, column_index['avg']] / price[i-j-1, column_index['avg']]
+                data[i, j, 6] = price[i-j, column_index['open']] / price[i-j, column_index['pre_close']]
+    
 # 归一化
 feature_norm = np.zeros(feature_size)
 feature_base = np.zeros(feature_size)
