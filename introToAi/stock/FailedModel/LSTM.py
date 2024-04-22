@@ -48,27 +48,25 @@ for i in range(len(fields)):
 5. 均价比 = avg / avg_yesterday
 6. 开盘/前日收盘 = open / pre_close
 '''
-days_before = 1
-days_after = 1
+days_before = 10
+days_after = 3
 sequence_length = days_before
-feature_size = 1
+feature_size = 7
 train_len = int(0.7 * price.shape[0])
 test_len = price.shape[0] - train_len
 #处理得到训练输入和训练标签
 train_inputs = np.zeros((sequence_length, train_len, feature_size))
 train_labels = np.zeros(train_len)
 for i in range(sequence_length, train_len):
-    train_labels[i] = (price[i+days_after, column_index['close']] - price[i, column_index['close']]) / price[i, column_index['close']]
-
     for j in range(sequence_length):
-            # train_inputs[j, i, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
-            # train_inputs[j, i, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
-            # train_inputs[j, i, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
-            # train_inputs[j, i, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
-            # train_inputs[j, i, 4] = (price[i-j, column_index['high']] - price[i-j, column_index['low']]) / price[i-j, column_index['low']]
-            # train_inputs[j, i, 5] = price[i-j, column_index['avg']] / price[i-j-1, column_index['avg']]
-            # train_inputs[j, i, 6] = price[i-j, column_index['open']] / price[i-j, column_index['pre_close']]
-        train_inputs[j, i, 0] = train_labels[i]
+            train_inputs[j, i, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
+            train_inputs[j, i, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
+            train_inputs[j, i, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
+            train_inputs[j, i, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
+            train_inputs[j, i, 4] = (price[i-j, column_index['high']] - price[i-j, column_index['low']]) / price[i-j, column_index['low']]
+            train_inputs[j, i, 5] = price[i-j, column_index['avg']] / price[i-j-1, column_index['avg']]
+            train_inputs[j, i, 6] = price[i-j, column_index['open']] / price[i-j, column_index['pre_close']]
+    train_labels[i] = (price[i+days_after, column_index['close']] - price[i, column_index['close']]) / price[i, column_index['close']]
 # 归一化
 feature_norm = np.zeros(feature_size)
 feature_base = np.zeros(feature_size)
@@ -81,8 +79,8 @@ label_base = np.min(train_labels)
 label_norm = np.max(train_labels) - np.min(train_labels)
 train_labels -= label_base
 train_labels /= label_norm
-np.save('train_inputs.npy', train_inputs)
-np.save('train_labels.npy', train_labels)
+# np.save('train_inputs.npy', train_inputs)
+# np.save('train_labels.npy', train_labels)
 # 绘制训练标签
 # plt.plot(train_labels)
 # plt.show()
@@ -94,36 +92,50 @@ print(f"Using {device} device")
 ############################################################################################################
 LSTM模型
 '''
-# 定义LSTM网络结构
-class LSTMNet(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers, output_size):
-        super(LSTMNet, self).__init__()
-        
-        # 定义LSTM层
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
-        
-        # 定义输出层
-        self.fc = nn.Linear(hidden_size, output_size)
+class LSTMModel(nn.Module):
+    def __init__(self, feature_size, output_size = 1):
+        super().__init__()
+        self.feature_size = feature_size
+        self.output_size = output_size # 为1
+
+        self.lstm = nn.LSTM(self.feature_size, self.output_size)
 
     def forward(self, x):
+        batch_size = x.shape[1]
         # 初始化隐藏状态和细胞状态
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        
-        # 前向传播LSTM
-        out, _ = self.lstm(x, (h0, c0))
-        
-        # 解码最后一个时间步的隐藏状态
-        out = self.fc(out[:, -1, :])
-        return out
+        h0 = torch.zeros(1, batch_size, self.output_size).to(device)
+        c0 = torch.zeros(1, batch_size, self.output_size).to(device)
 
-# 超参数设置
-input_size = 10  # 输入特征的维度
-hidden_size = 50  # 隐藏层的维度
-num_layers = 1  # LSTM层的数量
-output_size = 1  # 输出的维度
+        # 前向传播
+        # 假设x.shape = (sequence_length, batch_size, feature_size)
+        lstm_out, _ = self.lstm(x, (h0, c0))
+        # 只取最后一个时间步的输出
+        lstm_out = lstm_out[-1, :, :]
+        output = lstm_out.view(-1, self.output_size)
+        return output
+
+'''
+############################################################################################################
+模型训练部分
+'''
+# 实例化模型
+model = LSTMModel(feature_size, output_size = 1).to(device)
+# 损失函数和优化器
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+num_epochs = 2000
+train_inputs = torch.tensor(train_inputs, dtype=torch.float32).to(device)
+train_labels = torch.tensor(train_labels, dtype=torch.float32).to(device)
+# 训练模型
+for epoch in range(num_epochs):  # num_epochs是训练轮数
+    # 前向传播
+    outputs = model(train_inputs)
+    loss = criterion(outputs, train_labels)
+    # 反向传播和优化
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+    print(f'Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}')
 
 # 绘出训练标签和模型输出
 outputs = model(train_inputs)

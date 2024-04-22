@@ -48,7 +48,7 @@ def get_security (name = None, types = ['index', 'stock']):
         raise MyException('name is not a string or a list')
 
 def get_price_to_csv (code = None, start_date = None, end_date = None,
-                      fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close']):
+                      fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']):
     '''
     获取价格并保存到csv文件
     '''
