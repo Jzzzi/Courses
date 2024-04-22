@@ -84,15 +84,13 @@ class LSTMNet(nn.Module):
     '''
     定义LSTM网络
     '''
-    def __init__(self, input_size, hidden_size, num_layers, output_size, ihidden_size):
+    def __init__(self, input_size, hidden_size, num_layers, output_size):
         super(LSTMNet, self).__init__()
         
         # 定义LSTM层
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        self.ihidden_size = ihidden_size
-        self.ifc = nn.Linear(input_size, self.ihidden_size)
-        self.lstm = nn.LSTM(self.ihidden_size, hidden_size, num_layers, batch_first=True)        
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)        
         # 定义输出层
         self.fc = nn.Linear(hidden_size, output_size)
 
@@ -102,13 +100,7 @@ class LSTMNet(nn.Module):
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
         
         # 前向传播LSTM
-        # x前两维是batch_size和sequence_length，需要将最后一维的特征维度转换为hidden_size
-        ins = x
-        ins.view(-1,ins.size(2))
-        ins = self.ifc(ins)
-        ins = torch.sigmoid(ins)
-        ins.view(x.size(0), x.size(1), self.ihidden_size)
-        out, _ = self.lstm(ins, (h0, c0))
+        out, _ = self.lstm(x, (h0, c0))
         
         # 解码最后一个时间步的隐藏状态
         out = self.fc(out[:, -1, :])
@@ -139,7 +131,7 @@ get_price_to_csv(code, start_date, end_date, fields = fields)
 price = pd.read_csv(f'{code}.csv')
 price = price.values
 price = price[:, 1:] # 去掉第一列
-days_before = 10 #序列长度
+days_before = 5 #序列长度
 days_after = 1 # 预测天数
 k = 0.7 # 训练集占比
 train_data, train_labels, test_data, test_labels, num_samples, feature_size, feature_norm, feature_base, label_norm, label_base = price2data(price, fields, days_before, days_after, k)
@@ -147,7 +139,6 @@ train_data, train_labels, test_data, test_labels, num_samples, feature_size, fea
 # 超参数设置
 input_size = feature_size  # 输入特征的维度
 hidden_size = 16  # 隐藏层的维度
-ihidden_size = 4
 num_layers = 1  # LSTM层的数量
 output_size = 1  # 输出的维度
 batch_size = 16  # 批次大小
@@ -156,7 +147,7 @@ batch_size = 16  # 批次大小
 # 实例化LSTM网络
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using {device} device")
-lstm = LSTMNet(input_size=input_size, hidden_size=hidden_size, num_layers=num_layers, output_size=output_size, ihidden_size=ihidden_size).to(device)
+lstm = LSTMNet(input_size=input_size, hidden_size=hidden_size, num_layers=num_layers, output_size=output_size).to(device)
 # lstm.load_state_dict(torch.load('lstm.pth'))
 
 # 定义损失函数和优化器

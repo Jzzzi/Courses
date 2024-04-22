@@ -10,7 +10,7 @@ class DebugStop(Exception):
         self.message = 'debug stop'
         super().__init__(self.message)
 
-def get_security (name = None, types = ['index', 'stock']):
+def get_security (name = None, types = ['index', 'stock', 'etf']):
     '''
     根据名称获取标的代码
     当为单个名称时，返回一个字符串
@@ -72,7 +72,7 @@ def get_price_to_csv (code = None, start_date = None, end_date = None,
     print(f'{code}.csv has been saved')
     return
 
-def batchify_sequences(data, batch_size, shuffle=True):
+def batchify_sequences(data, label, batch_size, shuffle=True):
     import torch
     """
     将序列数据集划分成不同的批次，适用于LSTM网络。
@@ -86,9 +86,9 @@ def batchify_sequences(data, batch_size, shuffle=True):
     一个生成器，每次生成一个批次的张量
     """
     if shuffle:
-        indices = torch.randperm(data.size(0))  # 生成随机索引
+        indices = torch.randperm(data.shape[0])  # 生成随机索引
         data = data[indices]  # 根据随机索引打乱数据
-
+        label = label[indices]
     # 生成批次
-    for i in range(0, data.size(0), batch_size):
-        yield data[i:i + batch_size]
+    for i in range(0, data.shape[0], batch_size):
+        yield data[i:i + batch_size], label[i:i + batch_size]
