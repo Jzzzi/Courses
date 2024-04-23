@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
 def price2data(price, fields, days_before, days_after, k):
@@ -41,9 +42,18 @@ def price2data(price, fields, days_before, days_after, k):
     data = np.zeros((num_samples, sequence_length, feature_size))
     labels = np.zeros(num_samples)
     for i in range(num_samples):
+        if i+days_after < num_samples:
+            # if price[i+days_after, column_index['close']] - price[i, column_index['close']] > 0:
+                # labels[i] = 1
+            # else:
+                # labels[i] = 0
+            # labels[i] = (price[i+days_after, column_index['close']] -price[i, column_index['close']])/price[i, column_index['close']]
+            labels[i] = price[i+days_after, column_index['close']]
+
         for j in range(sequence_length):
             if i-j >= 0:
-                data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
+                data[i, j, 0] = labels[i]
+                # data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
                 data[i, j, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
                 data[i, j, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
                 data[i, j, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
@@ -57,29 +67,17 @@ def price2data(price, fields, days_before, days_after, k):
                 data[i, j, 11] = price[i-j, column_index['volume']]
                 data[i, j, 12] = price[i-j, column_index['money']]
                 data[i, j, 13] = price[i-j, column_index['avg']]
-        if i+days_after < num_samples:
-            if price[i+days_after, column_index['close']] - price[i, column_index['close']] > 0:
-                labels[i] = 1
-            else:
-                labels[i] = 0
-        # if i+days_after < num_samples:
-        #     labels[i] = price[i+days_after, column_index['close']] 
     # 归一化
-    feature_norm = np.zeros(feature_size)
-    feature_base = np.zeros(feature_size)
-    label_norm = np.max(labels) - np.min(labels)
-    label_base = np.min(labels)
-    for i in range(feature_size):
-        feature_norm[i] = np.max(data[:, :, i]) - np.min(data[:, :, i])
-        feature_base[i] = np.min(data[:, :, i])
-        data[:, :, i] = (data[:, :, i] - feature_base[i])/feature_norm[i]
-    labels = (labels - label_base) / label_norm
+    data_scaler = MinMaxScaler()
+    labels_scaler = MinMaxScaler()
+    shape = data.shape
+    data = data_scaler.fit_transform(data.reshape(-1, feature_size)).reshape(shape)
+    labels = labels_scaler.fit_transform(labels.reshape(-1, 1)).reshape(-1)
     train_data = data[:int(k*num_samples)]
     train_labels = labels[:int(k*num_samples)]
     test_data = data[int(k*num_samples):]
     test_labels = labels[int(k*num_samples):]
-    return train_data, train_labels, test_data, test_labels, num_samples, feature_size, feature_norm, feature_base, label_norm, label_base
-
+    return train_data, train_labels, test_data, test_labels, num_samples, feature_size, data_scaler, labels_scaler
 class LSTMNet(nn.Module):
     '''
     定义LSTM网络
@@ -127,22 +125,22 @@ current_date = datetime.now()
 yesterday_date = current_date - timedelta(days=1)
 end_date = yesterday_date.strftime('%Y-%m-%d')
 name = '创业50ETF'
-code = get_security(name)
-# code = '600025.XSHG'
+# code = get_security(name)
+code = '159682.XSHE'
 fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']
 
 # 存储原始数据到csv文件
-get_price_to_csv(code, start_date, end_date, fields = fields)
+# get_price_to_csv(code, start_date, end_date, fields = fields)
 # raise DebugStop
 
 # 读取原始数据
 price = pd.read_csv(f'{code}.csv')
 price = price.values
 price = price[:, 1:] # 去掉第一列
-days_before = 10 #序列长度
-days_after = 1 # 预测天数
+days_before = 15 #序列长度
+days_after = 5 # 预测天数
 k = 0.7 # 训练集占比
-train_data, train_labels, test_data, test_labels, num_samples, feature_size, feature_norm, feature_base, label_norm, label_base = price2data(price, fields, days_before, days_after, k)
+train_data, train_labels, test_data, test_labels, num_samples, feature_size, data_scaler, test_scaler = price2data(price, fields, days_before, days_after, k)
 
 # 超参数设置
 input_size = feature_size  # 输入特征的维度
