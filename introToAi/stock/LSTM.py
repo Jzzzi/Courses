@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
+#======================数据处理函数==============================
 def price2data(price, fields, days_before, days_after, k):
     '''
     处理数据用于训练
@@ -47,13 +48,13 @@ def price2data(price, fields, days_before, days_after, k):
                 # labels[i] = 1
             # else:
                 # labels[i] = 0
-            # labels[i] = (price[i+days_after, column_index['close']] -price[i, column_index['close']])/price[i, column_index['close']]
-            labels[i] = price[i+days_after, column_index['close']]
+            labels[i] = (price[i+days_after, column_index['close']] -price[i, column_index['close']])/price[i, column_index['close']]
+            # labels[i] = price[i+days_after, column_index['close']]
 
         for j in range(sequence_length):
             if i-j >= 0:
-                data[i, j, 0] = labels[i]
-                # data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
+                # data[i, j, 0] = labels[i]
+                data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
                 data[i, j, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
                 data[i, j, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
                 data[i, j, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
@@ -78,6 +79,7 @@ def price2data(price, fields, days_before, days_after, k):
     test_data = data[int(k*num_samples):]
     test_labels = labels[int(k*num_samples):]
     return train_data, train_labels, test_data, test_labels, num_samples, feature_size, data_scaler, labels_scaler
+#=============================神经网络类====================================
 class LSTMNet(nn.Module):
     '''
     定义LSTM网络
@@ -116,9 +118,7 @@ class LSTMNet(nn.Module):
         return out
 
 
-####################################################
-#                   主程序                          #
-####################################################
+#=================================主程序====================================
 # 获取标的代码
 start_date = '2023-01-03'
 current_date = datetime.now()
@@ -161,8 +161,7 @@ lstm = LSTMNet(input_size=input_size, hidden_size=hidden_size, num_layers=num_la
 criterion = nn.BCELoss()
 optimizer = optim.Adam(lstm.parameters(), lr=0.001)
 
-############################################################################################################
-# 训练模型
+#==============================训练模型======================================
 num_epochs = 200
 for epoch in range(num_epochs):
     batches = batchify_sequences(train_data, train_labels, batch_size)
@@ -183,8 +182,7 @@ for epoch in range(num_epochs):
 # 保存模型
 torch.save(lstm.state_dict(), 'lstm.pth')
 
-###############################################################################################
-
+#==============================测试模型=========================================
 
 # 训练集正确率
 outputs = lstm(torch.tensor(train_data, dtype=torch.float32).to(device))
