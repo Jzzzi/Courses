@@ -20,7 +20,7 @@ html {
     font-weight: normal;
     src: local('STIX2Text Regular'),
         url('./academic/STIX2Text-Regular.woff') format('woff'),
-        url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff')
+        url('ttps://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff')
 }
 
 @font-face {
@@ -29,7 +29,7 @@ html {
     font-weight: normal;
     src: local('STIX2Text Italic'),
         url('./academic/STIX2Text-Italic.woff') format('woff'),
-        url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff')
+        url('ttps://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff')
 }
 
 @font-face {
@@ -38,7 +38,7 @@ html {
     font-weight: bold;
     src: local('STIX2Text Bold'),
         url('./academic/STIX2Text-Bold.woff') format('woff'),
-        url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff')
+        url('ttps://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff')
 }
 
 @font-face {
@@ -47,7 +47,7 @@ html {
     font-weight: bold;
     src: local('STIX2Text Bold Italic'),
     url('./academic/STIX2Text-BoldItalic.woff') format('woff'),
-    url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-BoldItalic.woff') format('woff')
+    url('ttps://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS/TeX/woff/MathJax_Main-BoldItalic.woff') format('woff')
 }
 
 @font-face {
@@ -148,17 +148,9 @@ p {
 }
 
 pre, code {
-    font-family: 'Latin Modern Mono Light', "Latin Modern Mono", monospace !important;
-    /*text-align: center; /* 使代码块内的文本居中 */
-    /*border: 1px solid black; /* 添加边框 */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%; /* 根据需要调整宽度 */
-    padding: 0px; /* 添加内边距 */
-    overflow: auto; /* 如果代码过长，添加滚动条 */
-    background-color: #f5f5f5; /* 背景颜色，可选 */
-
+    /*font-family: 'Latin Modern Mono Light', "Latin Modern Mono", monospace !important;
+    text-align: left;*/
+    
 }
 
 .footnotes {
@@ -227,12 +219,6 @@ td, th {
 /*table tr[cid]:first-child > td {
     border-top: 3px double;
 }*/
-
-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 
 th {
     border-bottom: 0;
@@ -331,18 +317,3 @@ blockquote {
     top: -20px;
     color: #7a7a7a;
 }*/
-.math {
-  font-size: 1em;
-}
-
-.math display {
-  margin: 0;
-  display: block;
-  text-align: center;
-}
-
-.math inline {
-  display: inline;
-  text-align: inherit;
-}
-
