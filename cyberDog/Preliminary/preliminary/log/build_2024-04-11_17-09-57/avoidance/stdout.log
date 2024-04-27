@@ -1,0 +1,31 @@
+running egg_info
+creating ../../build/avoidance/avoidance.egg-info
+writing ../../build/avoidance/avoidance.egg-info/PKG-INFO
+writing dependency_links to ../../build/avoidance/avoidance.egg-info/dependency_links.txt
+writing entry points to ../../build/avoidance/avoidance.egg-info/entry_points.txt
+writing requirements to ../../build/avoidance/avoidance.egg-info/requires.txt
+writing top-level names to ../../build/avoidance/avoidance.egg-info/top_level.txt
+writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+reading manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/mi/preliminary/build/avoidance/build
+creating /home/mi/preliminary/build/avoidance/build/lib
+creating /home/mi/preliminary/build/avoidance/build/lib/avoidance
+copying avoidance/__init__.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance
+running install
+running install_lib
+creating /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/__init__.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/__init__.py to __init__.cpython-36.pyc
+running install_data
+creating /home/mi/preliminary/install/avoidance/share/ament_index
+creating /home/mi/preliminary/install/avoidance/share/ament_index/resource_index
+creating /home/mi/preliminary/install/avoidance/share/ament_index/resource_index/packages
+copying resource/avoidance -> /home/mi/preliminary/install/avoidance/share/ament_index/resource_index/packages
+copying package.xml -> /home/mi/preliminary/install/avoidance/share/avoidance
+running install_egg_info
+Copying ../../build/avoidance/avoidance.egg-info to /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info
+running install_scripts
+writing list of installed files to '/home/mi/preliminary/build/avoidance/install.log'

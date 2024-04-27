@@ -1,0 +1,36 @@
+[3.923s] Invoking command in '/home/mi/preliminary/src/avoidance': PYTHONPATH=/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/avoidance build --build-base /home/mi/preliminary/build/avoidance/build install --prefix /home/mi/preliminary/install/avoidance --record /home/mi/preliminary/build/avoidance/install.log --single-version-externally-managed
+[5.428s] running egg_info
+[5.430s] writing ../../build/avoidance/avoidance.egg-info/PKG-INFO
+[5.432s] writing dependency_links to ../../build/avoidance/avoidance.egg-info/dependency_links.txt
+[5.433s] writing entry points to ../../build/avoidance/avoidance.egg-info/entry_points.txt
+[5.434s] writing requirements to ../../build/avoidance/avoidance.egg-info/requires.txt
+[5.435s] writing top-level names to ../../build/avoidance/avoidance.egg-info/top_level.txt
+[5.449s] reading manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+[5.456s] writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+[5.457s] running build
+[5.457s] running build_py
+[5.463s] copying avoidance/avoid_jez.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance
+[5.464s] copying avoidance/ultrasonic.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance
+[5.465s] running install
+[5.466s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[5.466s]   setuptools.SetuptoolsDeprecationWarning,
+[5.468s] running install_lib
+[5.472s] copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/avoid_jez.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+[5.474s] copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/ultrasonic.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+[5.476s] byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/avoid_jez.py to avoid_jez.cpython-36.pyc
+[5.482s] byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/ultrasonic.py to ultrasonic.cpython-36.pyc
+[5.485s] running install_data
+[5.488s] running install_egg_info
+[5.497s] removing '/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info' (and everything under it)
+[5.501s] Copying ../../build/avoidance/avoidance.egg-info to /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info
+[5.503s] running install_scripts
+[5.590s] Installing avoid script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.594s] Installing avoid_jez script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.595s] Installing radar script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.595s] Installing sensor script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.596s] Installing stand script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.597s] Installing stand_sit script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.598s] Installing ultrasonic script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.599s] Installing walk script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.599s] writing list of installed files to '/home/mi/preliminary/build/avoidance/install.log'
+[5.706s] Invoked command in '/home/mi/preliminary/src/avoidance' returned '0': PYTHONPATH=/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/avoidance build --build-base /home/mi/preliminary/build/avoidance/build install --prefix /home/mi/preliminary/install/avoidance --record /home/mi/preliminary/build/avoidance/install.log --single-version-externally-managed

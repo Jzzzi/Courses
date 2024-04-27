@@ -1,0 +1,31 @@
+[4.063s] Invoking command in '/home/mi/preliminary/src/avoidance': PYTHONPATH=/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/avoidance build --build-base /home/mi/preliminary/build/avoidance/build install --prefix /home/mi/preliminary/install/avoidance --record /home/mi/preliminary/build/avoidance/install.log --single-version-externally-managed
+[5.552s] running egg_info
+[5.555s] writing ../../build/avoidance/avoidance.egg-info/PKG-INFO
+[5.556s] writing dependency_links to ../../build/avoidance/avoidance.egg-info/dependency_links.txt
+[5.556s] writing entry points to ../../build/avoidance/avoidance.egg-info/entry_points.txt
+[5.557s] writing requirements to ../../build/avoidance/avoidance.egg-info/requires.txt
+[5.557s] writing top-level names to ../../build/avoidance/avoidance.egg-info/top_level.txt
+[5.574s] reading manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+[5.580s] writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+[5.581s] running build
+[5.581s] running build_py
+[5.582s] copying avoidance/avoid.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance
+[5.585s] running install
+[5.586s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[5.587s]   setuptools.SetuptoolsDeprecationWarning,
+[5.588s] running install_lib
+[5.591s] copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/avoid.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+[5.595s] byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/avoid.py to avoid.cpython-36.pyc
+[5.601s] running install_data
+[5.602s] running install_egg_info
+[5.611s] removing '/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info' (and everything under it)
+[5.613s] Copying ../../build/avoidance/avoidance.egg-info to /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info
+[5.617s] running install_scripts
+[5.701s] Installing avoid script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.704s] Installing sensor script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.705s] Installing stand script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.706s] Installing stand_sit script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.706s] Installing test script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.706s] Installing walk script to /home/mi/preliminary/install/avoidance/lib/avoidance
+[5.709s] writing list of installed files to '/home/mi/preliminary/build/avoidance/install.log'
+[5.816s] Invoked command in '/home/mi/preliminary/src/avoidance' returned '0': PYTHONPATH=/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/avoidance build --build-base /home/mi/preliminary/build/avoidance/build install --prefix /home/mi/preliminary/install/avoidance --record /home/mi/preliminary/build/avoidance/install.log --single-version-externally-managed
