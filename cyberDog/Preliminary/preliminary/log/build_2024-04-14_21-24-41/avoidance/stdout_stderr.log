@@ -1,0 +1,29 @@
+running egg_info
+writing ../../build/avoidance/avoidance.egg-info/PKG-INFO
+writing dependency_links to ../../build/avoidance/avoidance.egg-info/dependency_links.txt
+writing entry points to ../../build/avoidance/avoidance.egg-info/entry_points.txt
+writing requirements to ../../build/avoidance/avoidance.egg-info/requires.txt
+writing top-level names to ../../build/avoidance/avoidance.egg-info/top_level.txt
+reading manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'
+running build
+running build_py
+copying avoidance/test.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance
+/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  setuptools.SetuptoolsDeprecationWarning,
+running install
+running install_lib
+copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/test.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance
+byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/test.py to test.cpython-36.pyc
+running install_data
+running install_egg_info
+removing '/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info' (and everything under it)
+Copying ../../build/avoidance/avoidance.egg-info to /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info
+running install_scripts
+Installing avoid script to /home/mi/preliminary/install/avoidance/lib/avoidance
+Installing sensor script to /home/mi/preliminary/install/avoidance/lib/avoidance
+Installing stand script to /home/mi/preliminary/install/avoidance/lib/avoidance
+Installing stand_sit script to /home/mi/preliminary/install/avoidance/lib/avoidance
+Installing test script to /home/mi/preliminary/install/avoidance/lib/avoidance
+Installing walk script to /home/mi/preliminary/install/avoidance/lib/avoidance
+writing list of installed files to '/home/mi/preliminary/build/avoidance/install.log'

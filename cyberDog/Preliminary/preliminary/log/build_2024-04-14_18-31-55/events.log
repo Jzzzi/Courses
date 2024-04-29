@@ -1,0 +1,90 @@
+[0.000000] (-) TimerEvent: {}
+[0.002693] (avoidance) JobQueued: {'identifier': 'avoidance', 'dependencies': OrderedDict()}
+[0.002981] (avoidance) JobStarted: {'identifier': 'avoidance'}
+[0.093877] (-) TimerEvent: {}
+[0.204112] (-) TimerEvent: {}
+[0.308068] (-) TimerEvent: {}
+[0.408942] (-) TimerEvent: {}
+[0.510499] (-) TimerEvent: {}
+[0.616687] (-) TimerEvent: {}
+[0.718206] (-) TimerEvent: {}
+[0.819100] (-) TimerEvent: {}
+[0.920072] (-) TimerEvent: {}
+[1.021066] (-) TimerEvent: {}
+[1.122269] (-) TimerEvent: {}
+[1.223337] (-) TimerEvent: {}
+[1.324307] (-) TimerEvent: {}
+[1.425257] (-) TimerEvent: {}
+[1.526325] (-) TimerEvent: {}
+[1.627252] (-) TimerEvent: {}
+[1.730494] (-) TimerEvent: {}
+[1.832043] (-) TimerEvent: {}
+[1.936807] (-) TimerEvent: {}
+[2.037712] (-) TimerEvent: {}
+[2.138645] (-) TimerEvent: {}
+[2.239749] (-) TimerEvent: {}
+[2.340717] (-) TimerEvent: {}
+[2.441628] (-) TimerEvent: {}
+[2.542538] (-) TimerEvent: {}
+[2.643781] (-) TimerEvent: {}
+[2.744888] (-) TimerEvent: {}
+[2.845897] (-) TimerEvent: {}
+[2.946754] (-) TimerEvent: {}
+[3.047743] (-) TimerEvent: {}
+[3.148737] (-) TimerEvent: {}
+[3.251367] (-) TimerEvent: {}
+[3.352421] (-) TimerEvent: {}
+[3.453993] (-) TimerEvent: {}
+[3.555508] (-) TimerEvent: {}
+[3.657009] (-) TimerEvent: {}
+[3.758893] (-) TimerEvent: {}
+[3.858161] (avoidance) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/avoidance', 'build', '--build-base', '/home/mi/preliminary/build/avoidance/build', 'install', '--prefix', '/home/mi/preliminary/install/avoidance', '--record', '/home/mi/preliminary/build/avoidance/install.log', '--single-version-externally-managed'], 'cwd': '/home/mi/preliminary/src/avoidance', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'MAIL': '/var/mail/mi', 'USER': 'mi', 'SSH_CLIENT': '10.0.0.251 50926 22', 'GIT_ASKPASS': '/home/mi/.vscode-server/cli/servers/Stable-e170252f762678dec6ca2cc69aba1570769a5d39/server/extensions/git/dist/askpass.sh', 'LD_LIBRARY_PATH': '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros2/galactic/opt/yaml_cpp_vendor/lib:/opt/ros2/galactic/opt/rviz_ogre_vendor/lib:/opt/ros2/galactic/lib:/opt/ros2/cyberdog/lib', 'BROWSER': '/home/mi/.vscode-server/cli/servers/Stable-e170252f762678dec6ca2cc69aba1570769a5d39/server/bin/helpers/browser.sh', 'SHLVL': '4', 'OLDPWD': '/home/mi/.vscode-server', 'CYCLONEDDS_URI': 'file:///etc/mi/cyclonedds.xml', 'HOME': '/home/mi', 'TERM_PROGRAM_VERSION': '1.88.1', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-673a8d94-918b-4358-8955-a40af918f341.sock', 'VSCODE_GIT_ASKPASS_MAIN': '/home/mi/.vscode-server/cli/servers/Stable-e170252f762678dec6ca2cc69aba1570769a5d39/server/extensions/git/dist/askpass-main.js', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_NODE': '/home/mi/.vscode-server/cli/servers/Stable-e170252f762678dec6ca2cc69aba1570769a5d39/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/home/mi/preliminary/install:/opt/ros2/cyberdog:/opt/ros2/galactic', 'ROS_DISTRO': 'galactic', 'LOGNAME': 'mi', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'PKG_CONFIG_PATH': '/opt/ros2/galactic/lib/aarch64-linux-gnu/pkgconfig:/opt/ros2/galactic/lib/pkgconfig', 'XDG_SESSION_ID': '3', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros2/cyberdog/bin:/home/mi/.vscode-server/cli/servers/Stable-e170252f762678dec6ca2cc69aba1570769a5d39/server/bin/remote-cli:/opt/ros2/galactic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-f5f5b1c867.sock', 'AMENT_PREFIX_PATH': '/home/mi/preliminary/install/avoidance:/opt/ros2/cyberdog:/opt/ros2/galactic', 'ROS_DOMAIN_ID': '42', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CMAKE_MODULE_PATH': '/opt/ros2/cyberdog/share/cyberdog_parameter/cmake', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/mi/preliminary/build/avoidance', 'SSH_CONNECTION': '10.0.0.251 50926 10.0.0.189 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages:/opt/ros2/cyberdog/lib/python3.6/site-packages:/opt/ros2/galactic/lib/python3.6/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros2/cyberdog:/opt/ros2/galactic'}, 'shell': False}
+[3.881674] (-) TimerEvent: {}
+[3.984124] (-) TimerEvent: {}
+[4.086085] (-) TimerEvent: {}
+[4.187039] (-) TimerEvent: {}
+[4.289068] (-) TimerEvent: {}
+[4.390724] (-) TimerEvent: {}
+[4.492672] (-) TimerEvent: {}
+[4.593673] (-) TimerEvent: {}
+[4.695347] (-) TimerEvent: {}
+[4.796856] (-) TimerEvent: {}
+[4.902611] (-) TimerEvent: {}
+[5.003597] (-) TimerEvent: {}
+[5.104655] (-) TimerEvent: {}
+[5.205509] (-) TimerEvent: {}
+[5.306407] (-) TimerEvent: {}
+[5.365075] (avoidance) StdoutLine: {'line': b'running egg_info\n'}
+[5.371237] (avoidance) StdoutLine: {'line': b'writing ../../build/avoidance/avoidance.egg-info/PKG-INFO\n'}
+[5.372621] (avoidance) StdoutLine: {'line': b'writing dependency_links to ../../build/avoidance/avoidance.egg-info/dependency_links.txt\n'}
+[5.373195] (avoidance) StdoutLine: {'line': b'writing entry points to ../../build/avoidance/avoidance.egg-info/entry_points.txt\n'}
+[5.373712] (avoidance) StdoutLine: {'line': b'writing requirements to ../../build/avoidance/avoidance.egg-info/requires.txt\n'}
+[5.374168] (avoidance) StdoutLine: {'line': b'writing top-level names to ../../build/avoidance/avoidance.egg-info/top_level.txt\n'}
+[5.385600] (avoidance) StdoutLine: {'line': b"reading manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'\n"}
+[5.391667] (avoidance) StdoutLine: {'line': b"writing manifest file '../../build/avoidance/avoidance.egg-info/SOURCES.txt'\n"}
+[5.393234] (avoidance) StdoutLine: {'line': b'running build\n'}
+[5.393698] (avoidance) StdoutLine: {'line': b'running build_py\n'}
+[5.394082] (avoidance) StdoutLine: {'line': b'copying avoidance/avoid.py -> /home/mi/preliminary/build/avoidance/build/lib/avoidance\n'}
+[5.395229] (avoidance) StdoutLine: {'line': b'running install\n'}
+[5.396224] (avoidance) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[5.396975] (avoidance) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[5.397968] (avoidance) StdoutLine: {'line': b'running install_lib\n'}
+[5.400962] (avoidance) StdoutLine: {'line': b'copying /home/mi/preliminary/build/avoidance/build/lib/avoidance/avoid.py -> /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance\n'}
+[5.403193] (avoidance) StdoutLine: {'line': b'byte-compiling /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance/avoid.py to avoid.cpython-36.pyc\n'}
+[5.406534] (-) TimerEvent: {}
+[5.407513] (avoidance) StdoutLine: {'line': b'running install_data\n'}
+[5.409756] (avoidance) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.416668] (avoidance) StdoutLine: {'line': b"removing '/home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info' (and everything under it)\n"}
+[5.418185] (avoidance) StdoutLine: {'line': b'Copying ../../build/avoidance/avoidance.egg-info to /home/mi/preliminary/install/avoidance/lib/python3.6/site-packages/avoidance-0.0.0-py3.6.egg-info\n'}
+[5.422529] (avoidance) StdoutLine: {'line': b'running install_scripts\n'}
+[5.506749] (-) TimerEvent: {}
+[5.528875] (avoidance) StdoutLine: {'line': b'Installing sensor script to /home/mi/preliminary/install/avoidance/lib/avoidance\n'}
+[5.531018] (avoidance) StdoutLine: {'line': b'Installing stand script to /home/mi/preliminary/install/avoidance/lib/avoidance\n'}
+[5.532446] (avoidance) StdoutLine: {'line': b'Installing stand_sit script to /home/mi/preliminary/install/avoidance/lib/avoidance\n'}
+[5.533060] (avoidance) StdoutLine: {'line': b'Installing walk script to /home/mi/preliminary/install/avoidance/lib/avoidance\n'}
+[5.535752] (avoidance) StdoutLine: {'line': b"writing list of installed files to '/home/mi/preliminary/build/avoidance/install.log'\n"}
+[5.607013] (-) TimerEvent: {}
+[5.658388] (avoidance) CommandEnded: {'returncode': 0}
+[5.707408] (-) TimerEvent: {}
+[5.749623] (avoidance) JobEnded: {'identifier': 'avoidance', 'rc': 0}
+[5.755159] (-) EventReactorShutdown: {}

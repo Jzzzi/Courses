@@ -1,0 +1,10 @@
+[console_scripts]
+avoid = avoidance.avoid:main
+avoid_jez = avoidance.avoid_jez:main
+radar = avoidance.radar:main
+sensor = avoidance.sensor:main
+stand = avoidance.stand:main
+stand_sit = avoidance.stand_sit:main
+ultrasonic = avoidance.ultrasonic:main
+walk = avoidance.walk:main
+
