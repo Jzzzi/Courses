@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.2.29)  4 MAR 2024 13:45
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.20)  6 MAY 2024 10:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -427,7 +427,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 Here is how much of TeX's memory you used:
  8680 strings out of 476191
  228649 string characters out of 5812072
- 566252 words of memory out of 5000000
+ 566249 words of memory out of 5000000
  29301 multiletter control sequences out of 15000+600000
  501661 words of font info for 68 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
