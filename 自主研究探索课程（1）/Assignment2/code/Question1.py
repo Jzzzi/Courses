@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 from util import *
 
 '''
@@ -24,7 +25,7 @@ a = 69.2
 g = 9.8
 td = 5.0
 bt = 0.8
-dt = 2.0
+deltat = 2.0
 m = 100
 mg0 = 0.1
 tw = lr*qr/(g*hr*a)
@@ -54,7 +55,23 @@ AR[0:4,4] = B.reshape(4)
 print('A_R矩阵为')
 print(AR)
 
-n = np.linalg.norm(AR) * dt
-PAR = matrix_exp(AR)
+n = int(np.linalg.norm(AR) * deltat)
+dt = deltat/n
+
+ART = AR * dt
+Phi = matrix_exp(ART)
 print('转移矩阵为')
-print(matrix_exp(AR))
+print(Phi)
+
+Res = np.zeros((m, 5, 1))
+Res[:,4,:] = mg0
+
+for i in range(1, m):
+    Res[i,:,:] = matrix_power(Phi,n) @ Res[i-1,:,:]
+
+plt.plot([i*deltat for i in range(0, m)], Res[:,0,0], label='x')
+plt.plot([i*deltat for i in range(0, m)], Res[:,1,0], label='y')
+plt.plot([i*deltat for i in range(0, m)], Res[:,2,0], label='z')
+plt.plot([i*deltat for i in range(0, m)], Res[:,3,0], label='h')
+plt.legend()
+plt.show()
