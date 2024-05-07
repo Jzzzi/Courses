@@ -1,0 +1,3 @@
+[console_scripts]
+test = VisualLocate.test:main
+

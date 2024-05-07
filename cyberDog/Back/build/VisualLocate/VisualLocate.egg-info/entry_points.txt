@@ -1,0 +1,5 @@
+[console_scripts]
+get_image = VisualLocate.get_image:main
+stand = VisualLocate.stand:main
+walk = VisualLocate.walk:main
+

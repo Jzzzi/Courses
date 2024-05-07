@@ -1,0 +1,94 @@
+[0.000000] (-) TimerEvent: {}
+[0.002822] (VisualLocate) JobQueued: {'identifier': 'VisualLocate', 'dependencies': OrderedDict()}
+[0.003778] (VisualLocate) JobStarted: {'identifier': 'VisualLocate'}
+[0.098834] (-) TimerEvent: {}
+[0.203836] (-) TimerEvent: {}
+[0.306362] (-) TimerEvent: {}
+[0.407345] (-) TimerEvent: {}
+[0.508354] (-) TimerEvent: {}
+[0.609306] (-) TimerEvent: {}
+[0.713891] (-) TimerEvent: {}
+[0.814866] (-) TimerEvent: {}
+[0.915709] (-) TimerEvent: {}
+[1.016528] (-) TimerEvent: {}
+[1.117485] (-) TimerEvent: {}
+[1.218377] (-) TimerEvent: {}
+[1.320571] (-) TimerEvent: {}
+[1.421413] (-) TimerEvent: {}
+[1.522305] (-) TimerEvent: {}
+[1.623157] (-) TimerEvent: {}
+[1.724137] (-) TimerEvent: {}
+[1.827728] (-) TimerEvent: {}
+[1.942301] (-) TimerEvent: {}
+[2.046929] (-) TimerEvent: {}
+[2.147989] (-) TimerEvent: {}
+[2.249011] (-) TimerEvent: {}
+[2.349888] (-) TimerEvent: {}
+[2.450831] (-) TimerEvent: {}
+[2.551797] (-) TimerEvent: {}
+[2.652847] (-) TimerEvent: {}
+[2.753719] (-) TimerEvent: {}
+[2.854596] (-) TimerEvent: {}
+[2.955517] (-) TimerEvent: {}
+[3.056480] (-) TimerEvent: {}
+[3.157526] (-) TimerEvent: {}
+[3.258569] (-) TimerEvent: {}
+[3.359508] (-) TimerEvent: {}
+[3.460390] (-) TimerEvent: {}
+[3.561320] (-) TimerEvent: {}
+[3.662170] (-) TimerEvent: {}
+[3.763053] (-) TimerEvent: {}
+[3.863911] (-) TimerEvent: {}
+[3.964982] (-) TimerEvent: {}
+[4.066010] (-) TimerEvent: {}
+[4.167017] (-) TimerEvent: {}
+[4.199132] (VisualLocate) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/VisualLocate', 'build', '--build-base', '/home/mi/VisualLocate/build/VisualLocate/build', 'install', '--prefix', '/home/mi/VisualLocate/install/VisualLocate', '--record', '/home/mi/VisualLocate/build/VisualLocate/install.log', '--single-version-externally-managed'], 'cwd': '/home/mi/VisualLocate/src/VisualLocate', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'MAIL': '/var/mail/mi', 'USER': 'mi', 'SSH_CLIENT': '10.0.0.253 46398 22', 'GIT_ASKPASS': '/home/mi/.vscode-server/cli/servers/Stable-b58957e67ee1e712cebf466b995adf4c5307b2bd/server/extensions/git/dist/askpass.sh', 'LD_LIBRARY_PATH': '/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros2/galactic/opt/yaml_cpp_vendor/lib:/opt/ros2/galactic/opt/rviz_ogre_vendor/lib:/opt/ros2/galactic/lib:/opt/ros2/cyberdog/lib', 'BROWSER': '/home/mi/.vscode-server/cli/servers/Stable-b58957e67ee1e712cebf466b995adf4c5307b2bd/server/bin/helpers/browser.sh', 'SHLVL': '4', 'OLDPWD': '/home/mi/VisualLocate', 'CYCLONEDDS_URI': 'file:///etc/mi/cyclonedds.xml', 'HOME': '/home/mi', 'TERM_PROGRAM_VERSION': '1.89.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-739d7652-4a5a-44f0-8e25-90adcecd8309.sock', 'VSCODE_GIT_ASKPASS_MAIN': '/home/mi/.vscode-server/cli/servers/Stable-b58957e67ee1e712cebf466b995adf4c5307b2bd/server/extensions/git/dist/askpass-main.js', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_NODE': '/home/mi/.vscode-server/cli/servers/Stable-b58957e67ee1e712cebf466b995adf4c5307b2bd/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/home/mi/VisualLocate/install:/opt/ros2/cyberdog:/opt/ros2/galactic', 'ROS_DISTRO': 'galactic', 'LOGNAME': 'mi', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'PKG_CONFIG_PATH': '/opt/ros2/galactic/lib/aarch64-linux-gnu/pkgconfig:/opt/ros2/galactic/lib/pkgconfig', 'XDG_SESSION_ID': '3', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros2/cyberdog/bin:/home/mi/.vscode-server/cli/servers/Stable-b58957e67ee1e712cebf466b995adf4c5307b2bd/server/bin/remote-cli:/opt/ros2/galactic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-a702a288b4.sock', 'AMENT_PREFIX_PATH': '/home/mi/VisualLocate/install/VisualLocate:/opt/ros2/cyberdog:/opt/ros2/galactic', 'ROS_DOMAIN_ID': '42', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CMAKE_MODULE_PATH': '/opt/ros2/cyberdog/share/cyberdog_parameter/cmake', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/mi/VisualLocate/build/VisualLocate', 'SSH_CONNECTION': '10.0.0.253 46398 10.0.0.189 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:/opt/ros2/cyberdog/lib/python3.6/site-packages:/opt/ros2/galactic/lib/python3.6/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros2/cyberdog:/opt/ros2/galactic'}, 'shell': False}
+[4.267609] (-) TimerEvent: {}
+[4.370070] (-) TimerEvent: {}
+[4.470973] (-) TimerEvent: {}
+[4.572440] (-) TimerEvent: {}
+[4.673291] (-) TimerEvent: {}
+[4.774224] (-) TimerEvent: {}
+[4.875126] (-) TimerEvent: {}
+[4.975956] (-) TimerEvent: {}
+[5.077044] (-) TimerEvent: {}
+[5.177972] (-) TimerEvent: {}
+[5.278925] (-) TimerEvent: {}
+[5.379755] (-) TimerEvent: {}
+[5.480814] (-) TimerEvent: {}
+[5.581746] (-) TimerEvent: {}
+[5.682817] (-) TimerEvent: {}
+[5.783733] (-) TimerEvent: {}
+[5.885320] (-) TimerEvent: {}
+[5.929819] (VisualLocate) StdoutLine: {'line': b'running egg_info\n'}
+[5.933660] (VisualLocate) StdoutLine: {'line': b'writing ../../build/VisualLocate/VisualLocate.egg-info/PKG-INFO\n'}
+[5.934830] (VisualLocate) StdoutLine: {'line': b'writing dependency_links to ../../build/VisualLocate/VisualLocate.egg-info/dependency_links.txt\n'}
+[5.935544] (VisualLocate) StdoutLine: {'line': b'writing entry points to ../../build/VisualLocate/VisualLocate.egg-info/entry_points.txt\n'}
+[5.936104] (VisualLocate) StdoutLine: {'line': b'writing requirements to ../../build/VisualLocate/VisualLocate.egg-info/requires.txt\n'}
+[5.936738] (VisualLocate) StdoutLine: {'line': b'writing top-level names to ../../build/VisualLocate/VisualLocate.egg-info/top_level.txt\n'}
+[5.950314] (VisualLocate) StdoutLine: {'line': b"reading manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'\n"}
+[5.955775] (VisualLocate) StdoutLine: {'line': b"writing manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'\n"}
+[5.956712] (VisualLocate) StdoutLine: {'line': b'running build\n'}
+[5.957207] (VisualLocate) StdoutLine: {'line': b'running build_py\n'}
+[5.957790] (VisualLocate) StdoutLine: {'line': b'copying VisualLocate/getimage.py -> /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate\n'}
+[5.959169] (VisualLocate) StdoutLine: {'line': b'running install\n'}
+[5.960654] (VisualLocate) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[5.962882] (VisualLocate) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[5.963378] (VisualLocate) StdoutLine: {'line': b'running install_lib\n'}
+[5.965614] (VisualLocate) StdoutLine: {'line': b'copying /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate/getimage.py -> /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate\n'}
+[5.968131] (VisualLocate) StdoutLine: {'line': b'byte-compiling /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate/getimage.py to getimage.cpython-36.pyc\n'}
+[5.970655] (VisualLocate) StdoutLine: {'line': b'running install_data\n'}
+[5.973158] (VisualLocate) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.981876] (VisualLocate) StdoutLine: {'line': b"removing '/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate-0.0.0-py3.6.egg-info' (and everything under it)\n"}
+[5.983695] (VisualLocate) StdoutLine: {'line': b'Copying ../../build/VisualLocate/VisualLocate.egg-info to /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate-0.0.0-py3.6.egg-info\n'}
+[5.985451] (-) TimerEvent: {}
+[5.988278] (VisualLocate) StdoutLine: {'line': b'running install_scripts\n'}
+[6.072396] (VisualLocate) StdoutLine: {'line': b'Installing getimage script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate\n'}
+[6.073591] (VisualLocate) StdoutLine: {'line': b'Installing stand script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate\n'}
+[6.074851] (VisualLocate) StdoutLine: {'line': b'Installing walk script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate\n'}
+[6.076708] (VisualLocate) StdoutLine: {'line': b"writing list of installed files to '/home/mi/VisualLocate/build/VisualLocate/install.log'\n"}
+[6.086241] (-) TimerEvent: {}
+[6.200396] (VisualLocate) CommandEnded: {'returncode': 0}
+[6.203292] (-) TimerEvent: {}
+[6.279309] (VisualLocate) JobEnded: {'identifier': 'VisualLocate', 'rc': 0}
+[6.284008] (-) EventReactorShutdown: {}

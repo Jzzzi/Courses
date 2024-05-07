@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/VisualLocate/VisualLocate.egg-info
+writing ../../build/VisualLocate/VisualLocate.egg-info/PKG-INFO
+writing dependency_links to ../../build/VisualLocate/VisualLocate.egg-info/dependency_links.txt
+writing entry points to ../../build/VisualLocate/VisualLocate.egg-info/entry_points.txt
+writing requirements to ../../build/VisualLocate/VisualLocate.egg-info/requires.txt
+writing top-level names to ../../build/VisualLocate/VisualLocate.egg-info/top_level.txt
+writing manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'
+reading manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'
+writing manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/mi/VisualLocate/build/VisualLocate/build
+creating /home/mi/VisualLocate/build/VisualLocate/build/lib
+creating /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate
+copying VisualLocate/test.py -> /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate
+copying VisualLocate/__init__.py -> /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate
+running install
+running install_lib
+creating /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate
+copying /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate/test.py -> /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate
+copying /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate/__init__.py -> /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate
+byte-compiling /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate/test.py to test.cpython-36.pyc
+byte-compiling /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate/__init__.py to __init__.cpython-36.pyc
+running install_data
+creating /home/mi/VisualLocate/install/VisualLocate/share/ament_index
+creating /home/mi/VisualLocate/install/VisualLocate/share/ament_index/resource_index
+creating /home/mi/VisualLocate/install/VisualLocate/share/ament_index/resource_index/packages
+copying resource/VisualLocate -> /home/mi/VisualLocate/install/VisualLocate/share/ament_index/resource_index/packages
+copying package.xml -> /home/mi/VisualLocate/install/VisualLocate/share/VisualLocate
+running install_egg_info
+Copying ../../build/VisualLocate/VisualLocate.egg-info to /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate-0.0.0-py3.6.egg-info
+running install_scripts
+Installing test script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate
+writing list of installed files to '/home/mi/VisualLocate/build/VisualLocate/install.log'

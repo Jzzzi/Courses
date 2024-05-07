@@ -1,0 +1,121 @@
+[2.118s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[2.118s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fa5fa6fd0>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=6, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fa5fa6fd0>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7fa5f1a358>)
+[2.155s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[2.156s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[2.156s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[2.156s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[2.156s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[2.159s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[2.159s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/mi/VisualLocate'
+[2.159s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[2.160s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[2.160s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[2.161s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[2.161s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[2.161s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[2.161s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[2.162s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[2.162s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[2.616s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[2.617s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[2.617s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[2.618s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[2.618s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[2.618s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[2.619s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[2.619s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[2.621s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[2.622s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[2.622s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[2.623s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[2.623s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[2.624s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[2.624s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[2.625s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[2.625s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[2.625s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[2.626s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[2.626s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[2.626s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[2.626s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[2.627s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[2.627s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[2.627s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[2.628s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[2.628s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[2.628s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[2.629s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extensions ['ignore', 'ignore_ament_install']
+[2.629s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extension 'ignore'
+[2.630s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extension 'ignore_ament_install'
+[2.630s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extensions ['colcon_pkg']
+[2.630s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extension 'colcon_pkg'
+[2.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extensions ['colcon_meta']
+[2.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extension 'colcon_meta'
+[2.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extensions ['ros']
+[2.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/VisualLocate) by extension 'ros'
+[2.648s] DEBUG:colcon.colcon_core.package_identification:Package 'src/VisualLocate' with type 'ros.ament_python' and name 'VisualLocate'
+[2.648s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[2.649s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[2.650s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[2.650s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[2.650s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.778s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_args' from command line to 'None'
+[2.779s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_target' from command line to 'None'
+[2.779s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.779s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_clean_cache' from command line to 'False'
+[2.779s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_clean_first' from command line to 'False'
+[2.780s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'cmake_force_configure' from command line to 'False'
+[2.780s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'ament_cmake_args' from command line to 'None'
+[2.780s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'catkin_cmake_args' from command line to 'None'
+[2.780s] Level 5:colcon.colcon_core.verb:set package 'VisualLocate' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.780s] DEBUG:colcon.colcon_core.verb:Building package 'VisualLocate' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/mi/VisualLocate/build/VisualLocate', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/mi/VisualLocate/install/VisualLocate', 'merge_install': False, 'path': '/home/mi/VisualLocate/src/VisualLocate', 'symlink_install': False, 'test_result_base': None}
+[2.850s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.865s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.866s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/mi/VisualLocate/src/VisualLocate' with build type 'ament_python'
+[2.867s] Level 1:colcon.colcon_core.shell:create_environment_hook('VisualLocate', 'ament_prefix_path')
+[2.893s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.894s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/ament_prefix_path.ps1'
+[2.899s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/ament_prefix_path.dsv'
+[2.902s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/ament_prefix_path.sh'
+[2.909s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.909s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.640s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/mi/VisualLocate/src/VisualLocate'
+[4.647s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.648s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[6.856s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mi/VisualLocate/src/VisualLocate': PYTHONPATH=/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/VisualLocate build --build-base /home/mi/VisualLocate/build/VisualLocate/build install --prefix /home/mi/VisualLocate/install/VisualLocate --record /home/mi/VisualLocate/build/VisualLocate/install.log --single-version-externally-managed
+[8.701s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mi/VisualLocate/src/VisualLocate' returned '0': PYTHONPATH=/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/VisualLocate build --build-base /home/mi/VisualLocate/build/VisualLocate/build install --prefix /home/mi/VisualLocate/install/VisualLocate --record /home/mi/VisualLocate/build/VisualLocate/install.log --single-version-externally-managed
+[8.734s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate' for CMake module files
+[8.737s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate' for CMake config files
+[8.743s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate/lib'
+[8.744s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate/bin'
+[8.745s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate/lib/pkgconfig/VisualLocate.pc'
+[8.745s] Level 1:colcon.colcon_core.environment:checking '/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages'
+[8.745s] Level 1:colcon.colcon_core.shell:create_environment_hook('VisualLocate', 'pythonpath')
+[8.749s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/pythonpath.ps1'
+[8.752s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/pythonpath.dsv'
+[8.754s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/hook/pythonpath.sh'
+[8.756s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(VisualLocate)
+[8.760s] INFO:colcon.colcon_core.shell:Creating package script '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/package.ps1'
+[8.766s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/package.dsv'
+[8.770s] INFO:colcon.colcon_core.shell:Creating package script '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/package.sh'
+[8.775s] INFO:colcon.colcon_core.shell:Creating package script '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/package.bash'
+[8.782s] INFO:colcon.colcon_core.shell:Creating package script '/home/mi/VisualLocate/install/VisualLocate/share/VisualLocate/package.zsh'
+[8.788s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mi/VisualLocate/install/VisualLocate/share/colcon-core/packages/VisualLocate)
+[8.792s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[8.794s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[8.795s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[8.795s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[8.830s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[8.831s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[8.831s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[8.929s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[8.933s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mi/VisualLocate/install/local_setup.ps1'
+[8.943s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mi/VisualLocate/install/_local_setup_util_ps1.py'
+[8.963s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mi/VisualLocate/install/setup.ps1'
+[8.977s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mi/VisualLocate/install/local_setup.sh'
+[8.984s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mi/VisualLocate/install/_local_setup_util_sh.py'
+[8.993s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mi/VisualLocate/install/setup.sh'
+[9.002s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mi/VisualLocate/install/local_setup.bash'
+[9.008s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mi/VisualLocate/install/setup.bash'
+[9.017s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mi/VisualLocate/install/local_setup.zsh'
+[9.023s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mi/VisualLocate/install/setup.zsh'

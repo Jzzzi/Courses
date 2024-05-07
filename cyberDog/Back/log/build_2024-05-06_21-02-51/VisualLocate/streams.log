@@ -1,0 +1,28 @@
+[4.823s] Invoking command in '/home/mi/VisualLocate/src/VisualLocate': PYTHONPATH=/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/VisualLocate build --build-base /home/mi/VisualLocate/build/VisualLocate/build install --prefix /home/mi/VisualLocate/install/VisualLocate --record /home/mi/VisualLocate/build/VisualLocate/install.log --single-version-externally-managed
+[6.357s] running egg_info
+[6.372s] writing ../../build/VisualLocate/VisualLocate.egg-info/PKG-INFO
+[6.373s] writing dependency_links to ../../build/VisualLocate/VisualLocate.egg-info/dependency_links.txt
+[6.378s] writing entry points to ../../build/VisualLocate/VisualLocate.egg-info/entry_points.txt
+[6.385s] writing requirements to ../../build/VisualLocate/VisualLocate.egg-info/requires.txt
+[6.385s] writing top-level names to ../../build/VisualLocate/VisualLocate.egg-info/top_level.txt
+[6.387s] reading manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'
+[6.402s] writing manifest file '../../build/VisualLocate/VisualLocate.egg-info/SOURCES.txt'
+[6.404s] running build
+[6.405s] running build_py
+[6.406s] copying VisualLocate/getimage.py -> /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate
+[6.408s] running install
+[6.410s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[6.411s]   setuptools.SetuptoolsDeprecationWarning,
+[6.415s] running install_lib
+[6.420s] copying /home/mi/VisualLocate/build/VisualLocate/build/lib/VisualLocate/getimage.py -> /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate
+[6.429s] byte-compiling /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate/getimage.py to getimage.cpython-36.pyc
+[6.429s] running install_data
+[6.435s] running install_egg_info
+[6.442s] removing '/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate-0.0.0-py3.6.egg-info' (and everything under it)
+[6.446s] Copying ../../build/VisualLocate/VisualLocate.egg-info to /home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages/VisualLocate-0.0.0-py3.6.egg-info
+[6.456s] running install_scripts
+[6.632s] Installing getimage script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate
+[6.633s] Installing stand script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate
+[6.634s] Installing walk script to /home/mi/VisualLocate/install/VisualLocate/lib/VisualLocate
+[6.637s] writing list of installed files to '/home/mi/VisualLocate/build/VisualLocate/install.log'
+[6.781s] Invoked command in '/home/mi/VisualLocate/src/VisualLocate' returned '0': PYTHONPATH=/home/mi/VisualLocate/install/VisualLocate/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/VisualLocate build --build-base /home/mi/VisualLocate/build/VisualLocate/build install --prefix /home/mi/VisualLocate/install/VisualLocate --record /home/mi/VisualLocate/build/VisualLocate/install.log --single-version-externally-managed
