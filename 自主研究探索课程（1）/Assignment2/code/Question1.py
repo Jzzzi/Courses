@@ -1,6 +1,11 @@
 import numpy as np
 from util import *
 
+'''
+util.py编写了若干科学计算的函数
+命名规则：
+小写字母为数值，大写字母为数组（矩阵或张量）
+'''
 # Parameters
 ey = 0.76
 ex = -1.23
@@ -22,7 +27,7 @@ bt = 0.8
 dt = 2.0
 m = 100
 mg0 = 0.1
-tw = lr*qr/g*hr*a
+tw = lr*qr/(g*hr*a)
 
 A = np.zeros((4,4))
 A[0,0] = (ex-eg)/ta
