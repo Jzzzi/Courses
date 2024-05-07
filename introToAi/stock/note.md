@@ -18,13 +18,6 @@
 
 关于Pytorch的使用文档，可以参考[PyTorch官方文档](https://pytorch.org/docs/stable/index.html)。
 
-**torch.utils.data**
-
-里面有若干封装好的数据处理工具例如：
-
-TensorDataset，接受元组输入(x,y)，
-DataLoader
-
 ---
 
 ## 工作

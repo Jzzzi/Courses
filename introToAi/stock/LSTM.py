@@ -15,6 +15,7 @@ def price2data(price, fields, days_before, days_after, k):
     处理数据用于训练
     原始数据fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']
     用days_before天的数据预测days_after天后的涨跌
+    k为训练集占比
     特征提取：
     0. 相比前日涨跌 = (close - pre_close) / pre_close
     1. 量比 = volume / volume_yesterday
@@ -33,28 +34,25 @@ def price2data(price, fields, days_before, days_after, k):
     data的形状为(num_samples, sequence_length, num_features)
     '''
     sequence_length = days_before
+    # 特征数量
     feature_size = 14
     # 创造一个字典将列名和列索引对应
     column_index = {}
     for i in range(len(fields)):
         column_index[fields[i]] = i
+    # 样本数量
     num_samples = price.shape[0]
-    #处理得到训练输入和训练标签
+    # 处理得到训练输入和训练标签
     data = np.zeros((num_samples, sequence_length, feature_size))
     labels = np.zeros(num_samples)
     for i in range(num_samples):
         if i+days_after < num_samples:
-            # if price[i+days_after, column_index['close']] - price[i, column_index['close']] > 0:
-                # labels[i] = 1
-            # else:
-                # labels[i] = 0
             labels[i] = (price[i+days_after, column_index['close']] -price[i, column_index['close']])/price[i, column_index['close']]
-            # labels[i] = price[i+days_after, column_index['close']]
 
         for j in range(sequence_length):
             if i-j >= 0:
-                # data[i, j, 0] = labels[i]
-                data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
+                data[i, j, 0] = labels[i]
+                # data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
                 data[i, j, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
                 data[i, j, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
                 data[i, j, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
@@ -137,18 +135,20 @@ fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']
 price = pd.read_csv(f'{code}.csv')
 price = price.values
 price = price[:, 1:] # 去掉第一列
-days_before = 15 #序列长度
+days_before = 30 #序列长度
 days_after = 5 # 预测天数
 k = 0.7 # 训练集占比
-train_data, train_labels, test_data, test_labels, num_samples, feature_size, data_scaler, test_scaler = price2data(price, fields, days_before, days_after, k)
+train_data,train_labels, test_data, test_labels,\
+num_samples, feature_size, data_scaler, test_scaler \
+= price2data(price, fields, days_before, days_after, k)
 
 # 超参数设置
 input_size = feature_size  # 输入特征的维度
-hidden_size = 16  # 隐藏层的维度
-ihidden_size = 4
-num_layers = 1  # LSTM层的数量
+hidden_size = 100  # 隐藏层的维度
+ihidden_size = 1
+num_layers = 2  # LSTM层的数量
 output_size = 1  # 输出的维度
-batch_size = 16  # 批次大小
+batch_size = 50  # 批次大小
 
 
 # 实例化LSTM网络
@@ -158,8 +158,8 @@ lstm = LSTMNet(input_size=input_size, hidden_size=hidden_size, num_layers=num_la
 # lstm.load_state_dict(torch.load('lstm.pth'))
 
 # 定义损失函数和优化器
-criterion = nn.BCELoss()
-optimizer = optim.Adam(lstm.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(lstm.parameters(), lr = 1)
 
 #==============================训练模型======================================
 num_epochs = 200
