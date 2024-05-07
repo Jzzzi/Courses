@@ -1,6 +1,0 @@
-source;share/VisualLocate/hook/pythonpath.ps1
-source;share/VisualLocate/hook/pythonpath.dsv
-source;share/VisualLocate/hook/pythonpath.sh
-source;share/VisualLocate/hook/ament_prefix_path.ps1
-source;share/VisualLocate/hook/ament_prefix_path.dsv
-source;share/VisualLocate/hook/ament_prefix_path.sh
