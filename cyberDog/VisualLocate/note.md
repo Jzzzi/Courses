@@ -1,3 +1,12 @@
+## 机器狗信息
+
+4-1 NC077 4-2 YN275
+
+4-1:mi@10.0.0.189 4-2:mi@10.0.0.245
+
+连接密码：123
+
+
 ## 编译方法
 
 输入如下命令build
@@ -54,13 +63,17 @@ ros2 topic type /camera/infra1/image_rect_raw
 消息的encoding格式为mono8
 
 ## 鱼眼和RGB相机
+
 ```
 ros2 launch camera_test stereo_camera.py
 ros2 lifecycle set /stereo_camera configure
 ros2 lifecycle set /stereo_camera activate
 # ros2 lifecycle set /stereo_camera deactivate
+
 ```
+
 编写在
+
 ```
 source ~/VisualLocate/bash/stereo_camera.bash
 ```
