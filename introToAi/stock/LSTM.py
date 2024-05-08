@@ -18,20 +18,19 @@ class LSTM(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(LSTM, self).__init__()
 
-        hidden_dim_1 = 20
-        hidden_dim_2 = 40
-        hidden_dim_3 = 20
-
-        self.fc1 = nn.Linear(input_dim, hidden_dim_1)
-        self.fc2 = nn.Linear(hidden_dim_1, hidden_dim_2)
-        self.fc3 = nn.Linear(hidden_dim_2, hidden_dim_3)
-        self.outlayer = nn.Linear(hidden_dim_3, output_dim)
+        hidden_size = 20
+        num_layers = 2
+        self.lstm = nn.LSTM(input_dim,
+                            hidden_size = hidden_size,
+                            num_layers = num_layers,
+                            batch_first=True)
+        self.fc = nn.Linear(hidden_size, output_dim)
         
     def forward(self, x):
-        x = F.sigmoid(self.fc1(x))
-        x = F.sigmoid(self.fc2(x))
-        x = F.sigmoid(self.fc3(x))
-        x = F.sigmoid(self.outlayer(x))
+        x, _ = self.lstm(x)
+        x = x[:, -1, :]
+        x = x.reshape(x.shape[0], -1)
+        x = F.sigmoid(self.fc(x))
         return x
     
 # 训练函数
@@ -83,10 +82,8 @@ def data_process(original_data):
     # 归一化
     scaler_x = MinMaxScaler()
     x = scaler_x.fit_transform(x.reshape(-1, feature_num)).reshape(num_samples, days_before, feature_num)
-    x = x.reshape(num_samples, days_before, feature_num)
     scaler_y = MinMaxScaler()
     y = scaler_y.fit_transform(y.reshape(-1, 1)).reshape(num_samples, 1)
-    y = y.reshape(num_samples, 1)
 
     # 划分训练集和测试集
     train_size = int(num_samples * k)
@@ -139,10 +136,10 @@ original_data = get_original_data('华能水电', '2018-01-01', '2024-05-08')
 
 print(f'训练集大小: {len(train_loader.dataset)}')
 
-input_dim = 15*8
-num_epochs = 10000
+input_dim = 8
+num_epochs = 1000
 
-model = MLP(input_dim, 1)
+model = LSTM(input_dim, 1)
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -160,7 +157,7 @@ y_test = scaler_y.inverse_transform(y_test)
 
 
 y_pred_train = model(train_loader.dataset.tensors[0])
-print(f'测试集loss: {criterion(y_pred_train, y_train).item()}')
+print(f'训练集loss: {criterion(y_pred_train, y_train).item()}')
 y_pred_train = y_pred_train.detach().numpy()
 y_pred_train = y_pred_train.reshape(-1, 1)
 y_pred_train = scaler_y.inverse_transform(y_pred_train)
@@ -179,5 +176,13 @@ plt.subplot(1, 2, 2)
 plt.title('Train')
 plt.plot(y_pred_train, label='Prediction')
 plt.plot(y_train, label='Real')
+plt.legend()
+plt.show()
+
+y_pred_total = np.concatenate((y_pred_train, y_pred_test))
+y_total = np.concatenate((y_train, y_test))
+
+plt.plot(y_pred_total, label='Prediction')
+plt.plot(y_total, label='Real')
 plt.legend()
 plt.show()
