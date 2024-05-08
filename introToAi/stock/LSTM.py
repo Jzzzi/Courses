@@ -1,212 +1,183 @@
-from jqdatasdk import *
-from util import *
-from datetime import datetime, timedelta
+import numpy as np
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, TensorDataset
+
 import matplotlib.pyplot as plt
 
-#======================数据处理函数==============================
-def price2data(price, fields, days_before, days_after, k):
-    '''
-    处理数据用于训练
-    原始数据fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']
-    用days_before天的数据预测days_after天后的涨跌
-    k为训练集占比
-    特征提取：
-    0. 相比前日涨跌 = (close - pre_close) / pre_close
-    1. 量比 = volume / volume_yesterday
-    2. 额比 = money / money_yesterday
-    3. 日内涨跌 = (close - open) / open
-    4. 振幅 = (high - low) / low
-    5. 均价比 = avg / avg_yesterday
-    6. 开盘/前日收盘 = open / pre_close
-    7. 当日收盘价
-    8. 当日开盘价
-    9. 当日最高价
-    10. 当日最低价
-    11. 当日成交量
-    12. 当日成交额
-    13. 当日均价
-    data的形状为(num_samples, sequence_length, num_features)
-    '''
-    sequence_length = days_before
-    # 特征数量
-    feature_size = 14
-    # 创造一个字典将列名和列索引对应
-    column_index = {}
-    for i in range(len(fields)):
-        column_index[fields[i]] = i
-    # 样本数量
-    num_samples = price.shape[0]
-    # 处理得到训练输入和训练标签
-    data = np.zeros((num_samples, sequence_length, feature_size))
-    labels = np.zeros(num_samples)
-    for i in range(num_samples):
-        if i+days_after < num_samples:
-            labels[i] = (price[i+days_after, column_index['close']] -price[i, column_index['close']])/price[i, column_index['close']]
+import util
 
-        for j in range(sequence_length):
-            if i-j >= 0:
-                data[i, j, 0] = labels[i]
-                # data[i, j, 0] = (price[i-j, column_index['close']] - price[i-j, column_index['pre_close']])/price[i-j, column_index['pre_close']]
-                data[i, j, 1] = price[i-j, column_index['volume']] / price[i-j-1, column_index['volume']]
-                data[i, j, 2] = price[i-j, column_index['money']] / price[i-j-1, column_index['money']]
-                data[i, j, 3] = (price[i-j, column_index['close']] - price[i-j, column_index['open']]) / price[i-j, column_index['open']]
-                data[i, j, 4] = (price[i-j, column_index['high']] - price[i-j, column_index['low']]) / price[i-j, column_index['low']]
-                data[i, j, 5] = price[i-j, column_index['avg']] / price[i-j-1, column_index['avg']]
-                data[i, j, 6] = price[i-j, column_index['open']] / price[i-j, column_index['pre_close']]
-                data[i, j, 7] = price[i-j, column_index['close']]
-                data[i, j, 8] = price[i-j, column_index['open']]
-                data[i, j, 9] = price[i-j, column_index['high']]
-                data[i, j, 10] = price[i-j, column_index['low']]
-                data[i, j, 11] = price[i-j, column_index['volume']]
-                data[i, j, 12] = price[i-j, column_index['money']]
-                data[i, j, 13] = price[i-j, column_index['avg']]
-    # 归一化
-    data_scaler = MinMaxScaler()
-    labels_scaler = MinMaxScaler()
-    shape = data.shape
-    data = data_scaler.fit_transform(data.reshape(-1, feature_size)).reshape(shape)
-    labels = labels_scaler.fit_transform(labels.reshape(-1, 1)).reshape(-1)
-    train_data = data[:int(k*num_samples)]
-    train_labels = labels[:int(k*num_samples)]
-    test_data = data[int(k*num_samples):]
-    test_labels = labels[int(k*num_samples):]
-    return train_data, train_labels, test_data, test_labels, num_samples, feature_size, data_scaler, labels_scaler
-#=============================神经网络类====================================
-class LSTMNet(nn.Module):
-    '''
-    定义LSTM网络
-    '''
-    def __init__(self, input_size, hidden_size, num_layers, output_size, ihidden_size):
-        super(LSTMNet, self).__init__()
+# MLP模型
+
+class LSTM(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(LSTM, self).__init__()
+
+        hidden_dim_1 = 20
+        hidden_dim_2 = 40
+        hidden_dim_3 = 20
+
+        self.fc1 = nn.Linear(input_dim, hidden_dim_1)
+        self.fc2 = nn.Linear(hidden_dim_1, hidden_dim_2)
+        self.fc3 = nn.Linear(hidden_dim_2, hidden_dim_3)
+        self.outlayer = nn.Linear(hidden_dim_3, output_dim)
         
-        # 定义LSTM层
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-        self.ihidden_size = ihidden_size
-        self.ifc = nn.Linear(input_size, self.ihidden_size)
-        self.lstm = nn.LSTM(self.ihidden_size, hidden_size, num_layers, batch_first=True)        
-        # 定义输出层
-        self.fc = nn.Linear(hidden_size, output_size)
-
     def forward(self, x):
-        # 初始化隐藏状态和细胞状态
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        
-        # 前向传播LSTM
-        # x前两维是batch_size和sequence_length，需要将最后一维的特征维度转换为hidden_size
-        ins = x
-        ins.view(-1,ins.size(2))
-        ins = self.ifc(ins)
-        ins = torch.sigmoid(ins)
-        ins.view(x.size(0), x.size(1), self.ihidden_size)
-        out, _ = self.lstm(ins, (h0, c0))
-        
-        # 解码最后一个时间步的隐藏状态
-        out = self.fc(out[:, -1, :])
-        out = torch.sigmoid(out)
-        # 展平输出
-        out = out.reshape(out.shape[0])
-        return out
+        x = F.sigmoid(self.fc1(x))
+        x = F.sigmoid(self.fc2(x))
+        x = F.sigmoid(self.fc3(x))
+        x = F.sigmoid(self.outlayer(x))
+        return x
+    
+# 训练函数
 
+def train(model, train_loader, optimizer, criterion, num_epochs):
+    model.train()
+    for epoch in range(num_epochs):
+        for i, (x, y) in enumerate(train_loader):
+            optimizer.zero_grad()
+            y_pred = model(x)
+            loss = criterion(y_pred, y)
+            loss.backward()
+            optimizer.step()
+        if epoch%100 == 0:
+            print(f'Epoch {epoch + 1}/{num_epochs}, Loss: {loss.item()}')
 
-#=================================主程序====================================
-# 获取标的代码
-start_date = '2023-01-03'
-current_date = datetime.now()
-yesterday_date = current_date - timedelta(days=1)
-end_date = yesterday_date.strftime('%Y-%m-%d')
-name = '创业50ETF'
-# code = get_security(name)
-code = '159682.XSHE'
-fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']
+# 数据处理函数
 
-# 存储原始数据到csv文件
-# get_price_to_csv(code, start_date, end_date, fields = fields)
-# raise DebugStop
+def data_process(original_data):
+    """数据处理函数
 
-# 读取原始数据
-price = pd.read_csv(f'{code}.csv')
-price = price.values
-price = price[:, 1:] # 去掉第一列
-days_before = 30 #序列长度
-days_after = 5 # 预测天数
-k = 0.7 # 训练集占比
-train_data,train_labels, test_data, test_labels,\
-num_samples, feature_size, data_scaler, test_scaler \
-= price2data(price, fields, days_before, days_after, k)
+    参数:
+    original_data -- DataFrame原始数据
+    """
 
-# 超参数设置
-input_size = feature_size  # 输入特征的维度
-hidden_size = 100  # 隐藏层的维度
-ihidden_size = 1
-num_layers = 2  # LSTM层的数量
-output_size = 1  # 输出的维度
-batch_size = 50  # 批次大小
+    days_before = 15
+    days_after = 3
+    feature_num = 8
+    k = 0.8
+    batch_size = len(original_data) - days_before - days_after - 2
 
+    num_samples = len(original_data) - days_before - days_after - 2
+    # 特征为前days_before天的数据
+    x = np.zeros((num_samples, days_before, feature_num))
+    for i in range(num_samples):
+        x[i] = original_data.loc[i:i + days_before - 1, 'open':].values
+    # 标签为days_after后的涨跌
+    # y = np.zeros((num_samples, 1))
+    # for i in range(num_samples):
+    #     if (original_data.loc[i+days_before+days_after-1, 'close'] - original_data.loc[i+days_before-1, 'close']) > 0:
+    #         y[i] = 1.0
+    #     else:
+    #         y[i] = 0.0
+    # 标签为days_after后的收盘价
+    y = np.zeros((num_samples, 1))
+    for i in range(num_samples):
+        y[i] = original_data.loc[i+days_before+days_after-1, 'close']
 
-# 实例化LSTM网络
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using {device} device")
-lstm = LSTMNet(input_size=input_size, hidden_size=hidden_size, num_layers=num_layers, output_size=output_size, ihidden_size=ihidden_size).to(device)
-# lstm.load_state_dict(torch.load('lstm.pth'))
+    # 归一化
+    scaler_x = MinMaxScaler()
+    x = scaler_x.fit_transform(x.reshape(-1, feature_num)).reshape(num_samples, days_before, feature_num)
+    x = x.reshape(num_samples, days_before, feature_num)
+    scaler_y = MinMaxScaler()
+    y = scaler_y.fit_transform(y.reshape(-1, 1)).reshape(num_samples, 1)
+    y = y.reshape(num_samples, 1)
 
-# 定义损失函数和优化器
+    # 划分训练集和测试集
+    train_size = int(num_samples * k)
+    x_train = x[:train_size]
+    y_train = y[:train_size]
+
+    x_test = x[train_size:]
+    y_test = y[train_size:]
+
+    # 转换为张量
+    x_train = torch.tensor(x_train, dtype=torch.float)
+    y_train = torch.tensor(y_train, dtype=torch.float)
+    x_test = torch.tensor(x_test, dtype=torch.float)
+    y_test = torch.tensor(y_test, dtype=torch.float)
+
+    # 转换为数据集
+    train_dataset = TensorDataset(x_train, y_train)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+    return train_loader, x_train, y_train, x_test, y_test, scaler_x, scaler_y
+
+# 原始数据获取函数
+
+def get_original_data(name, start_date, end_date):
+    """获取股票的原始数据
+
+    参数:
+    name -- 字符串，股票名称
+    start_date -- 字符串，开始日期
+    end_date -- 字符串，结束日期
+    """
+
+    # 获取标的代码
+    code = util.get_security(name)
+    # 保存价格
+    util.get_price_to_csv(code, start_date, end_date)
+    # 读取价格
+    original_data = pd.read_csv(f'{code}.csv')
+    # 标定第一列为日期
+    original_data.columns.values[0] = 'date'
+    return original_data
+
+# ==================== 主函数 ======================
+
+original_data = get_original_data('华能水电', '2018-01-01', '2024-05-08')    
+
+(train_loader, x_train, y_train,
+ x_test, y_test,
+ scaler_x, scaler_y) = data_process(original_data)
+
+print(f'训练集大小: {len(train_loader.dataset)}')
+
+input_dim = 15*8
+num_epochs = 10000
+
+model = MLP(input_dim, 1)
 criterion = nn.MSELoss()
-optimizer = optim.Adam(lstm.parameters(), lr = 1)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-#==============================训练模型======================================
-num_epochs = 200
-for epoch in range(num_epochs):
-    batches = batchify_sequences(train_data, train_labels, batch_size)
-    for inputs, labels in batches:
-        inputs = torch.tensor(inputs, dtype=torch.float32).to(device)
-        labels = torch.tensor(labels, dtype=torch.float32).to(device)
-        
-        # 前向传播
-        outputs = lstm(inputs)
-        loss = criterion(outputs, labels)
-        
-        # 反向传播和优化
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    print(f'Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}')
+train(model, train_loader, optimizer, criterion, num_epochs)
 
-# 保存模型
-torch.save(lstm.state_dict(), 'lstm.pth')
+model.eval()
+y_pred_test = model(x_test)
+print(f'测试集loss: {criterion(y_pred_test, y_test).item()}')
+y_pred_test = y_pred_test.detach().numpy()
+y_pred_test = y_pred_test.reshape(-1, 1)
+y_pred_test = scaler_y.inverse_transform(y_pred_test)
+y_test = y_test.detach().numpy()
+y_test = y_test.reshape(-1, 1)
+y_test = scaler_y.inverse_transform(y_test)
 
-#==============================测试模型=========================================
 
-# 训练集正确率
-outputs = lstm(torch.tensor(train_data, dtype=torch.float32).to(device))
-correct = 0
-for i in range(len(train_labels)):
-    if train_labels[i] > 0.5 and outputs[i] > 0.5:
-        correct += 1
-    elif train_labels[i] <= 0.5 and outputs[i] <= 0.5:
-        correct += 1
-accuracy = correct / len(train_labels)
-print(f'Train Accuracy: {accuracy}')
-# 测试集正确率
-outputs = lstm(torch.tensor(test_data, dtype=torch.float32).to(device))
-correct = 0
-for i in range(len(outputs)):   
-    if outputs[i] > 0.5 and test_labels[i] > 0.5:
-        correct += 1
-    elif outputs[i] <= 0.5 and test_labels[i] <= 0.5:
-        correct += 1
-accuracy = correct / len(outputs)
-print(f'Test Accuracy: {accuracy}')
+y_pred_train = model(train_loader.dataset.tensors[0])
+print(f'测试集loss: {criterion(y_pred_train, y_train).item()}')
+y_pred_train = y_pred_train.detach().numpy()
+y_pred_train = y_pred_train.reshape(-1, 1)
+y_pred_train = scaler_y.inverse_transform(y_pred_train)
+y_train = train_loader.dataset.tensors[1].numpy()
+y_train = y_train.reshape(-1, 1)
+y_train = scaler_y.inverse_transform(y_train)
 
-# 绘制预测结果
-plt.plot(outputs.cpu().detach().numpy(), label='Predicted')
-plt.plot(test_labels, label='True')
+
+plt.subplot(1, 2, 1)
+plt.title('Test')
+plt.plot(y_pred_test, label='Prediction')
+plt.plot(y_test, label='Real')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.title('Train')
+plt.plot(y_pred_train, label='Prediction')
+plt.plot(y_train, label='Real')
 plt.legend()
 plt.show()
