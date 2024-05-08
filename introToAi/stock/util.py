@@ -6,15 +6,16 @@ class MyException(Exception):
         super().__init__(self.message)
 
 class DebugStop(Exception):
-    def __init__(self):
-        self.message = 'debug stop'
+    def __init__(self, message = 'debug stop'):
+        self.message = message
         super().__init__(self.message)
 
 def get_security (name = None, types = ['index', 'stock', 'etf']):
-    '''
-    根据名称获取标的代码
-    当为单个名称时，返回一个字符串
-    当为多个名称时，返回一个列表
+    '''根据名称获取标的代码
+
+    参数:
+    name -- 字符串或列表，标的名称
+    types -- 列表，标的类型
     '''
     import collections.abc
     from jqdatasdk import get_all_securities, auth
@@ -49,11 +50,16 @@ def get_security (name = None, types = ['index', 'stock', 'etf']):
 
 def get_price_to_csv (code = None, start_date = None, end_date = None,
                       fields = ['open', 'close', 'high', 'low', 'volume', 'money', 'pre_close', 'avg']):
-    '''
-    获取价格并保存到csv文件
+    '''获取价格并保存到csv文件
+
+    参数:
+    code -- 字符串，聚宽标的代码
+    start_date -- 字符串，开始日期
+    end_date -- 字符串，结束日期
+    fields -- 列表，价格字段
     '''
     from jqdatasdk import get_price, auth
-    import pandas as pd
+
     # 登陆授权
     auth('18973738468','040725Liu')
     # 如果标的代码为空，抛出异常
