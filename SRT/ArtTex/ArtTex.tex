@@ -27,6 +27,8 @@
 
 \documentclass[UTF8]{ctexart}
 
+\usepackage{tikz}
+\usetikzlibrary{3d,quotes,angles}
 \usepackage{amsmath}
 \usepackage{cases}
 \usepackage{cite}
@@ -62,7 +64,38 @@
 
 \subsection{动力学方程}
 
-记水平杆的质量$m_1$，长度$l_1$，树枝干的质量$m_2$，长度$l_2$，水平杆的转动角度为$\phi$，竖直杆的转动角度$\theta$，假设两杆的质量都是均匀分布。电机的驱动力矩为$\tau$，重力加速度为$g$，下面从第二类Lagrange方程出发推倒倒立摆的动力学方程。
+系统动力学模型示意图如图所示：
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[x={(-1cm,-1cm)},y={(1.5cm,0cm)},z={(0cm,1.5cm)}]
+        % 定义坐标轴
+        \draw[->] (0,0,0) -- (4,0,0) node[below] {$X$};
+        \draw[->] (0,0,0) -- (0,4,0) node[right] {$Y$};
+        \draw[->] (0,0,0) -- (0,0,4) node[above] {$Z,z$};
+        % 画水平杆子
+        \draw[line width=3pt] (0,0,0) -- (3,3,0) node[below] {$m_1,l_1$};
+        % 画竖直虚线
+        \draw[dashed] (3,3,0) -- (3,3,4);
+        % 画竖直杆子
+        \draw[line width=3pt] (3,3,0) -- (2,5,4) node[above] {$m_2,l_2$};
+        % 两杆铰接处
+        \draw[fill=black] (3,3,0) circle (0.05);
+        % 标记phi角和tau
+        \draw[thick,->] (0.5,0,0) arc (0:40:0.5 and 0.5);
+        \node[font=\LARGE] at (0.9,0.4,0) {$\phi,\tau$};
+        % 标记theta角
+        \draw[thick,->] (3,3,1) arc (0:35:-1.0 and 1.0);
+        \node[font=\LARGE] at (3,3.3,1.2) {$^\theta$};
+        % 随杆坐标轴
+        \draw[->] (0,0,0) -- (4.3,4.3,0) node[below] {$x$};
+        \draw[->] (0,0,0) -- (-2.5,2.5,0) node[above] {$y$};
+        \draw[->] (0,0,0) -- (0,0,4);
+    \end{tikzpicture}
+    \caption{倒立摆示意图}
+\end{figure}
+
+$XYZ$坐标系为固定坐标系，而$xyz$为随着水平杆转动的坐标系。记水平杆的质量$m_1$，长度$l_1$，树枝干的质量$m_2$，长度$l_2$，水平杆的转动角度为$\phi$，竖直杆的转动角度$\theta$，假设两杆的质量都是均匀分布。电机的驱动力矩为$\tau$，重力加速度为$g$，下面从第二类Lagrange方程出发推倒倒立摆的动力学方程。
 
 水平杆的动能为
 
@@ -78,70 +111,104 @@
     - \f 1 2 l_2 \d{\theta} sin \theta \hat z 
 \end{equation}
 
-故其质心动能为
+其中$\hat{x},\hat{y},\hat{z}$为$xyz$坐标系各个方向的单位矢量，故其质心动能为
 
 \begin{equation}
-    T_{2c} = \f 1 2 m_2 \vec v^2 
-    = 
+    \begin{aligned}
+    T_{2c} &= \f 1 2 m_2 \vec v^2\\ 
+    &= \f 1 2 m_2 {l_1}^2 {\d \phi}^2
+    +\f 1 2 m_2 \d \phi \d \theta l_1 l_2 cos \theta
+    +\f 1 8 m_2 {l_2}^2 {\d \theta}^2
+    +\f 1 8 m_2 {l_2}^2 {\d \phi}^2 sin^2 \theta
+    \end{aligned}
 \end{equation}
 
+而竖直杆的相对质心动能为转动贡献，即为
 
-\subsection{简化动力学方程}
+\begin{equation}
+    T_{2r} = \f {1} {24} m_2 l_2^2 {\d \theta}^2+ \f {1} {24} m_2 l_2^2 {\d \phi}^2 sin^2 \theta
+\end{equation}
 
-在倒立摆控制在倒立的稳定状态时，由于水平杆转动角度较小，因此可以认为稳定态附近进行稳定控制时，水平旋转杆的外端点可以视为一个平动参照系，原模型可以简化为竖直摆铰接在一个平动的底座上，并且有一个力$F$可以驱动平动的底座：
+系统势能为
 
-\begin{center}
-    Change the picture by yourself！
-%    \includegraphics{picture/example.png}
-\end{center}
+\begin{equation}
+    V = \f 1 2 m_2 g l_2 cos \theta
+\end{equation}
 
-其中$x$为水平底座的位移，$\theta$为竖直杆的倾角，并记$m_b$为水平底座的质量，$m_c$为竖直杆的质量，$l_b$为水平杆的长度，$l_c$为竖直杆的长度，$F$为驱动水平杆外端点的作用力，$g$为重力加速度，根据第二类Lagrange方程，可以得到：
+系统的Lagrange量为
+
+\begin{equation}
+    \begin{aligned}
+        L &= T - V = T_1 + T_{2c} + T_{2r} - V\\
+        &= \f 1 6 m_1 l_1^2 {\d{\phi}}^2
+        +\f 1 2 m_2 {l_1}^2 {\d \phi}^2
+        +\f 1 2 m_2 \d \phi \d \theta l_1 l_2 cos \theta
+        +\f 1 8 m_2 {l_2}^2 {\d \theta}^2\\
+        &+\f 1 8 m_2 {l_2}^2 {\d \phi}^2 sin^2 \theta
+        +\f {1} {24} m_2 l_2^2 {\d \theta}^2
+        + \f {1} {24} m_2 l_2^2 {\d \phi}^2 sin^2 \theta
+        -\f 1 2 m_2 g l_2 cos \theta
+    \end{aligned}
+\end{equation}
+
+保留到二阶小量，可以得到：
+
+\begin{equation}
+    L = \f 1 6 m_1 l_1^2 {\d{\phi}}^2
+    + \f 1 2 m_2 {l_1}^2 {\d \phi}^2
+    + \f 1 2 m_2 \d \phi \d \theta l_1 l_2
+    + \f 1 8 m_2 {l_2}^2 {\d \theta}^2
+    + \f {1} {24} m_2 l_2^2 {\d \theta}^2
+    + \f 1 4 m_2 g l_2\theta^2
+\end{equation}
+
+带入第二类Lagrange方程，得到
 
 \begin{equation}
     \begin{cases}
-        (m_b+m_c) \dd{x}-\f{1}{2} m_b l \dd{\theta}cos\theta+\f 1 2 m_b l {\d{\theta}}^2 sin\theta=F\\
-        \f 1 3 m_b l^2 \dd{\theta}-\f 1 2 m_b l \dd{x} cos\theta-\f 1 2 m_b g l sin\theta = 0 
+        \f 1 3 m_1 l_1 \dd{\phi} + m_2 l_1 \dd{\phi} + \f 1 2 m_2 l_1 l_2 \dd{\theta} = \tau\\
+        \f 1 2 m_2 l_1 \dd{\phi} + \f 1 3 m_2 l_2\dd\theta - \f 1 2 m_2 g \theta = 0
     \end{cases}
 \end{equation}
 
-\noindent 对于倒立摆的控制，应该是在$\theta = 0$的附近进行控制，因此可以对上述方程在$\theta = 0$进行线性化处理，得到：
+记$\b{q}=[\phi , \theta]^T$，有
 
 \begin{equation}
-    \begin{cases}
-        (m_b+m_c) \dd{x}-\f{1}{2} m_b l \dd{\theta} = F\\
-        \f 1 3 m_b l^2 \dd{\theta}-\f 1 2 m_b l \dd{x} -\f 1 2 m_b g l \theta = 0 
-    \end{cases}
+    \b{M} \b{\dd q} + \b{K} \b{q} = \b{\tau}
 \end{equation}
 
-\noindent 对于上述方程，记广义坐标$\b{q}=[x,\theta]^T$，可以写为矩阵形式：
+其中
 
 \begin{equation}
-    \b{M} \b{\dd q} + \b{K} \b{q} = \b{F}
-\end{equation}
-
-\noindent 其中
-
-\begin{equation}
-    \b{M} = \begin{bmatrix}
-        m_b+m_c & -\f{1}{2} m_b l\\
-        -\f{1}{2} m_b l & \f{1}{3} m_b l^2
+    \b M = \begin{bmatrix}
+        \f 1 3 m_1 l_1 + m_2 l_1 & \f 1 2 m_2 l_1 l_2\\
+        \f 1 2 m_2 l_1  & \f 1 3 m_2 l_2
     \end{bmatrix},
-    \b{K} = \begin{bmatrix}
+    \b K = \begin{bmatrix}
         0 & 0\\
-        0 & \f{1}{2} m_b g l
+        0 & \f 1 2 m_2 g
     \end{bmatrix},
-    \b{F} = \begin{bmatrix}
-        F\\
+    \b \tau = \begin{bmatrix}
+        \tau\\
         0
     \end{bmatrix}
 \end{equation}
 
-\noindent 这即倒立摆的动力学方程。
+这就是倒立摆的动力学方程。
 
-\subsection{本征模块的计算}
-对于(3)式，可以求解本征模块，得到：
-实验仪器2使用方法可参考说明书。
+\subsection{本征模块}
 
+我们先分析系统的本征模块，设其一个本征模块为$\b q(t) = \b \eta e^{\lambda t}$，代入方程$\b{M} \b{\dd q} + \b{K} \b{q} = 0$得到特征方程：
+
+\begin{equation}
+        \det(\lambda^2\b M + \b K) = 0
+\end{equation}
+
+且对应的
+
+\begin{equation}
+    (\lambda^2\b M + \b K)
+\end{equation}
 
 \section{实验原理}
 
