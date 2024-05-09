@@ -60,9 +60,42 @@
 
 在本次SRT项目中，选用PD方法来完成对倒立摆的控制，可以建立动力学模型，对PD控制器的参数进行理论计算。
 
-\subsection{动力学模型}
+\subsection{动力学方程}
 
-在倒立摆控制在倒立的稳定状态时，由于水平转动角度较小，因此可以认为稳定态附近进行稳定控制时，水平旋转杆的外端点可以视为一个平动参照系，因此可以建立动力学模型如图所示：
+记水平杆的质量$m_1$，长度$l_1$，树枝干的质量$m_2$，长度$l_2$，水平杆的转动角度为$\phi$，竖直杆的转动角度$\theta$，假设两杆的质量都是均匀分布。电机的驱动力矩为$\tau$，重力加速度为$g$，下面从第二类Lagrange方程出发推倒倒立摆的动力学方程。
+
+水平杆的动能为
+
+\begin{equation}
+    T_1 = \f 1 6 m_1 l_1^2 {\d{\phi}}^2
+\end{equation}
+
+竖直杆的动能为为质心动能和相对之心动能之和，其质心速度为：
+
+\begin{equation}
+    \vec v = -\f 1 2 l_2 \d{\phi} sin \theta \hat x
+    +(\d{\phi} l_1+\f 1 2 l_2 \d{\theta} cos \theta )\hat y
+    - \f 1 2 l_2 \d{\theta} sin \theta \hat z 
+\end{equation}
+
+故其质心动能为
+
+\begin{equation}
+    T_{2c} = \f 1 2 m_2 \vec v^2 
+    = 
+\end{equation}
+
+
+\subsection{简化动力学方程}
+
+在倒立摆控制在倒立的稳定状态时，由于水平杆转动角度较小，因此可以认为稳定态附近进行稳定控制时，水平旋转杆的外端点可以视为一个平动参照系，原模型可以简化为竖直摆铰接在一个平动的底座上，并且有一个力$F$可以驱动平动的底座：
+
+\begin{center}
+    Change the picture by yourself！
+%    \includegraphics{picture/example.png}
+\end{center}
+
+其中$x$为水平底座的位移，$\theta$为竖直杆的倾角，并记$m_b$为水平底座的质量，$m_c$为竖直杆的质量，$l_b$为水平杆的长度，$l_c$为竖直杆的长度，$F$为驱动水平杆外端点的作用力，$g$为重力加速度，根据第二类Lagrange方程，可以得到：
 
 \begin{equation}
     \begin{cases}
@@ -103,13 +136,10 @@
     \end{bmatrix}
 \end{equation}
 
-\noindent 我们的目的是希望能够控制系统的两个目标量$x=0,\theta =0$，但是我们可以控制的仅有一个输出量$F$，应用PD方法，设电机的输出为：
+\noindent 这即倒立摆的动力学方程。
 
-\begin{equation}
-    F = k_p x + k_d \d{x}
-\end{equation}
-
-\subsection{实验仪器2}
+\subsection{本征模块的计算}
+对于(3)式，可以求解本征模块，得到：
 实验仪器2使用方法可参考说明书。
 
 
