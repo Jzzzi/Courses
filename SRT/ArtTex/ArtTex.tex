@@ -15,6 +15,16 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+% 宏定义一些数学符号
+
+\def\f#1#2{\frac{#1}{#2}}
+\def\d#1{\dot{#1}}
+\def\dd#1{\ddot{#1}}
+\def\fd#1#2{\frac{d #1}{d #2}}
+\def\fp#1#2{\frac{\partial #1}{\partial #2}}
+\def\b#1{\boldsymbol{#1}}
+
+
 \documentclass[UTF8]{ctexart}
 
 \usepackage{amsmath}
@@ -27,9 +37,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-
-\title{SRT创新计划专项结题报告\\
-倒立摆控制}
+\title{SRT创新计划专项结题报告\\倒立摆控制}
 \author{刘锦坤}
 \date{\today}
 \pagenumbering{arabic}
@@ -45,6 +53,7 @@
 \newpage
 
 \section{摘要}
+
 本文主要总结了本次倒立摆项目中所做的工作。
 
 \section{PD控制参数的理论计算}
@@ -52,7 +61,53 @@
 在本次SRT项目中，选用PD方法来完成对倒立摆的控制，可以建立动力学模型，对PD控制器的参数进行理论计算。
 
 \subsection{动力学模型}
-在倒立摆控制在倒立的稳定状态时，由于水平转动角度较小，因此可以认为稳定态附近进行稳定控制时，水平旋转杆的外端点可以视为一个平动参照系
+
+在倒立摆控制在倒立的稳定状态时，由于水平转动角度较小，因此可以认为稳定态附近进行稳定控制时，水平旋转杆的外端点可以视为一个平动参照系，因此可以建立动力学模型如图所示：
+
+\begin{equation}
+    \begin{cases}
+        (m_b+m_c) \dd{x}-\f{1}{2} m_b l \dd{\theta}cos\theta+\f 1 2 m_b l {\d{\theta}}^2 sin\theta=F\\
+        \f 1 3 m_b l^2 \dd{\theta}-\f 1 2 m_b l \dd{x} cos\theta-\f 1 2 m_b g l sin\theta = 0 
+    \end{cases}
+\end{equation}
+
+\noindent 对于倒立摆的控制，应该是在$\theta = 0$的附近进行控制，因此可以对上述方程在$\theta = 0$进行线性化处理，得到：
+
+\begin{equation}
+    \begin{cases}
+        (m_b+m_c) \dd{x}-\f{1}{2} m_b l \dd{\theta} = F\\
+        \f 1 3 m_b l^2 \dd{\theta}-\f 1 2 m_b l \dd{x} -\f 1 2 m_b g l \theta = 0 
+    \end{cases}
+\end{equation}
+
+\noindent 对于上述方程，记广义坐标$\b{q}=[x,\theta]^T$，可以写为矩阵形式：
+
+\begin{equation}
+    \b{M} \b{\dd q} + \b{K} \b{q} = \b{F}
+\end{equation}
+
+\noindent 其中
+
+\begin{equation}
+    \b{M} = \begin{bmatrix}
+        m_b+m_c & -\f{1}{2} m_b l\\
+        -\f{1}{2} m_b l & \f{1}{3} m_b l^2
+    \end{bmatrix},
+    \b{K} = \begin{bmatrix}
+        0 & 0\\
+        0 & \f{1}{2} m_b g l
+    \end{bmatrix},
+    \b{F} = \begin{bmatrix}
+        F\\
+        0
+    \end{bmatrix}
+\end{equation}
+
+\noindent 我们的目的是希望能够控制系统的两个目标量$x=0,\theta =0$，但是我们可以控制的仅有一个输出量$F$，应用PD方法，设电机的输出为：
+
+\begin{equation}
+    F = k_p x + k_d \d{x}
+\end{equation}
 
 \subsection{实验仪器2}
 实验仪器2使用方法可参考说明书。
