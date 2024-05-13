@@ -77,3 +77,7 @@ ros2 lifecycle set /stereo_camera activate
 ```
 source ~/VisualLocate/bash/stereo_camera.bash
 ```
+
+## 色彩识别方案
+
+在HSV颜色空间中，low = [31, 40, 00],high = [90, 255, 223]，可以识别到球，对于image_rgb
