@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Water Hammer Event}{3}{0}{1}
+\beamer@sectionintoc {2}{Column Seperation}{4}{0}{2}
+\beamer@sectionintoc {3}{Water Hammer Event Calculation without Considering Seperation}{5}{0}{3}
+\beamer@sectionintoc {4}{A Simple Way To Calculate The Seperation Effect}{6}{0}{4}
