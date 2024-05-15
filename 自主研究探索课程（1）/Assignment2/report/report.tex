@@ -15,7 +15,7 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-% 宏定义数学公式中的粗体
+% Define the command to use the bold symbol in math environment
 \newcommand{\mb}[1]{\boldsymbol{#1}}
 
 \documentclass[UTF8]{ctexart}
@@ -44,11 +44,15 @@
 \maketitle
 \tableofcontents
 
-\newpage
-
 \section{说明}
 
-本次作业所有文件均已上传至附件，代码保存在code文件夹，图片保存在在pic文件夹，问题[n]对应的代码为Question[n].py文件，util.py文件为编写的工具函数文件，其中包括了若干矩阵运算函数。
+本次作业所有文件均已上传至附件，代码保存在code文件夹，图片保存在pic文件夹，问题[n]对应的代码为Question[n].py文件，util.py文件为编写的工具函数文件，其中包括了若干矩阵运算函数。运行python程序前请确保
+
+\begin{enumerate}
+  \item 安装了python3.7及以上版本，实地测试环境为python3.11.4
+  \item 安装了符合python版本的numpy, matplotlib, scipy, tkindter等python库
+  \item 保证util.py文件与Question[n].py文件在同一目录下
+\end{enumerate}
 
 \section{问题一}
 
@@ -120,12 +124,42 @@
 
 \section{问题五}
 
-这里我们可以进行一个理论推导分析系统的稳定性，我们知道任意矩阵$\mb A$可以分解为：
+这里我们可以进行一个理论推导分析系统的稳定性，对于矩阵方程
 
 \begin{equation}
-  \mb A = \mb P^{-1} \mb J \mb P
+  \mb{\dot x} = \mb A \mb x
 \end{equation}
 
-其中$\mb J$是$\mb A$的Jordan标准型，$\mb P$是一个可逆矩阵。
+其解为
+
+\begin{equation}
+  \mb x = \mb x_0 e^{\mb A t}
+\end{equation}
+
+而该解要是渐近稳定的（即不发散），则要求对于矩阵$\mb A$的所有特征值$\lambda_i$均满足实部小于0的条件，即
+
+\begin{equation}
+  \text{Re}(\lambda_i) < 0  
+\end{equation}
+
+那么对于一组特定的特定的传递系数，我们只需计算矩阵$\mb A_R$的特征值即可判断系统的稳定性。在Question5.py文件中，我们实现了对于不同传递系数计算矩阵$\mb A_R$的特征值，并且绘制转速曲线代码。可以通过滑块自由变动传递系数，观察特征值的变化和系统的稳定性,如图5所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pic/eigensys.png}
+    \caption{特征值的变化}
+\end{figure}
+
+最终会发现当传递系数在一定范围内时，当使得矩阵$\mb A_R$的特征值的实部全为负时，系统是稳定的，而当传递系数超出一定范围时，矩阵$\mb A_R$的特征值的实部出现正数（或0），系统会变得不稳定。具体对于每一个传递系数来说：
+
+\begin{enumerate}
+  \item $e_y$增大时系统向平衡稳定方向偏离，减小时向不平衡方向偏离。
+  \item $e_x$增大时系统向不平衡稳定方向偏离，减小时向平衡方向偏离。
+  \item $e_h$增大时系统向不平衡稳定方向偏离，减小时向平衡方向偏离。
+  \item $e_{qy}$增大时系统向不平衡稳定方向偏离，减小时向平衡方向偏离。
+  \item $e_{qx}$增大时系统向平衡稳定方向偏离，减小时向不平衡方向偏离。
+  \item $e_{qh}$增大时系统向平衡稳定方向偏离，减小时向不平衡方向偏离。
+\end{enumerate}
+
 \end{document}
 
