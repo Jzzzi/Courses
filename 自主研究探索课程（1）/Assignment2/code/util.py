@@ -14,3 +14,10 @@ def matrix_power(A, n):
     '''
     pow = np.linalg.matrix_power(A, n)
     return pow
+
+def eig(A):
+    '''
+    Compute the eigenvalues and eigenvectors of A
+    '''
+    eigvals, eigvecs = np.linalg.eig(A)
+    return eigvals, eigvecs
