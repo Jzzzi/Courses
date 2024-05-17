@@ -6,7 +6,6 @@
 
 连接密码：123
 
-
 ## 编译方法
 
 输入如下命令build
@@ -81,3 +80,41 @@ source ~/VisualLocate/bash/stereo_camera.bash
 ## 色彩识别方案
 
 在HSV颜色空间中，low = [31, 40, 00],high = [90, 255, 223]，可以识别到球，对于image_rgb
+
+## Stereo_Camera相机参数
+
+```
+h_left: 400
+h_rgb: 480
+h_right: 400
+w_left: 500
+w_rgb: 640
+w_right: 500
+```
+
+## 深度和灰度
+
+![1715951240114](image/note/1715951240114.png)
+
+可以看到，可以认为infra1和depth的图是对整齐的，如果能在infra1中找到球即可
+
+## Infra1的参数
+
+height=480, width=640,fx=388.5847168,cx=322.05200195,fy=388.5847168,cy=236.50979614
+r=array([1., 0., 0., 0., 1., 0., 0., 0., 1.]),
+
+## RGB的参数
+
+fx=470.0
+
+fy=464.68
+
+cx=300.0
+
+cy=250.50979614
+
+width = 640
+
+height = 320
+
+![1715955706553](image/note/1715955706553.png)
