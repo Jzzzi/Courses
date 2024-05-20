@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.20)  21 MAY 2024 00:31
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.20)  21 MAY 2024 00:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -892,14 +892,34 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  TU/lmtt/b/n --> TU/lmtt/b/n on input line 12.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
- (./report2.nav) [1
+ (./report2.nav)
+Overfull \hbox (0.74216pt too wide) detected at line 12
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
 
-] (./report2.toc) [2
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[1
+
+] (./report2.toc)
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[2
 
 ]
 File: pic/DVCM_Model.png Graphic file (type bmp)
 <pic/DVCM_Model.png>
- [3
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[3
 
 ]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 45.
@@ -909,15 +929,35 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 45.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [4
+)
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
 
-] [5
+[4
 
-] [6
+]
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[5
+
+]
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[6
 
 ]
 Overfull \hbox (30.73143pt too wide) detected at line 86
 [][]
+ []
+
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
  []
 
 [7
@@ -927,18 +967,33 @@ Overfull \hbox (30.73143pt too wide) detected at line 107
 [][]
  []
 
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
 [8
 
 ]
 File: pic/keycode.png Graphic file (type bmp)
 <pic/keycode.png>
- [9
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[9
 
 ]
 File: pic/DVCM_Waterhead.png Graphic file (type bmp)
 <pic/DVCM_Waterhead.png>
 
 Overfull \vbox (45.75264pt too high) detected at line 129
+ []
+
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
  []
 
 [10
@@ -950,11 +1005,33 @@ File: pic/MOC_Waterhead.png Graphic file (type bmp)
 Overfull \vbox (45.75264pt too high) detected at line 137
  []
 
+
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
 [11
 
-] [12
+]
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
 
-] [13
+[12
+
+]
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[13
+
+]
+Overfull \hbox (0.74216pt too wide) has occurred while \output is active
+  [] [][] [][][][][][] [][] [][][][] [][] [][]  
+ []
+
+[14
 
 ]
 \tf@nav=\write6
@@ -968,15 +1045,15 @@ Overfull \vbox (45.75264pt too high) detected at line 137
 
  (./report2.aux)
 Package rerunfilecheck Info: File `report2.out' has not changed.
-(rerunfilecheck)             Checksum: FB24C3F9A82EA442DC6956F9BA3FAA91;657.
+(rerunfilecheck)             Checksum: 3871AD08F1F71C468D86213C624B3E0A;715.
  ) 
 Here is how much of TeX's memory you used:
- 28509 strings out of 476191
- 626922 string characters out of 5812072
- 960598 words of memory out of 5000000
- 48668 multiletter control sequences out of 15000+600000
+ 28514 strings out of 476191
+ 626962 string characters out of 5812072
+ 964486 words of memory out of 5000000
+ 48673 multiletter control sequences out of 15000+600000
  476061 words of font info for 68 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  142i,20n,136p,443b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on report2.pdf (13 pages).
+Output written on report2.pdf (14 pages).
