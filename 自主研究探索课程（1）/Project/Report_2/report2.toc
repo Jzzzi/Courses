@@ -1,1 +1,5 @@
 \beamer@sectionintoc {1}{Introduction of DVCM}{3}{0}{1}
+\beamer@sectionintoc {2}{Details of DVCM}{4}{0}{2}
+\beamer@sectionintoc {3}{Implementation of DVCM}{9}{0}{3}
+\beamer@sectionintoc {4}{Results of DVCM}{10}{0}{4}
+\beamer@sectionintoc {5}{Future Work}{13}{0}{5}
