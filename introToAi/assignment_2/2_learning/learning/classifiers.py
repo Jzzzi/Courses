@@ -94,9 +94,17 @@ class KNNClassifier:
 
         "*** YOUR CODE HERE ***"
         # should compute (validationData[i] - trainingData[j])^2
-        util.raiseNotDefined()
-
-
+        numData = data.shape[0]
+        numTrain = self.trainingData.shape[0]
+        dists = np.zeros((numData, numTrain))
+        labels = np.zeros(numData)
+        for i in range(numData):
+            for j in range(numTrain):
+                dists[i, j] = np.sum((data[i] - self.trainingData[j])**2)
+            neighbors = np.argsort(dists[i])[0:self.num_neighbors]
+            labels[i] = np.argmax(np.bincount(self.trainingLabels[neighbors]))
+        return labels
+        
 class PerceptronClassifier:
     """
     Perceptron classifier.

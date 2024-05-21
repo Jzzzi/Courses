@@ -170,7 +170,18 @@ class KMeansClusterDigit(BaseFeatureExtractor):
         # performing K-means clustering
         # YOU SHOULD use the cluster_no for computing the clusters
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        for _ in range(self.num_iterations):
+            for i in range(self.num_cluster):
+                # Get points assigned to cluster i
+                cluster_points = trainingData[cluster_no == i]
+                # If there are data points in the cluster, update the cluster center
+                if cluster_points.shape[0] > 0:
+                    self.clusters[i] = np.mean(cluster_points, axis=0)
+            
+            # Assign each data point to the closest cluster
+            # Numpy will broadcast the subtraction to all data points
+            distances = np.linalg.norm(trainingData[:, np.newaxis, :] - self.clusters, axis=2)
+            cluster_no = np.argmin(distances, axis=1)
         
         return self.clusters
         
