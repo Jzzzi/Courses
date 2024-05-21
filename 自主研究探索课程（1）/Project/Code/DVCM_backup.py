@@ -121,7 +121,7 @@ for i in range(1,N_t+1):
 plt.figure(figsize=(12,10), dpi=100)
 
 for i in range(N+1):
-    if i%int(int(N)/2) == 0:
+    if i%10 == 0:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
 # Draw line H_min, and the maximum water head
 plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
@@ -137,7 +137,7 @@ plt.close()
 # set the resolution and the dpi of the plot
 plt.figure(figsize=(10,10), dpi=100)
 for i in range(N+1):
-    if i%int(int(N)/2) == 0:
+    if i%10 == 0:
         plt.plot(np.arange(0,N_t+1)*dt,Q[:,i],label=f'node N={i}')
 plt.xlabel('Time (s)')
 plt.ylabel('Flow rate (m^3/s)')
@@ -157,16 +157,3 @@ plt.close()
 # plt.title('The flow rate difference in the pipe at different time and position')
 # plt.legend()
 # plt.show()
-
-# Plot the bubble volumn
-plt.figure(figsize=(10,10), dpi=100)
-for i in range(0, N+1):
-    if i % 4 == 0:
-        plt.plot(np.arange(0,N_t+1)*dt,E[:,i],label=f'node N={i}')
-plt.xlabel('Time (s)')
-plt.ylabel('Volumn m^3')
-plt.title('Bubble Volumn')
-plt.legend()
-plt.savefig('./Report_2/pic/DVCM_Bubble.png')
-plt.show()
-plt.close()

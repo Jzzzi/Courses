@@ -12,7 +12,7 @@ f = 0.018
 # k is a coefficient
 k = 0.009
 g = 9.806
-t_c = 1.0
+t_c = 0.5
 E_m = 1.5
 rho = 1000
 # The minimum water head at which the water will vaporize
@@ -27,8 +27,8 @@ N_t = int(T/dt)
 
 # initialize the Q, H and E, E is the volumn of the cavity, axis 0 is time, axis 1 is the position
 init = np.zeros(N+1)
-Q = np.zeros((N_t+1,N+1)) + Q_0
-H = np.zeros((N_t+1,N+1))
+Q = np.zeros((N_t+1,N+1))
+H = np.zeros((N_t+1,N+1)) + H_R
 E = np.zeros((N_t+1,N+1))
 # initialize the H by linear interpolation
 for i in range(N+1):
@@ -42,9 +42,9 @@ R = f*dx/(2*g*D*A**2)
 for i in range(1,N_t+1):
     t =  i*dt
     if t < t_c:
-        tau = np.power(1-t/t_c,E_m)
+        tau = t/t_c
     else:
-        tau = 0
+        tau = 1
     for j in range(N+1):
         # If the cavitarion does not happen
         if E[i-1,j] <= 0:
@@ -83,7 +83,7 @@ plt.xlabel('Time (s)')
 plt.ylabel('Water head (m)')
 plt.title('The water head in the pipe at different time and position')
 plt.legend()
-plt.savefig('./Report_2/pic/MOC_Waterhead.png')
+plt.savefig('./Report_2/pic/MOC_Open_Waterhead.png')
 # close the plot
 plt.close()
 # Plot the relationship between the flow rate and the time of all the nodes
@@ -96,5 +96,5 @@ plt.xlabel('Time (s)')
 plt.ylabel('Flow rate (m^3/s)')
 plt.title('The flow rate in the pipe at different time and position')
 plt.legend()
-plt.savefig('./Report_2/pic/MOC_Flowrate.png')
+plt.savefig('./Report_2/pic/MOC_Open_Flowrate.png')
 plt.close()
