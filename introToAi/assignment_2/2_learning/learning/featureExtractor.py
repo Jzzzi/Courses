@@ -180,7 +180,10 @@ class KMeansClusterDigit(BaseFeatureExtractor):
             
             # Assign each data point to the closest cluster
             # Numpy will broadcast the subtraction to all data points
-            distances = np.linalg.norm(trainingData[:, np.newaxis, :] - self.clusters, axis=2)
+            distances = np.zeros((n, self.num_cluster))
+            for i in range(n):
+                for j in range(self.num_cluster):
+                    distances[i, j] = np.linalg.norm(trainingData[i] - self.clusters[j])
             cluster_no = np.argmin(distances, axis=1)
         
         return self.clusters
