@@ -2,11 +2,33 @@
 \usefonttheme{serif}
 \usepackage[labelformat=empty]{caption}
 % Set the theme
-\usetheme{Berlin}
+\usetheme{default}
+\AtBeginSection[]{
+  \begin{frame}{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+      \usebeamerfont{institute in head/foot}\insertshortinstitute
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+      \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+      \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
 
 % title, author, date
 \title{An Implementation of DVCM in Water Hammer Event}
 \author{刘锦坤;姜逸轩;黑建聪}
+\institute{Tsinghua University}
 \date{2024.5.21}
 
 \begin{document}
