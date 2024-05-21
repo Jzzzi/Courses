@@ -1,58 +1,36 @@
 #include <iostream>
-#include <vector>
-#include <string>
-
 using namespace std;
 
-void printTree(const vector<int>& parents, const vector<string>& names, int current, int depth, vector<bool>& visited) {
-    cout << string(depth * 2, ' ') << "+-" << names[current] << endl;
-    visited[current] = true;
-
-    // 找到当前节点的子节点
-    for (int i = 0; i < parents.size(); ++i) {
-        if (parents[i] == current) {
-            printTree(parents, names, i, depth + 1, visited);
-        }
-    }
-
-    // 检查当前节点是否有未打印的兄弟节点
-    for (int i = current + 1; i < parents.size(); ++i) {
-        if (parents[i] == parents[current]) {
-            if (!visited[i]) {
-                cout << string(depth * 2, ' ') << "|" << endl;
-                printTree(parents, names, i, depth, visited);
+// TO DO: Implement the drawTree function
+void drawTree(int* parents, string* names, int N, int parent, string prefix, bool HasBrother = false){ 
+    HasBrother = false;
+    for(int i = 0; i < N; i++){
+        if(parents[i] == parent){
+            cout << prefix;
+            cout << "+-" << names[i] << endl;
+            for(int j = i + 1; j < N; j++){
+                if(parents[j] == parent){
+                    HasBrother = true;
+                    break;
+                }
+                HasBrother = false;
             }
-            break;
+            drawTree(parents, names, N, i, prefix + (HasBrother ? "| " : "  "), false);
         }
     }
 }
 
-int main() {
+int main(){
     int N;
     cin >> N;
-
-    vector<int> parents(N);
-    vector<string> names(N);
-    vector<bool> visited(N, false);
-
-    for (int i = 0; i < N; ++i) {
+    int* parents = new int [N];
+    for(int i = 0; i < N; i++){
         cin >> parents[i];
     }
-    for (int i = 0; i < N; ++i) {
+    string* names = new string [N];
+    for(int i = 0; i < N; i++){
         cin >> names[i];
     }
-
-    // 找到根节点
-    int root = -1;
-    for (int i = 0; i < N; ++i) {
-        if (parents[i] == -1) {
-            root = i;
-            break;
-        }
-    }
-
-    // 输出树结构
-    printTree(parents, names, root, 0, visited);
-
+    drawTree(parents, names, N, -1, "");
     return 0;
 }
