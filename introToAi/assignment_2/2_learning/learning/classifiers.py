@@ -130,10 +130,10 @@ class PerceptronClassifier:
         self.learningRate = 1
         
     def setWeights(self, input_dim):
-        '*** MY CODE ***'
+        '*** MY CODE START***'
         # Reset the random seed in case that the autograder change the random numbers
         np.random.seed(0)
-        '*** MY CODE ***'
+        '*** MY CODE END***'
         self.weights = np.random.randn(input_dim, len(self.legalLabels))/np.sqrt(input_dim)
         self.bias = np.zeros(len(self.legalLabels))
     
