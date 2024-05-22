@@ -130,6 +130,9 @@ class PerceptronClassifier:
         self.learningRate = 1
         
     def setWeights(self, input_dim):
+        '*** MY CODE ***'
+        np.random.seed(0)
+        '*** MY CODE ***'
         self.weights = np.random.randn(input_dim, len(self.legalLabels))/np.sqrt(input_dim)
         self.bias = np.zeros(len(self.legalLabels))
     
@@ -176,7 +179,7 @@ class PerceptronClassifier:
         
         # Hyper-parameters. Your can reset them. Default batchSize = 100, weight_decay = 1e-3, learningRate = 1e-2
         "*** YOU CODE HERE ***"
-        self.batchSize = 1000
+        self.batchSize = 500
         self.weight_decay = 1e-3
         self.learningRate = 1
 
