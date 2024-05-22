@@ -30,4 +30,6 @@ def displayDigit(data, nrows=1, outfile='sample.png'):
         i = n // ncols
         j = n % ncols
         output[i*90+3:i*90+87,j*90+3:j*90+87] = d
+    # Normalize data to 0-255
+    output = (255.0 / output.max() * (output - output.min())).astype(np.uint8)
     io.imsave(outfile, output)
