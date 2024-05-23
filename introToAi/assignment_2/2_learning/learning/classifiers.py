@@ -15,6 +15,7 @@
 import util
 from classificationMethod import ClassificationMethod
 import numpy as np
+import math
 
 
 class LinearRegressionClassifier(ClassificationMethod):
@@ -129,6 +130,10 @@ class PerceptronClassifier:
         self.learningRate = 1
         
     def setWeights(self, input_dim):
+        '*** MY CODE START***'
+        # Reset the random seed in case that the autograder change the random numbers
+        np.random.seed(0)
+        '*** MY CODE END***'
         self.weights = np.random.randn(input_dim, len(self.legalLabels))/np.sqrt(input_dim)
         self.bias = np.zeros(len(self.legalLabels))
     
@@ -175,7 +180,7 @@ class PerceptronClassifier:
         
         # Hyper-parameters. Your can reset them. Default batchSize = 100, weight_decay = 1e-3, learningRate = 1e-2
         "*** YOU CODE HERE ***"
-        self.batchSize = 100
+        self.batchSize = 500
         self.weight_decay = 1e-3
         self.learningRate = 1
 
@@ -184,7 +189,25 @@ class PerceptronClassifier:
             dataBatches = self.prepareDataBatches(trainingData, trainingLabels)
             for batchData, batchLabel in dataBatches:
                 "*** YOUR CODE HERE ***"
-                util.raiseNotDefined()
+                outPut = np.dot(batchData, self.weights) + self.bias
+                # Numerical stabilization
+                outPut = outPut - np.max(outPut, axis=1)[:, None]
+                expMatrix = np.exp(outPut)
+                sumExp = np.sum(expMatrix, axis=1)
+                softmax = expMatrix / sumExp[:, None]
+                gradWeights = np.zeros(self.weights.shape)
+                gradBias = np.zeros(self.bias.shape)
+                for j in range (self.weights.shape[1]):
+                    gradWeights[:,j] += self.weight_decay * self.weights[:,j]
+                    for i in range (self.batchSize):
+                        if j == batchLabel[i]:
+                            gradWeights[:,j] += (softmax[i,j] - 1) * batchData[i]
+                            gradBias[j] += (softmax[i,j] - 1)
+                        else:
+                            gradWeights[:,j] += softmax[i,j] * batchData[i]
+                            gradBias[j] += softmax[i,j]
+                    gradBias[j] += self.weight_decay * self.bias[j]
+                self.weights -= self.learningRate * gradWeights
 
     def classify(self, data):
         """
