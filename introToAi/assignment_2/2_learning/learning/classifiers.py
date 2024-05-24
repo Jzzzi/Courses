@@ -253,9 +253,9 @@ class SVMClassifier(ClassificationMethod):
         """
         from sklearn import svm
          
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
-        
+        "*** YOUR CODE HERE ***"   
+        scale = 10.0
+        self.sklearn_svm = svm.SVC(C=5.0, kernel='rbf', gamma=1/(2*scale**2))     
         self.sklearn_svm.fit(trainingData, trainingLabels)
     
     def classify(self, data):
@@ -263,7 +263,7 @@ class SVMClassifier(ClassificationMethod):
         classification with SVM using sklearn API
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.sklearn_svm.predict(data)
 
         
 class BestClassifier(ClassificationMethod):
@@ -280,7 +280,17 @@ class BestClassifier(ClassificationMethod):
         
         "*** YOUR CODE HERE (If needed) ***"
         # For passing the autograder, you may import sklearn package HERE. 
-        self.sklearn_classifier = None
+        from sklearn.neural_network import MLPClassifier
+        from sklearn.datasets import fetch_openml
+        from sklearn.model_selection import train_test_split
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.metrics import classification_report, confusion_matrix
+        self.scaler = StandardScaler()
+        self.mlp_model = MLPClassifier(hidden_layer_sizes=(256,128), activation='relu', solver='adam', batch_size='auto',
+                                learning_rate='constant', learning_rate_init=0.001, max_iter=500, random_state=42,
+                                tol=1e-4, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True,
+                                early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
+                                epsilon=1e-08, n_iter_no_change=10)
     
     def train( self, trainingData, trainingLabels, validationData, validationLabels ):
         """
@@ -289,14 +299,12 @@ class BestClassifier(ClassificationMethod):
         For digit data, trainingData/validationData are all in numpy format with size ([number of data], 784)
         For passing the autograder, you may import sklearn package HERE. 
         """
-        from sklearn import svm
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        self.mlp_model.fit(trainingData, trainingLabels)
             
     def classify(self, data):
         """
         classification with the designed classifier
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
-
+        return self.mlp_model.predict(data)
