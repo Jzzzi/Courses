@@ -12,6 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
+import torch.version
 import util
 from classificationMethod import ClassificationMethod
 import numpy as np
@@ -280,17 +281,40 @@ class BestClassifier(ClassificationMethod):
         
         "*** YOUR CODE HERE (If needed) ***"
         # For passing the autograder, you may import sklearn package HERE. 
-        from sklearn.neural_network import MLPClassifier
-        from sklearn.datasets import fetch_openml
-        from sklearn.model_selection import train_test_split
-        from sklearn.preprocessing import StandardScaler
-        from sklearn.metrics import classification_report, confusion_matrix
-        self.scaler = StandardScaler()
-        self.mlp_model = MLPClassifier(hidden_layer_sizes=(256,128), activation='relu', solver='adam', batch_size='auto',
-                                learning_rate='constant', learning_rate_init=0.001, max_iter=500, random_state=42,
-                                tol=1e-4, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True,
-                                early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
-                                epsilon=1e-08, n_iter_no_change=10)
+        import torch
+        import torch.nn as nn
+        import torch.nn.functional as F
+        import torch.optim as optim
+
+        # The defination of the neural network
+        class cnnNet(nn.Module):
+            def __init__(self):
+                super(cnnNet, self).__init__()
+                # Set the random seed
+                torch.manual_seed(0)
+                self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
+                self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
+                self.conv2_drop = nn.Dropout2d()
+                self.fc1 = nn.Linear(320, 50)
+                self.fc2 = nn.Linear(50, 10)
+            def forward(self, x):
+                x = F.relu(F.max_pool2d(self.conv1(x), 2))
+                x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
+                x = x.view(-1, 320)
+                x = F.relu(self.fc1(x))
+                x = F.dropout(x, training=self.training)
+                x = self.fc2(x)
+                return F.log_softmax(x, dim=1)
+        # Set the random seed
+        torch.manual_seed(0)
+        if torch.cuda.is_available():
+            self.device = "cuda"
+            self.cnn_model = cnnNet().cuda()
+            print("Using cuda")
+        else:
+            self.device = "cpu"
+            self.cnn_model = cnnNet()
+            print("Using cpu")
     
     def train( self, trainingData, trainingLabels, validationData, validationLabels ):
         """
@@ -300,11 +324,79 @@ class BestClassifier(ClassificationMethod):
         For passing the autograder, you may import sklearn package HERE. 
         """
         "*** YOUR CODE HERE ***"
-        self.mlp_model.fit(trainingData, trainingLabels)
+        import torch
+        import torch.nn as nn
+        import torch.nn.functional as F
+        import torch.optim as optim
+        from torch.autograd import Variable
+        from torch.utils.data import DataLoader, TensorDataset
+
+        # Hyper-parameters
+        batchSize = 500
+        epochs = 300
+        learning_rate = 0.005
+        momentum = 0.5
+        # Define the loss function and optimizer
+        self.criterion = nn.CrossEntropyLoss()
+        '''
+        Using SGD optimizer, a good hyper-parameter setting
+        batch_size = 200
+        epochs = 200
+        learning_rate = 0.10
+        momentum = 0.5
+        '''
+        # self.optimizer = optim.SGD(self.cnn_model.parameters(), lr=learning_rate, momentum=momentum)
+
+        '''
+        Using Adam optimizer, a good hyper-parameter setting
+        batch_size = 500
+        epochs = 300
+        learning_rate = 0.005
+        '''
+        self.optimizer = optim.Adam(self.cnn_model.parameters(), lr=learning_rate)
+
+        # Process the data
+        trainData = torch.from_numpy(trainingData).float()
+        trainLabel = torch.from_numpy(trainingLabels).long()
+        if self.device == "cuda":
+            trainData = trainData.cuda()
+            trainLabel = trainLabel.cuda()
+        trainData = trainData.reshape(-1, 1, 28, 28)
+        trainData = trainData.reshape(-1, 1, 28, 28)
+        trainDataset = TensorDataset(trainData, trainLabel)
+        trainLoader = DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=True)
+        # Train the model
+        self.cnn_model.train()
+        for epoch in range(epochs):
+            for data in trainLoader:
+                inputs, labels = data
+                inputs, labels = Variable(inputs), Variable(labels)
+                self.optimizer.zero_grad()
+                outputs = self.cnn_model(inputs)
+                loss = self.criterion(outputs, labels)
+                loss.backward()
+                self.optimizer.step()
+            if epoch % 10 == 0:
+                print("Epoch: ", epoch, "Loss: ", loss.item())
             
     def classify(self, data):
         """
         classification with the designed classifier
         """
         "*** YOUR CODE HERE ***"
-        return self.mlp_model.predict(data)
+        import torch
+        import torch.nn as nn
+        import torch.nn.functional as F
+        import torch.optim as optim
+        from torch.autograd import Variable
+        # Process the data
+        data = torch.from_numpy(data).float()
+        if self.device == "cuda":
+            data = data.cuda()
+        data = data.reshape(-1, 1, 28, 28)
+        # Predict the data
+        self.cnn_model.eval()
+        output = self.cnn_model(data)
+        if self.device == "cuda":
+            return torch.max(output, 1)[1].cpu().numpy()
+        return torch.max(output, 1)[1].numpy()
