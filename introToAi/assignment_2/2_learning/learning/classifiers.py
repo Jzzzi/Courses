@@ -294,9 +294,10 @@ class BestClassifier(ClassificationMethod):
                 torch.manual_seed(0)
                 self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
                 self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
-                self.conv2_drop = nn.Dropout2d()
-                self.fc1 = nn.Linear(320, 50)
-                self.fc2 = nn.Linear(50, 10)
+                self.conv2_drop = nn.Dropout2d(0.5)
+                self.fc1 = nn.Linear(320, 128)
+                self.fc2 = nn.Linear(128, 64)
+                self.fc3 = nn.Linear(64, 10)
             def forward(self, x):
                 x = F.relu(F.max_pool2d(self.conv1(x), 2))
                 x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
@@ -304,6 +305,9 @@ class BestClassifier(ClassificationMethod):
                 x = F.relu(self.fc1(x))
                 x = F.dropout(x, training=self.training)
                 x = self.fc2(x)
+                x= F.dropout(x, training=self.training)
+                x = F.relu(x)
+                x = self.fc3(x)
                 return F.log_softmax(x, dim=1)
         # Set the random seed
         torch.manual_seed(0)
@@ -332,9 +336,9 @@ class BestClassifier(ClassificationMethod):
         from torch.utils.data import DataLoader, TensorDataset
 
         # Hyper-parameters
-        batchSize = 500
-        epochs = 300
-        learning_rate = 0.005
+        batchSize = 200
+        epochs = 200
+        learning_rate = 0.1
         momentum = 0.5
         # Define the loss function and optimizer
         self.criterion = nn.CrossEntropyLoss()
@@ -345,7 +349,7 @@ class BestClassifier(ClassificationMethod):
         learning_rate = 0.10
         momentum = 0.5
         '''
-        # self.optimizer = optim.SGD(self.cnn_model.parameters(), lr=learning_rate, momentum=momentum)
+        self.optimizer = optim.SGD(self.cnn_model.parameters(), lr=learning_rate, momentum=momentum)
 
         '''
         Using Adam optimizer, a good hyper-parameter setting
@@ -353,7 +357,7 @@ class BestClassifier(ClassificationMethod):
         epochs = 300
         learning_rate = 0.005
         '''
-        self.optimizer = optim.Adam(self.cnn_model.parameters(), lr=learning_rate)
+        # self.optimizer = optim.Adam(self.cnn_model.parameters(), lr=learning_rate)
 
         # Process the data
         trainData = torch.from_numpy(trainingData).float()
@@ -378,6 +382,16 @@ class BestClassifier(ClassificationMethod):
                 self.optimizer.step()
             if epoch % 10 == 0:
                 print("Epoch: ", epoch, "Loss: ", loss.item())
+        # Print the training accuracy
+        self.cnn_model.eval()
+        output = self.cnn_model(trainData)
+        if self.device == "cuda":
+            output = torch.max(output, 1)[1].cpu().numpy()
+            trainLabel = trainLabel.cpu()
+        else:
+            output = torch.max(output, 1)[1].numpy()
+        correct = (output == trainLabel.numpy()).sum()
+        print("Training accuracy: ", correct / len(trainingLabels)*100, "%")
             
     def classify(self, data):
         """
