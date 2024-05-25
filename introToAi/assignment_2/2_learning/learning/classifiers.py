@@ -358,7 +358,7 @@ class BestClassifier(ClassificationMethod):
         learning_rate = 0.005
         '''
         # self.optimizer = optim.Adam(self.cnn_model.parameters(), lr=learning_rate)
-
+        
         # Process the data
         trainData = torch.from_numpy(trainingData).float()
         trainLabel = torch.from_numpy(trainingLabels).long()

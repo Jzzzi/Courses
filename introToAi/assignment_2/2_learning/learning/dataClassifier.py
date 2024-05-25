@@ -59,6 +59,21 @@ def analysis(classifier, guesses, testLabels, testData, rawTestData):
     #         print "Predicted %d; truth is %d" % (prediction, truth)
     #         print "Image: "
     #         break
+    def printImage(pixels,prediction,truth):
+        # print a grayscale image of the pixels
+        import matplotlib.pyplot as plt
+        plt.figure()
+        plt.imshow(pixels, cmap='gray')
+        plt.title('Prediction: %d; Truth: %d' % (prediction, truth))
+        plt.show()
+    for i in range(len(guesses)):
+        prediction = guesses[i]
+        truth = testLabels[i]
+        if (prediction != truth):
+            print ("===================================")
+            print ("Predicted %d; truth is %d" % (prediction, truth))
+            print ("Image: ")
+            printImage(rawTestData[i].reshape(28,28),prediction,truth)
 
 
 ## =====================
@@ -176,7 +191,6 @@ def runClassifier(args, options):
                                 (100.0 * correct / len(testLabels)))
 
         analysis(classifier, guesses, testLabels, testData, rawTestData)
-
     # do odds ratio computation if specified at command line
     if options.visualize and options.classifier=='perceptron':
         import display
