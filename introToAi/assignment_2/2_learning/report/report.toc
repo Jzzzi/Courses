@@ -1,1 +1,7 @@
 \contentsline {section}{\numberline {1}问题1}{1}{}%
+\contentsline {section}{\numberline {2}算法分析}{2}{}%
+\contentsline {subsection}{\numberline {2.1}K-Means算法}{2}{}%
+\contentsline {subsection}{\numberline {2.2}KNN算法}{2}{}%
+\contentsline {subsection}{\numberline {2.3}Softmax Regression算法}{3}{}%
+\contentsline {subsection}{\numberline {2.4}SVM算法}{3}{}%
+\contentsline {subsection}{\numberline {2.5}Better Classifier}{4}{}%
