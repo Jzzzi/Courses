@@ -12,7 +12,7 @@ f = 0.018
 # k is a coefficient
 k = 0.009
 g = 9.806
-t_c = 1.0
+t_c = 0.3
 E_m = 1.5
 rho = 1000
 # The minimum water head at which the water will vaporize
@@ -23,7 +23,7 @@ N = 20
 dx = L/N
 dt = dx/a
 T = 25
-psi = 0.8
+psi = 1.0
 N_t = int(T/dt)
 
 # initialize the Q, H and E, E is the volumn of the cavity, axis 0 is time, axis 1 is the position
@@ -63,10 +63,11 @@ for i in range(1,N_t+1):
                 Q[i,j] = (C_P-C_M)/(2*B)
                 Qu[i,j] = Q[i,j]
                 if H[i,j] < H_min:
-                    H[i,j] = H_min
-                    Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
-                    Q[i,j] = (H[i,j]-H[i-1,j+1]+B*Qu[i-1,j+1])/(B+R*abs(Qu[i-1,j+1]))
-                    E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
+                    # H[i,j] = H_min
+                    # Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
+                    # Q[i,j] = (H[i,j]-H[i-1,j+1]+B*Qu[i-1,j+1])/(B+R*abs(Qu[i-1,j+1]))
+                    # E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
+                    E[i,j] = +1e-10
             if j == N:
                 C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
                 C_V = (Q_0*tau)**2/(2*H_0)
@@ -76,10 +77,11 @@ for i in range(1,N_t+1):
                 if H[i,j] < H_min:
                     if t < t_c:
                         raise("Cavitation before t_c")
-                    H[i,j] = H_min
-                    Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
-                    Q[i,j] = 0
-                    E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
+                    # H[i,j] = H_min
+                    # Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
+                    # Q[i,j] = 0
+                    # E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
+                    E[i,j] = 1e-10
         # If the cavitation happens, E[i,j] > 0
         elif E[i-1,j] > 0:
             if j == 0:
@@ -91,11 +93,11 @@ for i in range(1,N_t+1):
                 E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
                 if E[i, j] < 0:
                     E[i, j] = 0
-                    C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
-                    C_M = H[i-1,j+1]-Q[i-1,j+1]*(B-S-R*abs(Q[i-1,j+1]))
-                    H[i,j] = (C_P+C_M)/2
-                    Q[i,j] = (C_P-C_M)/(2*B)
-                    Qu[i,j] = Q[i,j]
+                    # C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
+                    # C_M = H[i-1,j+1]-Q[i-1,j+1]*(B-S-R*abs(Q[i-1,j+1]))
+                    # H[i,j] = (C_P+C_M)/2
+                    # Q[i,j] = (C_P-C_M)/(2*B)
+                    # Qu[i,j] = Q[i,j]
 
             if j == N:
                 H[i,j] = H_min
@@ -104,11 +106,11 @@ for i in range(1,N_t+1):
                 E[i,j] = E[i-1,j] + (1-psi)*(Q[i,j]*dt - Qu[i,j]*dt) + psi*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
                 if E[i,j] < 0:
                     E[i,j] = 0
-                    C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
-                    C_V = (Q_0*tau)**2/(2*H_0)
-                    Q[i,j] = -B*C_V+np.sqrt((B*C_V)**2+2*C_V*C_P)
-                    H[i,j] = C_P - B*Q[i,j]
-                    Qu[i,j] = Q[i,j]
+                    # C_P = H[i-1,j-1]+Q[i-1,j-1]*(B+S-R*abs(Q[i-1,j-1]))
+                    # C_V = (Q_0*tau)**2/(2*H_0)
+                    # Q[i,j] = -B*C_V+np.sqrt((B*C_V)**2+2*C_V*C_P)
+                    # H[i,j] = C_P - B*Q[i,j]
+                    # Qu[i,j] = Q[i,j]
 
 
 
@@ -122,6 +124,7 @@ plt.figure(figsize=(12,10), dpi=100)
 
 for i in range(N+1):
     if i%int(int(N)/2) == 0:
+    # if i == 2:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
 # Draw line H_min, and the maximum water head
 plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
