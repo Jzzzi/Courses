@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 H_R = 150
-Q_0 =0.4774321
+Q_0 = 0.4774321
 H_0 = 143.48828
 #Question1计算结果
 L = 600
@@ -12,7 +12,7 @@ f = 0.018
 # k is a coefficient
 k = 0.009
 g = 9.806
-t_c = 0.5
+t_c = 0.3
 E_m = 1.5
 rho = 1000
 # The minimum water head at which the water will vaporize
@@ -28,7 +28,7 @@ N_t = int(T/dt)
 # initialize the Q, H and E, E is the volumn of the cavity, axis 0 is time, axis 1 is the position
 init = np.zeros(N+1)
 Q = np.zeros((N_t+1,N+1))
-H = np.zeros((N_t+1,N+1)) + H_R
+H = np.zeros((N_t+1,N+1))
 E = np.zeros((N_t+1,N+1))
 # initialize the H by linear interpolation
 for i in range(N+1):

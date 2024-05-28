@@ -12,7 +12,7 @@ f = 0.018
 # k is a coefficient
 k = 0.009
 g = 9.806
-t_c = 1.0
+t_c = 0.3
 E_m = 1.5
 rho = 1000
 # The minimum water head at which the water will vaporize
