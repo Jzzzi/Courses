@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.20)  29 MAY 2024 00:56
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.5.20)  29 MAY 2024 12:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -579,13 +579,13 @@ File: images/you.jpg Graphic file (type bmp)
 
 ] (./resume.aux)
 Package rerunfilecheck Info: File `resume.out' has not changed.
-(rerunfilecheck)             Checksum: 62551555FF12A55874FDA0AF9003CC80;2617.
+(rerunfilecheck)             Checksum: 8FEF5BE7A6737C8B4132C8F1055DE291;2464.
  ) 
 Here is how much of TeX's memory you used:
- 15813 strings out of 476191
- 332916 string characters out of 5812072
- 715015 words of memory out of 5000000
- 36324 multiletter control sequences out of 15000+600000
+ 15771 strings out of 476191
+ 329681 string characters out of 5812072
+ 713853 words of memory out of 5000000
+ 36282 multiletter control sequences out of 15000+600000
  471653 words of font info for 66 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  103i,5n,105p,355b,325s stack positions out of 5000i,500n,10000p,200000b,80000s
