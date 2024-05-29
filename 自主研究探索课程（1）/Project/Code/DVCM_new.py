@@ -69,6 +69,7 @@ for i in range(1,N_t+1):
                     H[i,j] = H_min
                     Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
                     Q[i,j] = (H[i,j]-H[i-1,j+1]+B*Qu[i-1,j+1])/(B+R*abs(Qu[i-1,j+1]))
+                    # E[i,j] = 1e-100
                     E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
                     # E[i,j] = E[i-2,j] + psi*(Q[i,j]*2*dt - Qu[i,j]*2*dt) + (1-psi)*(Q[i-2,j]*2*dt - Qu[i-2,j]*2*dt)
             if j == N:
@@ -83,6 +84,7 @@ for i in range(1,N_t+1):
                     H[i,j] = H_min
                     Qu[i,j] = (-H[i,j]+H[i-1,j-1]+B*Q[i-1,j-1])/(B+R*abs(Q[i-1,j-1]))
                     Q[i,j] = 0
+                    # E[i,j] = 1e-100
                     E[i,j] = E[i-1,j] + psi*(Q[i,j]*dt - Qu[i,j]*dt) + (1-psi)*(Q[i-1,j]*dt - Qu[i-1,j]*dt)
                     # E[i,j] = E[i-2,j] + psi*(Q[i,j]*2*dt - Qu[i,j]*2*dt) + (1-psi)*(Q[i-2,j]*2*dt - Qu[i-2,j]*2*dt)
         # If the cavitation happens, E[i,j] > 0
@@ -134,8 +136,8 @@ plt.figure(figsize=(12,10), dpi=100)
 
 for i in range(N+1):
     # if i%int(int(N)/2) == 0:
-    if i == int(N/2):
-    # if i == N:
+    # if i == int(N/2):
+    if i == N:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
 # Draw line H_min, and the maximum water head
 plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
@@ -153,8 +155,8 @@ plt.close()
 plt.figure(figsize=(12,10), dpi=100)
 for i in range(N+1):
     # if i%int(int(N)/2) == 0:
-    # if i == int(N/2):
-    if i == N:
+    if i == int(N/2):
+    # if i == N:
         plt.plot(np.arange(0,N_t+1)*dt,Q[:,i],label=f'node N={i}')
 plt.xlabel('Time (s)')
 plt.ylabel('Flow rate (m^3/s)')
