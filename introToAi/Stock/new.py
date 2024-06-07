@@ -159,12 +159,10 @@ if __name__ == '__main__':
     _, predicted = torch.max(y_pred, 1)
     total = 0
     correct = 0
-    boughtPoints = []
-    soldPoints = []
     for i in range(len(predicted)):
-        if y_pred[i][1] > 0.5:
+        if y_pred[i][1]<0.5:
             total += 1
-            if y_test[i][1] == 1:
+            if y_test[i][0] == 1:
                 correct += 1
     print(f'极端正确率: {correct/total}')
 
