@@ -15,24 +15,22 @@ import util
 # MLP模型
 
 class LSTM(nn.Module):
-    def __init__(self, input_dim):
+    def __init__(self, input_dim, output_dim):
         super(LSTM, self).__init__()
 
-        hidden_size = 32
+        hidden_size = 20
         num_layers = 2
         self.lstm = nn.LSTM(input_dim,
                             hidden_size = hidden_size,
                             num_layers = num_layers,
                             batch_first=True)
-        self.fc = nn.Linear(hidden_size, 2)
+        self.fc = nn.Linear(hidden_size, output_dim)
         
     def forward(self, x):
         x, _ = self.lstm(x)
         x = x[:, -1, :]
         x = x.reshape(x.shape[0], -1)
-        x = F.relu(self.fc(x))
-        # 使用softmax函数输出概率
-        x = F.softmax(x, dim=1)
+        x = F.sigmoid(self.fc(x))
         return x
     
 # 训练函数
@@ -59,10 +57,10 @@ def data_process(original_data):
     """
 
     days_before = 15
-    days_after = 5
+    days_after = 3
     feature_num = 8
     k = 0.8
-    batch_size = 200
+    batch_size = len(original_data) - days_before - days_after - 2
 
     num_samples = len(original_data) - days_before - days_after - 2
     # 特征为前days_before天的数据
@@ -70,20 +68,22 @@ def data_process(original_data):
     for i in range(num_samples):
         x[i] = original_data.loc[i:i + days_before - 1, 'open':].values
     # 标签为days_after后的涨跌
-    y = np.zeros((num_samples, 2))
-    for i in range(num_samples):
-        if (original_data.loc[i+days_before+days_after-1, 'close'] - original_data.loc[i+days_before-1, 'close']) > 0:
-            y[i,1] = 1
-        else:
-            y[i,0] = 0
-    # 标签为days_after后的收盘价
     # y = np.zeros((num_samples, 1))
     # for i in range(num_samples):
-    #     y[i] = original_data.loc[i+days_before+days_after-1, 'close']
+    #     if (original_data.loc[i+days_before+days_after-1, 'close'] - original_data.loc[i+days_before-1, 'close']) > 0:
+    #         y[i] = 1.0
+    #     else:
+    #         y[i] = 0.0
+    # 标签为days_after后的收盘价
+    y = np.zeros((num_samples, 1))
+    for i in range(num_samples):
+        y[i] = original_data.loc[i+days_before+days_after-1, 'close']
 
     # 归一化
     scaler_x = MinMaxScaler()
     x = scaler_x.fit_transform(x.reshape(-1, feature_num)).reshape(num_samples, days_before, feature_num)
+    scaler_y = MinMaxScaler()
+    y = scaler_y.fit_transform(y.reshape(-1, 1)).reshape(num_samples, 1)
 
     # 划分训练集和测试集
     train_size = int(num_samples * k)
@@ -98,18 +98,12 @@ def data_process(original_data):
     y_train = torch.tensor(y_train, dtype=torch.float)
     x_test = torch.tensor(x_test, dtype=torch.float)
     y_test = torch.tensor(y_test, dtype=torch.float)
-    # 如果使用GPU
-    if torch.cuda.is_available():
-        x_train = x_train.cuda()
-        y_train = y_train.cuda()
-        x_test = x_test.cuda()
-        y_test = y_test.cuda()
 
     # 转换为数据集
     train_dataset = TensorDataset(x_train, y_train)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-    return train_loader, x_train, y_train, x_test, y_test, scaler_x
+    return train_loader, x_train, y_train, x_test, y_test, scaler_x, scaler_y
 
 # 原始数据获取函数
 
@@ -134,38 +128,61 @@ def get_original_data(name, start_date, end_date):
 
 # ==================== 主函数 ======================
 
-original_data = get_original_data('华能水电', '2018-01-01', '2024-06-04')    
+original_data = get_original_data('华能水电', '2018-01-01', '2024-05-08')    
 
 (train_loader, x_train, y_train,
  x_test, y_test,
- scaler_x) = data_process(original_data)
+ scaler_x, scaler_y) = data_process(original_data)
 
 print(f'训练集大小: {len(train_loader.dataset)}')
 
 input_dim = 8
 num_epochs = 1000
 
-model = LSTM(input_dim)
-# 如果使用GPU
-if torch.cuda.is_available():
-    model = model.cuda()
-# criterion = nn.MSELoss()
-criterion = nn.CrossEntropyLoss()
-# 使用SGD优化器
-optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+model = LSTM(input_dim, 1)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 train(model, train_loader, optimizer, criterion, num_epochs)
 
 model.eval()
-# 训练集准确率
-y_pred = model(x_train)
-y_pred = torch.argmax(y_pred, dim=1)
-y_train = torch.argmax(y_train, dim=1)
-accuracy = torch.sum(y_pred == y_train).item() / y_train.size(0)
-print(f'训练集准确率: {accuracy}')
-# 测试集准确率
-y_pred = model(x_test)
-y_pred = torch.argmax(y_pred, dim=1)
-y_test = torch.argmax(y_test, dim=1)
-accuracy = torch.sum(y_pred == y_test).item() / y_test.size(0)
-print(f'测试集准确率: {accuracy}')
+y_pred_test = model(x_test)
+print(f'测试集loss: {criterion(y_pred_test, y_test).item()}')
+y_pred_test = y_pred_test.detach().numpy()
+y_pred_test = y_pred_test.reshape(-1, 1)
+y_pred_test = scaler_y.inverse_transform(y_pred_test)
+y_test = y_test.detach().numpy()
+y_test = y_test.reshape(-1, 1)
+y_test = scaler_y.inverse_transform(y_test)
+
+
+y_pred_train = model(train_loader.dataset.tensors[0])
+print(f'训练集loss: {criterion(y_pred_train, y_train).item()}')
+y_pred_train = y_pred_train.detach().numpy()
+y_pred_train = y_pred_train.reshape(-1, 1)
+y_pred_train = scaler_y.inverse_transform(y_pred_train)
+y_train = train_loader.dataset.tensors[1].numpy()
+y_train = y_train.reshape(-1, 1)
+y_train = scaler_y.inverse_transform(y_train)
+
+
+plt.subplot(1, 2, 1)
+plt.title('Test')
+plt.plot(y_pred_test, label='Prediction')
+plt.plot(y_test, label='Real')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.title('Train')
+plt.plot(y_pred_train, label='Prediction')
+plt.plot(y_train, label='Real')
+plt.legend()
+plt.show()
+
+y_pred_total = np.concatenate((y_pred_train, y_pred_test))
+y_total = np.concatenate((y_train, y_test))
+
+plt.plot(y_pred_total, label='Prediction')
+plt.plot(y_total, label='Real')
+plt.legend()
+plt.show()
