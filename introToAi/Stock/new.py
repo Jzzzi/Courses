@@ -39,9 +39,9 @@ def dataProcess(original_data, days_before=15, days_after=5, batch_size=100, k=0
     y = np.zeros((num_samples, 2))
     for i in range(num_samples):
         if (original_data.loc[i+days_before+days_after, 'close'] - original_data.loc[i+days_before, 'close']) > 0:
-            y[i,1] = 1
+            y[i,1] = 1# [0, 1]
         else:
-            y[i,0] = 1
+            y[i,0] = 1# [1, 0]
 
     # 归一化
     scaler_x = MinMaxScaler()
@@ -83,8 +83,8 @@ def train(model, train_loader, num_epochs=500, lr=0.001):
     """
     print('Start training...')
     model.train()
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr)
+    criterion = nn.CrossEntropyLoss() # 交错熵损失函数
+    optimizer = optim.Adam(model.parameters(), lr=lr) # 优化器
     for epoch in range(num_epochs):
         for i, (x, y) in enumerate(train_loader):
             y_pred = model(x)
@@ -117,14 +117,15 @@ if __name__ == '__main__':
     days_before = 15
     days_after = 5
     k = 0.9
+    # 训练集占比
     num_samples = len(original_data) - days_before - days_after 
-    train_loader, x_train, y_train, x_test, y_test, scaler_x = dataProcess(original_data,batch_size=200,k=k,days_before=days_before,days_after=days_after)
+    train_loader, x_train, y_train, x_test, y_test, scaler_x = dataProcess(original_data,batch_size=100,k=k,days_before=days_before,days_after=days_after)
     model = LSTM(8, 6, 2, 2)
     # model = LSTM(8)
     if torch.cuda.is_available():
         model = model.cuda()
 
-    # train(model, train_loader, num_epochs=1000, lr=0.001)
+    # train(model, train_loader, num_epochs=1000, lr=0.005)
     # 读取模型
     model.load_state_dict(torch.load('model.pth'))
     model.eval()
@@ -154,6 +155,9 @@ if __name__ == '__main__':
             correct += 1
     print(f'测试集上涨概率: {correct/total}')
 
+    #[x ,y]
+    # x + y = 1
+    # x代表下跌概率，y代表上涨概率
     # 预测上涨买入，预测下跌卖出，输出收益
     y_pred = model(x_test)
     _, predicted = torch.max(y_pred, 1)
@@ -171,4 +175,13 @@ if __name__ == '__main__':
     if key == 'y':
         torch.save(model.state_dict(), 'model.pth')
         print('模型已保存')
+    
+    # 画出股票走势图
+    import matplotlib.pyplot as plt
+    original_data = original_data[days_before:]
+    original_data = original_data.reset_index(drop=True)
+    original_data = original_data.dropna()
+    original_data['close'].plot()
+    plt.show()
+
     
