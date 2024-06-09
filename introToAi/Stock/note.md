@@ -57,3 +57,18 @@
 ## 现在
 
 根据前15天交易数据，预测第五天后相对今天的涨跌，训练集准确率: 0.60，测试集准确率: 0.58。
+
+## 调节一下
+
+LSTM模型看一眼，[LSTM](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html#torch.nn.LSTM)
+
+torch 官网，[Torch](https://pytorch.org/docs/stable/index.html)
+
+AI，[ChatGLM](https://chatglm.cn/)
+
+聚宽安装教程(聚宽)[https://www.joinquant.com/help/api/doc?name=logon&id=9823]
+
+调节几个超参数，batch_size, lr, 网络设计
+
+
+

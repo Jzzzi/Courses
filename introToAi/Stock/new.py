@@ -30,7 +30,10 @@ def dataProcess(original_data, days_before=15, days_after=5, batch_size=100, k=0
     # 样本总数
     num_samples = len(original_data) - days_before - days_after
     print(f'样本总数: {num_samples}')
-    # 特征为前days_before天的数据
+    # 特征为前days_before天的数据\
+    # numsamples 序列个数
+    # days_before 序列长度
+    # 8 特征数
     x = np.zeros((num_samples, days_before, 8))
     for i in range(num_samples):
         x[i] = original_data.loc[i+1:i + days_before, 'open':].values/original_data.loc[i:i + days_before-1, 'open':].values
@@ -114,18 +117,32 @@ class LSTM(nn.Module):
 
 if __name__ == '__main__':
     original_data = pd.read_csv('002765.XSHE.csv')
+    #=========================HyperParameter
     days_before = 15
     days_after = 5
+    batch_size = 100
     k = 0.9
+    #=========================
     # 训练集占比
     num_samples = len(original_data) - days_before - days_after 
-    train_loader, x_train, y_train, x_test, y_test, scaler_x = dataProcess(original_data,batch_size=100,k=k,days_before=days_before,days_after=days_after)
-    model = LSTM(8, 6, 2, 2)
+    train_loader, x_train, y_train, x_test, y_test, scaler_x = dataProcess(original_data,batch_size=batch_size,k=k,days_before=days_before,days_after=days_after)
+    
+    #=======================HyperParameter
+    hidden_size = 6
+    num_layers = 2
+    #=======================
+    model = LSTM(8, hidden_size=hidden_size, num_layers=num_layers, num_classes=2)
+
     # model = LSTM(8)
     if torch.cuda.is_available():
         model = model.cuda()
 
-    # train(model, train_loader, num_epochs=1000, lr=0.005)
+    # 训练模型
+    #======================HyperParameter
+    num_epochs = 1000
+    lr = 0.005
+    #======================
+    # train(model, train_loader, num_epochs=num_epochs, lr=lr)
     # 读取模型
     model.load_state_dict(torch.load('model.pth'))
     model.eval()
@@ -155,21 +172,6 @@ if __name__ == '__main__':
             correct += 1
     print(f'测试集上涨概率: {correct/total}')
 
-    #[x ,y]
-    # x + y = 1
-    # x代表下跌概率，y代表上涨概率
-    # 预测上涨买入，预测下跌卖出，输出收益
-    y_pred = model(x_test)
-    _, predicted = torch.max(y_pred, 1)
-    total = 0
-    correct = 0
-    for i in range(len(predicted)):
-        if y_pred[i][1]<0.5:
-            total += 1
-            if y_test[i][0] == 1:
-                correct += 1
-    print(f'极端正确率: {correct/total}')
-
     # 保存模型
     key = input('是否保存模型？(y/n)')
     if key == 'y':
@@ -183,5 +185,3 @@ if __name__ == '__main__':
     original_data = original_data.dropna()
     original_data['close'].plot()
     plt.show()
-
-    
