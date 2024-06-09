@@ -126,7 +126,7 @@ for i in range(N+1):
     if i%int(int(N)/2) == 0:
     # if i == 2:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
-# Draw line H_min, and the maximum water head
+# Draw line H_min, and the maximum water head, initial water head
 plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
 plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*np.max(H[:,N]),label=f'H_max={np.max(H[:,N])}',linestyle='--') 
 plt.xlabel('Time (s)')

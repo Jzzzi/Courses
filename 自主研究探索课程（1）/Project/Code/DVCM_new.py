@@ -10,7 +10,7 @@ L = 37.23 # the length of the pipe
 a = 1319.0 # the speed of wave
 D = 0.0221 # the diameter of the pipe
 A = 1/4*np.pi*D**2 # the cross section area of the pipe
-f = 0.18 # the friction factor
+f = 0.018 # the friction factor
 k = 0.0 # k is a coefficient of the valve
 g = 9.806 # the gravity
 t_c = 0.009 # the closure time of the valve
@@ -19,7 +19,11 @@ H_min = -1.013e5/g/rho # the minimum water head at which the water will vaporize
 N = 16 # the number of nodes
 V_0 = 1.5 # the initial velocity of the water
 Q_0 = A*V_0 # the initial flow rate
+
+#TO DO: Calculate the H_0
 H_0 = 30.0 # the initial water head
+# By theoretical calculation, easy to get an approximate value
+H_0 = H_R - f*V_0**2/(2*g*D) * L # about 28.52
 # The parameters of the iteration
 dx = L/N
 dt = dx/a
@@ -35,8 +39,11 @@ Qu[0,:] = Q_0
 # Down stream flow rate
 Q = np.zeros((N_t+1,N+1))
 Q[0,:] = Q_0
+# Water head
 H = np.zeros((N_t+1,N+1))
-H[0,:] = H_0
+for i in range(N+1):
+    H[0,i] = H_R - f*V_0**2/(2*g*D) * i*dx
+# Bubble volumn
 E = np.zeros((N_t+1,N+1))
 
 A = np.pi*D**2/4
@@ -135,9 +142,10 @@ for i in range(N+1):
     if i == int(N/2):
     # if i == N:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
-# Draw line H_min, and the maximum water head
-plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
-plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*np.max(H[:,N]),label=f'H_max={np.max(H[:,N])}',linestyle='--') 
+        # Draw line H_min, and the maximum water head
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*np.max(H[:,N]),label=f'H_max={np.max(H[:,N])}',linestyle='--') 
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H[0,i],label=f'H_0={H[0,i]}',linestyle='--')
 plt.xlabel('Time (s)')
 plt.ylabel('Water head (m)')
 plt.title('The water head in the pipe at different time and position')
@@ -153,9 +161,10 @@ for i in range(N+1):
     # if i == int(N/2):
     if i == N:
         plt.plot(np.arange(0,N_t+1)*dt,H[:,i],label=f'node N={i}')
-# Draw line H_min, and the maximum water head
-plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
-plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*np.max(H[:,N]),label=f'H_max={np.max(H[:,N])}',linestyle='--') 
+        # Draw line H_min, and the maximum water head
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H_min,label=f'H_min={H_min}',linestyle='--')
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*np.max(H[:,N]),label=f'H_max={np.max(H[:,N])}',linestyle='--') 
+        plt.plot(np.arange(0,N_t+1)*dt,np.ones(N_t+1)*H[0,i],label=f'H_0={H[0,i]}',linestyle='--')
 plt.xlabel('Time (s)')
 plt.ylabel('Water head (m)')
 plt.title('The water head in the pipe at different time and position')

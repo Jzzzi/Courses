@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+% 定义偏导数的简便写法
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\begin{document}
+
+\title{Calculation of the end valve head}
+\author{Jez}
+\date{\today}
+
+\maketitle
+
+\section{Brief Procedure}
+
+Generally, we have
+
+\begin{equation}
+    V\frac{\partial H}{\partial x}+\frac{a^2}{g}\frac{\partial V}{\partial x}=0
+\end{equation}
+
+\begin{equation}
+    g\pd{H}{x}+V\pd{V}{x}+\frac{fV|V|}{2D}=0
+\end{equation}
+
+\noindent Substitute (1) into (2), we have
+
+\begin{equation}
+    g\pd{H}{x}-\frac{gV^2}{a^2}\pd{H}{x}+\frac{fV|V|}{2D}=0
+\end{equation}
+
+\noindent The second term in (3) can be neglected, so we have
+
+\begin{equation}
+    g\pd{H}{x}+\frac{fV|V|}{2D}=0
+\end{equation}
+
+\noindent Since $V = Const$ and $V > 0$,$H(x)$ can be calculated by
+
+\begin{equation}
+    H(x) = H_0 - \frac{fV^2}{2gD}x
+    \label{eq:head}
+\end{equation}
+
+(\ref{eq:head}) can be used to calculate the head at the end valve, which indicates the head loss of the pipeline depending on the coefficient of friction $f$, so $f$ do matters though not given in the article.
+
+Also, the numerical results show that the loss of the velocity can be neglected but the head loss is significant.
+\end{document}
