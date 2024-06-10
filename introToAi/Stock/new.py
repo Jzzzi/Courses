@@ -144,7 +144,10 @@ if __name__ == '__main__':
     #======================
     # train(model, train_loader, num_epochs=num_epochs, lr=lr)
     # 读取模型
-    model.load_state_dict(torch.load('model.pth'))
+    if torch.cuda.is_available():
+        model.load_state_dict(torch.load('model.pth'))
+    else:
+        model.load_state_dict(torch.load('model.pth', map_location='cpu'))     
     model.eval()
     # 训练集准确率
     y_pred = model(x_train)
