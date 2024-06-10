@@ -99,11 +99,11 @@ def train(model, train_loader, num_epochs=500, lr=0.001):
             print(f'Epoch {epoch + 1}/{num_epochs}, Loss: {loss.item()}')
 
 class LSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers, num_classes):
+    def __init__(self, input_size, hidden_size, num_layers, num_classes, dropout):
         super(LSTM, self).__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, dropout=dropout)
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
@@ -130,8 +130,9 @@ if __name__ == '__main__':
     #=======================HyperParameter
     hidden_size = 6
     num_layers = 2
+    dropout = 0
     #=======================
-    model = LSTM(8, hidden_size=hidden_size, num_layers=num_layers, num_classes=2)
+    model = LSTM(8, hidden_size=hidden_size, num_layers=num_layers, num_classes=2, dropout=dropout)
 
     # model = LSTM(8)
     if torch.cuda.is_available():
