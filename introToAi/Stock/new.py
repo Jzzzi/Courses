@@ -147,7 +147,7 @@ if __name__ == '__main__':
     if torch.cuda.is_available():
         model.load_state_dict(torch.load('model.pth'))
     else:
-        model.load_state_dict(torch.load('model.pth', map_location='cpu'))     
+        model.load_state_dict(torch.load('model.pth', map_location='cpu')) 
     model.eval()
     # 训练集准确率
     y_pred = model(x_train)
