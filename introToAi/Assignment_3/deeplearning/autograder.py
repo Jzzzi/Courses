@@ -293,7 +293,7 @@ def verify_node(node, expected_type, expected_shape, method_name):
         assert False, "If you see this message, please report a bug in the autograder"
 
     if expected_type != 'loss':
-        assert all([(expected is '?' or actual == expected) for (actual, expected) in zip(node.data.size(), expected_shape)]), (
+        assert all([(expected == '?' or actual == expected) for (actual, expected) in zip(node.data.size(), expected_shape)]), (
             "{} should return an object with shape {}, got {}".format(
                 method_name, expected_shape, tuple(node.data.size())))
                 
@@ -330,7 +330,7 @@ def check_digit_classification(tracker):
     detected_parameters = None
     for batch_size in (1, 2, 4):
         loader_train = DataLoader(data_train, batch_size=batch_size, shuffle=True)
-        inp_x, inp_y = loader_train.__iter__().next()
+        inp_x, inp_y = loader_train.__iter__().__next__()
         inp_x, inp_y = inp_x.to(device), inp_y.to(device)
         output_node = model.forward(inp_x)
         verify_node(output_node, 'node', (batch_size, 10), "DigitClassificationModel.forward()")
@@ -432,7 +432,7 @@ def check_adversarial_examples(tracker):
     detected_parameters = None
     for batch_size in (1, 2, 4):
         loader_train = DataLoader(data_test, batch_size=batch_size, shuffle=True)
-        inp_x, inp_y = loader_train.__iter__().next()
+        inp_x, inp_y = loader_train.__iter__().__next__()
         inp_x, inp_y = inp_x.to(device), inp_y.to(device)
         output_node = model.attack(inp_x, inp_y, epsilon)
         verify_node(output_node, 'node', (batch_size, 1, 28, 28), "DigitAttackModel.attack()")

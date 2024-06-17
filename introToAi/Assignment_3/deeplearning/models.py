@@ -50,6 +50,16 @@ class DigitClassificationModel(nn.Module):
         super(DigitClassificationModel, self).__init__()
         # Initialize your model parameters here
         "*** YOUR CODE HERE ***"
+        self.conv1 = nn.Conv2d(in_channels = 1, out_channels = 16, kernel_size = 3, padding = 0, stride = 1, bias = False)
+        self.bn1 = nn.BatchNorm2d(16)
+        self.conv2 = nn.Conv2d(in_channels = 16, out_channels = 32, kernel_size = 3, padding = 0, stride = 1, bias = False)
+        self.bn2 = nn.BatchNorm2d(32)
+        self.pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        self.conv3 = nn.Conv2d(in_channels = 32, out_channels = 64, kernel_size = 3, padding = 0, stride = 1, bias = False)
+        self.bn3 = nn.BatchNorm2d(64)
+        self.pool2 = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        self.fc1 = nn.Linear(64*5*5, 500, bias = True)
+        self.fc2 = nn.Linear(500, 10, bias = True)
 
     def forward(self, x):
         """
@@ -66,6 +76,25 @@ class DigitClassificationModel(nn.Module):
                 (also called logits)
         """
         "*** YOUR CODE HERE ***"
+        # ========================================================
+        # If the BatchNorm layer is used 
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = self.pool1(F.relu(self.bn2(self.conv2(x))))
+        x = self.pool2(F.relu(self.bn3(self.conv3(x))))
+        x = x.view(-1, 64*5*5)
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+        # ========================================================
+        # If the BatchNorm layer is not used
+        # x = F.relu(self.conv1(x))
+        # x = self.pool1(F.relu(self.conv2(x)))
+        # x = self.pool2(F.relu(self.conv3(x)))
+        # x = x.view(-1, 64*5*5)
+        # x = F.relu(self.fc1(x))   
+        # x = self.fc2(x)
+        # return x
+
 
     def train_model(self, data_train, data_val=None):
         """
@@ -86,7 +115,7 @@ class DigitClassificationModel(nn.Module):
         self.train()
         # Define proper optimizers: suggest to use SGD with learning rate 0.05, monemtum 0.9, weight decay 5e-4.
         "*** YOUR CODE HERE ***"
-        optimizer = None 
+        optimizer = optim.SGD(self.parameters(), lr=0.05, momentum=0.9, weight_decay=5e-4)
         for epoch in range(1):
             for batch_idx, (data, target) in enumerate(loader_train):
                 data, target = data.to(device), target.to(device) # recommend to add this line of code
@@ -94,7 +123,8 @@ class DigitClassificationModel(nn.Module):
                 output = self.forward(data)
                 # Define cross entropy loss here.
                 "*** YOUR CODE HERE ***"
-                loss = None 
+                criterion = nn.CrossEntropyLoss()
+                loss = criterion(output, target)
                 loss.backward()
                 optimizer.step()
                 accuracy = torch.mean((torch.max(output, dim=1)[1] == target).float())
@@ -138,6 +168,7 @@ class RegressionModel(nn.Module):
             PyTorch tensor with shape (batch_size x 1) containing predicted y-values
         """
         "*** YOUR CODE HERE ***"
+        return self.net(x)
 
     def train_model(self, data_train, data_val=None):
         """
@@ -159,6 +190,20 @@ class RegressionModel(nn.Module):
         
         # Train with the DataLoader
         "*** YOUR CODE HERE ***"
+        optimizer = torch.optim.Adam(self.parameters(), lr=0.01)
+        criterion = torch.nn.MSELoss()
+        for epoch in range(100):
+            for x, y in loader_train:
+                x, y = x.to(device), y.to(device)
+                optimizer.zero_grad()
+                y_pred = self.forward(x)
+                loss = criterion(y_pred, y)
+                loss.backward()
+                optimizer.step()
+            if epoch % 10 == 0:
+                print('Epoch: {}, Loss: {:.4f}'.format(epoch, loss.item()))
+        return loss.item()
+    
             
                         
 class DigitAttackModel(object):
@@ -201,8 +246,14 @@ class DigitAttackModel(object):
         x_input = (x - 0.1307) / 0.3081 # Normalize data
         # generate the adversarial examples and store them in x_adv
         "*** YOUR CODE HERE ***"
-        
-        x_adv = None
+        output = self.model(x_input)
+        # using cross entropy loss
+        criterion = nn.CrossEntropyLoss()
+        loss = criterion(output, target)
+        self.model.zero_grad()
+        loss.backward()
+        x_grad = x.grad.data
+        x_adv = x + epsilon * torch.sign(x_grad)
         # Adding clipping to maintain [0,1] range
         return torch.clamp(x_adv, 0, 1)
 
@@ -227,6 +278,13 @@ class LanguageIDModel(nn.Module):
 
         # Initialize your model parameters here
         "*** YOUR CODE HERE ***"
+        self.hidden_size = 64
+        self.rnn = nn.RNN(input_size = self.num_chars, hidden_size = self.hidden_size, num_layers = 3, batch_first = False)
+        # move the model to the device
+        self.rnn = self.rnn.to(device)
+        self.fc = nn.Linear(self.hidden_size, 5)
+        # print(f'Using device: {device}')
+
 
     def forward(self, xs):
         """
@@ -256,6 +314,12 @@ class LanguageIDModel(nn.Module):
                 (also called logits)
         """
         "*** YOUR CODE HERE ***"
+        h0 = torch.zeros(3, xs.size(1), self.hidden_size).to(device)
+        # move the input to the device
+        xs = xs.to(device)
+        out, _ = self.rnn(xs, h0)
+        out = self.fc(out[-1])
+        return out
 
     def train_model(self, loader_train, loader_val):
         """
@@ -264,6 +328,21 @@ class LanguageIDModel(nn.Module):
         The train loader and the validation loader are provided.
         """
         "*** YOUR CODE HERE ***"
+        self.train()
+        optimizer = torch.optim.Adam(self.parameters(), lr=0.005)
+        criterion = torch.nn.CrossEntropyLoss()
+        for epoch in range(20):
+            for x, y in loader_train:
+                x, y = x.to(device), y.to(device)
+                optimizer.zero_grad()
+                output = self.forward(x)
+                loss = criterion(output, y)
+                loss.backward()
+                optimizer.step()
+            if epoch % 1 == 0:
+                print('Epoch: {}, Loss: {:.4f}'.format(epoch, loss.item()))
+        return loss.item()
+    
             
             
 class DeepQModel(nn.Module):
