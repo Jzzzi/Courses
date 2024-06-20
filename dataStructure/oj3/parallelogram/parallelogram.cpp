@@ -1,84 +1,78 @@
-// WRONG ANSWER
+#include <iostream>
 
-#include<stdio.h>
 #define MD 119997
 
-struct Point{
-    int x,y;
-};
+using namespace std;
 
-struct hashElem
+struct HashElem
 {
-    int point1, point2;
-    bool occupied = false;
+    int point1;
+    int point2;
+    bool ocp = false;
 };
 
+struct Point
+{
+    int x;
+    int y;
+};
 
-void hashing(int midx, int midy, int i, int j, hashElem* hashTable){
-    int key = ((midx * 1000 + midy * 1234) % MD + MD) % MD;
-    while(hashTable[key].occupied)
+HashElem hashTable[MD];
+int conflictCount = 0;
+
+int hashKey(int x, int y){
+    int key = ((x * 4217 + y * 8731) % MD+ MD) % MD;
+    return key;
+}
+
+int searchCount(int key, int i, int j, Point* points){
+    int count = 0;
+    while (hashTable[key].ocp){
+        int p = hashTable[key].point1;
+        int q = hashTable[key].point2;
+        if(points[i].x + points[j].x != points[p].x + points[q].x || points[i].y + points[j].y != points[p].y + points[q].y){
+            key = (key + 1) % MD;
+            continue;
+        }
+        if((points[p].x-points[q].x)*(points[i].y-points[j].y) != (points[i].x-points[j].x)*(points[p].y-points[q].y))
+            count++;
         key = (key + 1) % MD;
+    }
+    hashTable[key].ocp = true;
     hashTable[key].point1 = i;
     hashTable[key].point2 = j;
-    hashTable[key].occupied = true;
-}
-
-int countParallelogram(int midx, int midy, int i, int j, Point* points, hashElem* hashTable){
-    int count = 0;
-    int key = ((midx * 1000 + midy * 1234) % MD + MD) % MD;
-    while(hashTable[key].occupied){
-        if((hashTable[key].point1 != i) && (hashTable[key].point1 != j) && (hashTable[key].point2 != i) && (hashTable[key].point2 != j)){
-            // 确保4点不共线
-            if((points[hashTable[key].point1].x - points[hashTable[key].point2].x) * (points[i].y - points[j].y) == (points[i].x - points[j].x) * (points[hashTable[key].point1].y - points[hashTable[key].point2].y)){
-                key = (key + 1) % MD;
-                continue;
-            }
-            count++;
-            // print the 4 dots
-            // printf("(%d, %d), (%d, %d), (%d, %d), (%d, %d)\n", points[i].x, points[i].y, points[j].x, points[j].y, points[hashTable[key].point1].x, points[hashTable[key].point1].y, points[hashTable[key].point2].x, points[hashTable[key].point2].y); 
-        }
-        key = (key + 1) % MD;
-    }
     return count;
-}
-
-int totalCount(Point* points, int m){
-    hashElem* hashTable = new hashElem[MD];
-    int count = 0;
-    for (int i = 0; i < m; i++){
-        for (int j = i+1; j < m; j++){
-            int midx = (points[i].x + points[j].x);
-            int midy = (points[i].y + points[j].y);
-            hashing(midx, midy, i, j, hashTable);
-        }
-    }
-    for (int i = 0; i < m; i++){
-        for (int j = i+1; j < m; j++){
-            int midx = (points[i].x + points[j].x);
-            int midy = (points[i].y + points[j].y);
-            count += countParallelogram(midx, midy, i, j, points, hashTable);
-        }
-    }
-    delete[] hashTable;
-    return count/2;
 }
 
 int main(){
     int n;
     scanf("%d", &n);
-    int* results = new int [n];
-    for(int i = 0; i < n; i++){
+    int* results = new int[n];
+    for(int indexN = 0; indexN < n; indexN++){
+        // initialize hashTable
+        for(int i = 0; i < MD; i++){
+            hashTable[i].ocp = false;
+        }
         int m;
         scanf("%d", &m);
         Point* points = new Point[m];
-        for(int j = 0; j < m; j++){
-            scanf("%d %d", &points[j].x, &points[j].y);
+        for(int indexM = 0; indexM < m; indexM++){
+            scanf("%d %d", &points[indexM].x, &points[indexM].y);
         }
-        results[i] = totalCount(points, m);
-        delete[] points;
+        int sum = 0;
+        int midX, midY, key;
+        for(int i = 0; i < m; i++){
+            for(int j = i + 1; j < m; j++){
+                midX = (points[i].x + points[j].x);
+                midY = (points[i].y + points[j].y);
+                key = ((midX * 4217 + midY * 8731) % MD+ MD) % MD;
+                sum += searchCount(key, i, j, points);
+            }
+        }
+        results[indexN] = sum;
     }
-    for(int i = 0; i < n; i++){
-        printf("%d\n", results[i]);
+    for(int indexN = 0; indexN < n; indexN++){
+        printf("%d\n", results[indexN]);
     }
     return 0;
 }
