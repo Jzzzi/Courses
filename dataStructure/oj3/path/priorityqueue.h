@@ -24,7 +24,7 @@ class PriorityQueue{
 };
 
 template <typename Elem, typename Key>
-PriorityQueue<Elem, Key>::PriorityQueue(bool bigHeap = true){
+PriorityQueue<Elem, Key>::PriorityQueue(bool bigHeap){
     this->_size = 0;
     this->_capacity = 10;
     this->_arr = new Elem[this->_capacity];
