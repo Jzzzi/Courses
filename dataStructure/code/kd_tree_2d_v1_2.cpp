@@ -4,7 +4,7 @@
 #include <limits>
 #include <cmath>
 
-// ÓÃÓÚ±íÊ¾×ø±ê
+// ç”¨äºè¡¨ç¤ºåæ ‡
 struct Coordinate
 {
 	double m_vector[2];
@@ -38,7 +38,7 @@ struct Coordinate
 	}
 };
 
-// µãÊı¾İµÄÀàĞÍ ÔÚ×ø±êµÄ»ù´¡ÉÏ¼ÓÉÏÊı¾İÓò ±¾ÌâÏŞÖÆÊı¾İÓòµÄÀàĞÍÎª×Ö·ûĞÍ
+// ç‚¹æ•°æ®çš„ç±»å‹ åœ¨åæ ‡çš„åŸºç¡€ä¸ŠåŠ ä¸Šæ•°æ®åŸŸ æœ¬é¢˜é™åˆ¶æ•°æ®åŸŸçš„ç±»å‹ä¸ºå­—ç¬¦å‹
 struct PointStruct : public Coordinate
 {
 	char m_data;
@@ -50,10 +50,10 @@ struct PointStruct : public Coordinate
 	}
 };
 
-// Ê÷½Úµã ¼Ì³Ğ×ÔµãÊı¾İµÄÀàĞÍ
+// æ ‘èŠ‚ç‚¹ ç»§æ‰¿è‡ªç‚¹æ•°æ®çš„ç±»å‹
 struct TreeNode : public PointStruct
 {
-	// ÓÃÓÚ±íÊ¾¿Õ¼ä»®·ÖµÄ·ÅĞÄ 0´ú±íÔÚx·½Ïò»®·Ö 1´ú±íÔÚy·½Ïò»®·Ö
+	// ç”¨äºè¡¨ç¤ºç©ºé—´åˆ’åˆ†çš„æ”¾å¿ƒ 0ä»£è¡¨åœ¨xæ–¹å‘åˆ’åˆ† 1ä»£è¡¨åœ¨yæ–¹å‘åˆ’åˆ†
 	int m_dimension;
 
 	TreeNode* m_pLeftChild;
@@ -75,14 +75,14 @@ struct TreeNode : public PointStruct
 	}
 };
 
-// ²éÑ¯µÄ¾ØĞÎÇøÓòÀàĞÍ
+// æŸ¥è¯¢çš„çŸ©å½¢åŒºåŸŸç±»å‹
 struct RecArea
 {
-	// ´æ·Å¾ØĞÎÇøÓò×óÏÂºÍÓÒÉÏ×ø±ê
+	// å­˜æ”¾çŸ©å½¢åŒºåŸŸå·¦ä¸‹å’Œå³ä¸Šåæ ‡
 	Coordinate m_minCoor;
 	Coordinate m_maxCoor;
 
-	// Ä¬ÈÏ¾ØĞÎÇøÓòµÄ·¶Î§ÎªÕı¸ºÎŞÇî
+	// é»˜è®¤çŸ©å½¢åŒºåŸŸçš„èŒƒå›´ä¸ºæ­£è´Ÿæ— ç©·
 	RecArea(double minX = -std::numeric_limits<double>::infinity(), double minY = -std::numeric_limits<double>::infinity()
 		, double maxX = std::numeric_limits<double>::infinity(), double maxY = std::numeric_limits<double>::infinity())
 	{
@@ -90,7 +90,7 @@ struct RecArea
 		m_maxCoor = Coordinate(maxX, maxY);
 	}
 
-	// ÅĞ¶ÏÒ»¸öÔÚdimension·½ÏòÉÏµÄ¿Õ¼ä»®·ÖÊÇ·ñÓë¾ØĞÎÇøÓòÏà½»
+	// åˆ¤æ–­ä¸€ä¸ªåœ¨dimensionæ–¹å‘ä¸Šçš„ç©ºé—´åˆ’åˆ†æ˜¯å¦ä¸çŸ©å½¢åŒºåŸŸç›¸äº¤
 	int intersect(int dimension, const Coordinate& hyperPlane) const
 	{
 		if (m_minCoor.isBigger(dimension, hyperPlane))
@@ -101,14 +101,14 @@ struct RecArea
 			return 0;
 	}
 
-	// ÅĞ¶ÏÄ³Ò»µãÊÇ·ñÊôÓÚÕâ¸ö¾ØĞÎÇøÓò
+	// åˆ¤æ–­æŸä¸€ç‚¹æ˜¯å¦å±äºè¿™ä¸ªçŸ©å½¢åŒºåŸŸ
 	bool include(const Coordinate& point) const
 	{
 		return !m_minCoor.isBigger(0, point) && !m_maxCoor.isSmaller(0, point)
 			&& !m_minCoor.isBigger(1, point) && !m_maxCoor.isSmaller(1, point);
 	}
 
-	// ½«¾ØĞÎÇøÓò»®·ÖÎªÁ½²¿·Ö
+	// å°†çŸ©å½¢åŒºåŸŸåˆ’åˆ†ä¸ºä¸¤éƒ¨åˆ†
 	void split(int dimension, const Coordinate& hyperPlane, RecArea& smallerArea, RecArea& biggerArea) const
 	{
 		smallerArea = *this;
@@ -170,7 +170,7 @@ TreeNode* KdTree::buildTree(std::vector<PointStruct>& pointList, int depth)
 		else if (!mediaPoint.isEqual(pointList[i]))
 			pointListRight.push_back(pointList[i]);
 
-	// µ÷ÊÔĞÅÏ¢£¬ÓÉÓÚ±íÊ¾ÏÈĞò±éÀú½á¹û
+	// è°ƒè¯•ä¿¡æ¯ï¼Œç”±äºè¡¨ç¤ºå…ˆåºéå†ç»“æœ
 	std::cout << depth << ' ' << mediaPoint.m_data << std::endl;
 	TreeNode* pTreeNode = new TreeNode(mediaPoint);
 	pTreeNode->m_pLeftChild = buildTree(pointListLeft, depth + 1);
@@ -239,9 +239,9 @@ void KdTree::recursionNearestSearch(TreeNode* pNode, int depth, const Coordinate
 int main()
 {
 	int sampleCount;
-	std::cout << "ÊäÈëÑù±¾Êı:";
+	std::cout << "è¾“å…¥æ ·æœ¬æ•°:";
 	std::cin >> sampleCount;
-	std::cout << "ÊäÈëËùÓĞÊı¾İ£¬¸ñÊ½Îª£º x×ø±ê y×ø±ê Êı¾İ£¨×Ö·ûĞÍ£©\n";
+	std::cout << "è¾“å…¥æ‰€æœ‰æ•°æ®ï¼Œæ ¼å¼ä¸ºï¼š xåæ ‡ yåæ ‡ æ•°æ®ï¼ˆå­—ç¬¦å‹ï¼‰\n";
 	std::vector<PointStruct> vec;
 	while (sampleCount--)
 	{
@@ -252,18 +252,18 @@ int main()
 		vec.push_back(point);
 	}
 
-	std::cout << "ÏÈĞò±éÀú½á¹û£º -Éî¶È -Êı¾İ\n";
+	std::cout << "å…ˆåºéå†ç»“æœï¼š -æ·±åº¦ -æ•°æ®\n";
 	KdTree kdTree(vec);
 
 	RecArea recArea;
 	recArea.m_minCoor.m_vector[0] = -1;
 	recArea.m_maxCoor.m_vector[0] = 1;
-	std::cout << "²éÑ¯µÄx×ø±ê·¶Î§£º" << recArea.m_minCoor.m_vector[0] << " ~ " << recArea.m_maxCoor.m_vector[0] << std::endl;
-	std::cout << "²éÑ¯µÄy×ø±ê·¶Î§£º" << recArea.m_minCoor.m_vector[1] << " ~ " << recArea.m_maxCoor.m_vector[1] << std::endl;
+	std::cout << "æŸ¥è¯¢çš„xåæ ‡èŒƒå›´ï¼š" << recArea.m_minCoor.m_vector[0] << " ~ " << recArea.m_maxCoor.m_vector[0] << std::endl;
+	std::cout << "æŸ¥è¯¢çš„yåæ ‡èŒƒå›´ï¼š" << recArea.m_minCoor.m_vector[1] << " ~ " << recArea.m_maxCoor.m_vector[1] << std::endl;
 	std::vector<PointStruct> res;
 	kdTree.rectangleSearch(recArea, res);
 
-	std::cout << "Âú×ãÌõ¼şµÄÊı¾İ£º";
+	std::cout << "æ»¡è¶³æ¡ä»¶çš„æ•°æ®ï¼š";
 	for (auto p : res)
 	{
 		std::cout << p.m_data << ' ';
@@ -273,5 +273,5 @@ int main()
 	Coordinate coor(4.9, 4.1);
 	PointStruct nearest;
 	nearest = kdTree.nearestSearch(coor);
-	std::cout << "×î½üµã£º" << nearest.m_data << std::endl;
+	std::cout << "æœ€è¿‘ç‚¹ï¼š" << nearest.m_data << std::endl;
 }
